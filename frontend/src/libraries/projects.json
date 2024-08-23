@@ -1,0 +1,60 @@
+{
+    "projects": [
+  
+      {
+        "id": 1,
+        "name": "Common Moves",
+        "year": "2023",
+        "images": ["/choreographer/Common-moves-walking.jpg"],
+        "description": "Common moves is a new collaborative artwork, a ‘social choreography’ or ‘choreography of the community’. The work operates as a speculative site. Through the act of occupying public space and applying simple scores and choreographies, it questions our conception of what is held to be ‘in common’, whether social norms or habits, whether something shared, public, or regularly occurring, whether something that is not underrepresented or marginalized, or whether something that does not stop the flow, that belongs. The work softly resists the current by changing and moving what is ‘common’.The work is realized in collaboration with BIPOC artists and volunteers in Helsinki and is thus rooted in local conversations and urgencies. common moves takes place in several sites around central Helsinki. The work was performed in Helsinki between 29 July and 13 August in several public spaces.",
+        "credits":"Coreography and dance: Afra Hosseini, Love Andersson and Karin Raudsepp, Ama Kyei Mentorship: Linda Adami, BamBam Frost",
+        "video":null
+      },
+      {
+        "id": 2,
+        "name": "Blomdanser / Kukkatanssit",
+        "year": "2022",
+        "images": ["/choreographer/Blomdanser.jpg"],
+        "description": "Blomdanser (Kukkatanssit) is an interactive performance for 3-7 year old children. All of the flowers have lost their colors and therefore their superpowers. Luckily Ama can communicate with Mother Nature through her dance. Together with Mother Natures guidance and the help from the children we get a chance to help the flowers to gain their colors and superpowers back. The performance can be shown in Swedish or English",
+        "credits": "Choreografer: Ama Kyei Dancer: Rebecca Livaniou or Ama Kyei Creative assistens: Fredrika Burvall, Love Andersson, Marika Peura, Mona Namer, Selma Fikerte, Kirsi Hemanus Financed: Konstnärsnämnden and Region Stockholm",
+        "video": "https://www.youtube.com/embed/jCypMmfwcXI?si=WLpnI8NuwBUwkatX"
+
+      },
+      {
+        "id": 3,
+        "name": "ሙሉkokonainenتمامی",
+        "year": "2021",
+        "images": ["/choreographer/Kokonainen promobild.jpg"],
+        "description": "Blomdanser (Kukkatanssit) is an interactive performance for 3-7 year old children. All of the flowers have lost their colors and therefore their superpowers. Luckily Ama can communicate with Mother Nature through her dance. Together with Mother Natures guidance and the help from the children we get a chance to help the flowers to gain their colors and superpowers back. The performance can be shown in Swedish or English",
+        "credits": "Choreografer: Ama Kyei Dancer: Rebecca Livaniou or Ama Kyei Creative assistens: Fredrika Burvall, Love Andersson, Marika Peura, Mona Namer, Selma Fikerte, Kirsi Hemanus Financed: Konstnärsnämnden and Region Stockholm",
+        "video": null
+      },
+      {
+        "id": 4,
+        "name": "Vita Strumpor",
+        "year": "2022",
+        "images":[ "/choreographer/VITA STRUMPOR PROMO BILD.jpg"],
+        "description": "Blomdanser (Kukkatanssit) is an interactive performance for 3-7 year old children. All of the flowers have lost their colors and therefore their superpowers. Luckily Ama can communicate with Mother Nature through her dance. Together with Mother Natures guidance and the help from the children we get a chance to help the flowers to gain their colors and superpowers back. The performance can be shown in Swedish or English",
+        "credits": "Choreografer: Ama Kyei Dancer: Rebecca Livaniou or Ama Kyei Creative assistens: Fredrika Burvall, Love Andersson, Marika Peura, Mona Namer, Selma Fikerte, Kirsi Hemanus Financed: Konstnärsnämnden and Region Stockholm",
+        "video": null
+      },
+      {
+        "id": 5,
+        "name": "እህቴMun siskoخواهر من",
+        "year": "2020",
+        "images": ["/choreographer/mun sisko 6.jpg", "/choreographer/say my name klipp.jpg"],
+        "description": "Blomdanser (Kukkatanssit) is an interactive performance for 3-7 year old children. All of the flowers have lost their colors and therefore their superpowers. Luckily Ama can communicate with Mother Nature through her dance. Together with Mother Natures guidance and the help from the children we get a chance to help the flowers to gain their colors and superpowers back. The performance can be shown in Swedish or English",
+        "credits": "Choreografer: Ama Kyei Dancer: Rebecca Livaniou or Ama Kyei Creative assistens: Fredrika Burvall, Love Andersson, Marika Peura, Mona Namer, Selma Fikerte, Kirsi Hemanus Financed: Konstnärsnämnden and Region Stockholm",
+        "video": null
+      },
+      {
+        "id": 6,
+        "name": "say my name, (say my name), Say my name (say my name)",
+        "year": "2019",
+        "images": ["/choreographer/say my name klipp.jpg"],
+        "description": "Blomdanser (Kukkatanssit) is an interactive performance for 3-7 year old children. All of the flowers have lost their colors and therefore their superpowers. Luckily Ama can communicate with Mother Nature through her dance. Together with Mother Natures guidance and the help from the children we get a chance to help the flowers to gain their colors and superpowers back. The performance can be shown in Swedish or English",
+        "credits": "Choreografer: Ama Kyei Dancer: Rebecca Livaniou or Ama Kyei Creative assistens: Fredrika Burvall, Love Andersson, Marika Peura, Mona Namer, Selma Fikerte, Kirsi Hemanus Financed: Konstnärsnämnden and Region Stockholm",
+        "video": null
+      }
+    ]
+    }
