@@ -14,7 +14,7 @@ import { Autoplay, Navigation, Pagination, A11y } from "swiper/modules";
 export const ProjectsOverview = () => {
   return (
     <div className="w-full">
-      <ul className="grid grid-cols-2 gap-2 tablet:grid-cols-3 flex-wrap laptop:hidden">
+      <ul className="grid grid-cols-2 gap-4 tablet:grid-cols-3 flex-wrap laptop:hidden">
       {projects.map((project, index) => {
           const projectEndpoint = project.name
           .replaceAll('/', '')   // Remove all '/' characters
@@ -22,7 +22,7 @@ export const ProjectsOverview = () => {
           .toLowerCase();  
 
           return (
-            <li key={index} className="p-4 w-full">
+            <li key={index} className=" w-full">
               <NavLink to={`/project/${projectEndpoint}`} aria-label={`Link to ${project.name}`}>
                 <img src={project.images[0]} alt={project.name} className="aspect-square object-cover " />
                 <div className="font-heading text-xs pt-2"><p>{project.name}</p><p>{project.year}</p></div>

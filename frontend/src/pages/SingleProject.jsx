@@ -30,7 +30,7 @@ export const SingleProject = () => {
   console.log(currentProject.images)
 
   return (
-    <section className="w-full laptop:m-auto laptop:w-8/12 grid grid-cols-1 tablet:grid-cols-2 tablet:gap-6 laptop:gap-8 text-main-dark ">
+    <section className="w-full laptop:m-auto laptop:w-8/12 grid grid-cols-1 gap-8 tablet:grid-cols-2 tablet:gap-6 laptop:gap-8 text-main-dark ">
       <IoIosArrowBack onClick={() => navigate(-1)} className="cursor-pointer"/>
         <div>
       <h2 className="text-lg font-heading text-end">{currentProject.name}</h2>
@@ -70,7 +70,7 @@ export const SingleProject = () => {
           className="w-full h-auto aspect-[2/3] object-cover"
         />
       )}
-      <div className="tablet:flex-col-reverse tablet:flex h-fit self-end gap-4 tablet:gap-8">
+      <div className="tablet:flex-col-reverse flex flex-col h-fit self-end gap-4 tablet:gap-8">
       <div className="p-4 bg-main-white font-body">
         <p>{currentProject.credits}</p>
       </div>
