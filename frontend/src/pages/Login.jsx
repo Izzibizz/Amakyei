@@ -19,12 +19,12 @@ export const Login = () => {
           <h2 className="text-2xl mb-6 font-semibold text-center font-heading text-main-dark">Login</h2>
           
           <div className="mb-4 font-body">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2"/>
+            <label htmlFor="user" className="block text-sm font-medium text-gray-700 mb-2"/>
             <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
+              type="text"
+              id="user"
+              name="user"
+              placeholder="User"
               className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent"
               required
             />
