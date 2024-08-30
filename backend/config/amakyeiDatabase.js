@@ -11,7 +11,7 @@ mongoose.Promise = Promise;
 
 if (process.env.RESET_DB === "true") {
     const seedDatabase = async () => {
-      await Project.deleteMany({});
+      await Project.deleteMany();
       console.log("seeding data")
   
       projectData.forEach((projectData) => {
