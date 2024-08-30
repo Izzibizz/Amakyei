@@ -2,22 +2,25 @@ import { useUserStore } from "../store/useUserStore";
 import { useNavigate, NavLink } from "react-router-dom";
 import { FiPlusCircle } from "react-icons/fi";
 import { useEffect, useState } from "react";
-import { FaPen } from "react-icons/fa";
-import { MdDone } from "react-icons/md";
+/* import { FaPen } from "react-icons/fa";
+import { MdDone } from "react-icons/md"; */
 
 export const Admin = () => {
   const { loggedOut, setLoggedOut, setBackgroundColor, backgroundColor, textColor, setTextColor } =
     useUserStore();
   const navigate = useNavigate();
-  const [isEditingColor, setIsEditingColor] = useState(false);
-  const [editingField, setEditingField] = useState(null);
+/*   const [isEditingColor, setIsEditingColor] = useState(false);
+  const [editingField, setEditingField] = useState(null); */
 
   const handleLogOut = () => {
     setLoggedOut();
     navigate("/");
   };
 
-  const toggleColorMode = () => {
+
+  /* if I choose to let user change colors */
+
+/*   const toggleColorMode = () => {
     setIsEditingColor(!isEditingColor);
     console.log(isEditingColor)
   };
@@ -32,7 +35,7 @@ export const Admin = () => {
     if (e.key === "Enter") {
       setEditingField(null); // Exit edit mode on Enter
     }
-  };
+  }; */
 
 
   useEffect(() => {

@@ -1,17 +1,26 @@
 import { useUserStore } from "../store/useUserStore"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 export const Login = () => {
 
-  const { setLoggedIn, loggedIn } = useUserStore()
+  const { loginUser, loggedIn } = useUserStore()
   const navigate = useNavigate()
+  const [ userName, setUserName ] = useState()
+  const [ password, setPassword ] = useState()
 
   useEffect(() => {
     if (loggedIn) {
       navigate("/admin");
     }
   }, [loggedIn, navigate]);
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    await loginUser(userName, password);
+    console.log("loginUser:", loginUser);
+  };
 
     return (
       <section className="w-full flex">
@@ -24,6 +33,7 @@ export const Login = () => {
               type="text"
               id="user"
               name="user"
+              value={userName}
               placeholder="User"
               className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent"
               required
@@ -33,8 +43,9 @@ export const Login = () => {
           <div className="mb-6">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2"/>
             <input
-              type="password"
+              type="text"
               id="password"
+              value={password}
               name="password"
               placeholder="Password"
               className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent"
@@ -49,7 +60,7 @@ export const Login = () => {
             Login
           </button>
         </form>
-        <button onClick={setLoggedIn}>Login</button>
+        <button onClick={handleLogin}>Login</button>
       </section>
     )
   }

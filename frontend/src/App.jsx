@@ -8,14 +8,13 @@ import { useEffect } from "react"
 export const App = () => {
 
   const { fetchProjects } = useProjectsStore()
-  const { backgroundColor } = useUserStore()
 
   useEffect(() => {
     fetchProjects();
   }, []);
 
   return (
-    <div /* style={{ backgroundColor }} */
+    <div
     className="bg-background w-screen min-h-screen flex flex-col">
       <Header />
       <main className="my-32 px-7 tablet:px-16 laptop:px-32 laptop:py-16 flex-grow">
