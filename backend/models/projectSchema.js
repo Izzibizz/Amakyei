@@ -76,4 +76,6 @@ const projectSchema = new Schema({
   ],
 });
 
-export const Projects = model("Project", projectSchema);
+ const Projects = model("Projects", projectSchema);
+
+ export default Projects

@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import { Projects } from "./models/projectSchema";
+import Projects from "./models/projectSchema";
 import projectData from "./data/projects.json";
 import documentationRoutes from "./routes/documentation";
 import projectRoutes from "./routes/projects";
@@ -15,16 +15,15 @@ mongoose.connect(mongoUrl);
 mongoose.Promise = Promise;
 
 if (process.env.RESET_DB) {
-    const seedDatabase = async () => {
-      await Projects.deleteMany({});
-      console.log("seeding data")
-  
-      projectData.forEach((project) => {
-        new Projects(project).save();
-      });
-    };
-    seedDatabase();
+  const seedDatabase = async () => {
+    await Projects.deleteMany()
+
+    projectData.forEach((project) => {
+      new Projects(project).save()
+    })
   }
+  seedDatabase()
+}
 
 const app = express();
 const port = process.env.PORT || 8080;
