@@ -54,7 +54,7 @@ const projectSchema = new Schema({
         required: true,
       },
       photographer: {
-        type: String, // Photographer's name
+        type: String, 
       },
       link: {
         type: String,
@@ -76,4 +76,6 @@ const projectSchema = new Schema({
   ],
 });
 
-export const Project = model("Project", projectSchema);
+const Projects = model("Project", projectSchema);
+
+export default Projects

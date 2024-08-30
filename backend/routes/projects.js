@@ -1,19 +1,19 @@
 import express from "express";
 
-import { Project } from "../models/projectSchema";
+import Projects from "../models/projectSchema";
 
 const router = express.Router();
 
 //Product Endpoints
 router.get("/", async (req, res) => {
   try {
-    const project = await Project.find().exec();
+    const project = await Projects.find().exec();
     //For Search bar in Frontend use this endpoint as well
     const projectTitle = req.query.title;
 
     if (projectTitle) {
       const titleSearch = async (projectTitle) => {
-        const resultSearch = await Project.find({
+        const resultSearch = await Projects.find({
           title: { $regex: new RegExp(projectTitle, "i") },
         }).exec();
         return resultSearch;
@@ -49,7 +49,7 @@ router.get("/", async (req, res) => {
 router.get("/:projectId", async (req, res) => {
   try {
     const { projectId } = req.params;
-    const project = await Project.findOne({ _id: projectId }).exec();
+    const project = await Projects.findOne({ _id: projectId }).exec();
 
     if (project) {
       res
