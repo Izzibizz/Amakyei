@@ -2,10 +2,17 @@ import { Header } from "./components/Header";
 import { MainRoutes } from "./routes/MainRoutes";
 import { Footer } from "./components/Footer";
 import { useUserStore } from "./store/useUserStore"
+import { useProjectsStore } from "./store/useProjectsStore"
+import { useEffect } from "react"
 
 export const App = () => {
 
+  const { fetchProjects } = useProjectsStore()
   const { backgroundColor } = useUserStore()
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
 
   return (
     <div /* style={{ backgroundColor }} */

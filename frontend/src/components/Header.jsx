@@ -1,10 +1,9 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useUserStore } from "../store/useUserStore";
 
 export const Header = () => {
   const { loggedIn } = useUserStore();
-
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
@@ -26,7 +25,7 @@ export const Header = () => {
   const textColor = isHomePage ? "text-main-white" : "text-main-dark";
   const menuColor = isHomePage ? "bg-main-white" : "bg-main-dark";
 
-  console.log(loggedIn)
+  const categories = ["dancer", "choreographer", "pedagog"];
 
   return (
     <header
@@ -67,27 +66,16 @@ export const Header = () => {
           className={`absolute top-24 right-0 w-fit text-xl bg-background ${headerOpacity} ${textColor}`}
         >
           <ul className="flex flex-col items-end gap-6 p-8 pr-8 tablet:pb-20">
-            <NavLink
-              to="/dancer"
-              aria-label="Link to Dancer"
-              onClick={toggleMenu}
-            >
-              <li>Dancer</li>
-            </NavLink>
-            <NavLink
-              to="/choreographer"
-              aria-label="Link to Choreographer"
-              onClick={toggleMenu}
-            >
-              <li>Choreographer</li>
-            </NavLink>
-            <NavLink
-              to="/pedagog"
-              aria-label="Link to Pedagog"
-              onClick={toggleMenu}
-            >
-              <li>Pedagog</li>
-            </NavLink>
+            {categories.map((category) => (
+              <NavLink
+                key={category}
+                to={`/${category}`}
+                aria-label={`Link to ${category}`}
+                onClick={toggleMenu}
+              >
+                <li>{category.charAt(0).toUpperCase() + category.slice(1)}</li>
+              </NavLink>
+            ))}
             <NavLink
               to="/about"
               aria-label="Link to About"
@@ -102,36 +90,36 @@ export const Header = () => {
             >
               <li>Contact</li>
             </NavLink>
-            {loggedIn && (<NavLink
-              to="/admin"
-              aria-label="Link to Admin"
-              onClick={toggleMenu}
-            >
-              <li className="text-peach">Admin</li>
-            </NavLink>)}
+            {loggedIn && (
+              <NavLink
+                to="/admin"
+                aria-label="Link to Admin"
+                onClick={toggleMenu}
+              >
+                <li className="text-peach">Admin</li>
+              </NavLink>
+            )}
           </ul>
         </div>
       )}
       {/* Laptop */}
       <ul className="hidden laptop:flex gap-16">
-        <NavLink to="/dancer" aria-label="Link to dancer">
-          <li>Dancer</li>
-        </NavLink>
-        <NavLink to="/choreographer" aria-label="Link to choreographer">
-          <li>Choreographer</li>
-        </NavLink>
-        <NavLink to="/pedagog" aria-label="Link to Pedagog">
-          <li>Pedagog</li>
-        </NavLink>
+        {categories.map((category) => (
+          <NavLink key={category} to={`/${category}`} aria-label={`Link to ${category}`}>
+            <li>{category.charAt(0).toUpperCase() + category.slice(1)}</li>
+          </NavLink>
+        ))}
         <NavLink to="/about" aria-label="Link to About">
           <li>About</li>
         </NavLink>
         <NavLink to="/contact" aria-label="Link to Contact">
           <li>Contact</li>
         </NavLink>
-        {loggedIn && (<NavLink to="/admin" aria-label="Link to Admin">
-          <li className="text-peach">Admin</li>
-        </NavLink>)}
+        {loggedIn && (
+          <NavLink to="/admin" aria-label="Link to Admin">
+            <li className="text-peach">Admin</li>
+          </NavLink>
+        )}
       </ul>
     </header>
   );
