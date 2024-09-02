@@ -180,6 +180,11 @@
     ],
     "images": [
       {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1724760844/WHILE-IN-BATTLE-IM-FREE%2C-NEVER-FREE-TO-REST-Hooman-Sharifi-Senay-Ama-Kyei-Cullberg-3.png",
+        "photographer": "Senay Berhe",
+        "link": "https://senay.se/"
+      },
+      {
         "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1724760840/WHILE-IN-BATTLE-IM-FREE%2C-NEVER-FREE-TO-REST-Hooman-Sharifi-Senay-Ama-Kyei-Cullberg-1.png",
         "photographer": "Senay Berhe",
         "link": "https://senay.se/"
@@ -188,12 +193,8 @@
         "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1724760839/WHILE-IN-BATTLE-IM-FREE%2C-NEVER-FREE-TO-REST-Hooman-Sharifi-Senay-Ama-Kyei-Cullberg-2.png",
         "photographer": "Senay Berhe",
         "link": "https://senay.se/"
-      },
-      {
-        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1724760844/WHILE-IN-BATTLE-IM-FREE%2C-NEVER-FREE-TO-REST-Hooman-Sharifi-Senay-Ama-Kyei-Cullberg-3.png",
-        "photographer": "Senay Berhe",
-        "link": "https://senay.se/"
       }
+
     ],
     "video": [
       {
