@@ -24,16 +24,17 @@ export const Header = () => {
   const isHomePage = location.pathname === "/";
   const headerOpacity = isHomePage ? "bg-opacity-0" : "bg-opacity-95";
   const textColor = isHomePage ? "text-main-white" : "text-main-dark";
+  const hoverText = isHomePage ? "hover:text-main-dark" : "hover:text-main-white"
   const menuColor = isHomePage ? "bg-main-white" : "bg-main-dark";
 
   console.log(loggedIn)
 
   return (
     <header
-      className={`fixed top-0 w-full h-24 p-7 laptop:px-20 laptop:py-12 flex justify-between font-heading z-10 bg-background transition-opacity duration-300 ease-in-out ${headerOpacity} ${textColor}`}
+      className={`fixed top-0 w-full h-24 p-7 laptop:px-20 laptop:py-12 flex justify-between font-heading z-10 bg-background transition-opacity duration-300 ease-in-out ${headerOpacity} ${textColor} `}
     >
       <NavLink to="/" aria-label="Link to Home" className="flex gap-4">
-        <h1 className="text-3xl laptop:text-4xl">Ama Kyei</h1>
+        <h1 className={`${hoverText} text-3xl laptop:text-4xl`}>Ama Kyei</h1>
       </NavLink>
       {/* Mobile and tablet */}
       <button
@@ -72,42 +73,42 @@ export const Header = () => {
               aria-label="Link to Dancer"
               onClick={toggleMenu}
             >
-              <li>Dancer</li>
+              <li className={`${hoverText}`}>Dancer</li>
             </NavLink>
             <NavLink
               to="/choreographer"
               aria-label="Link to Choreographer"
               onClick={toggleMenu}
             >
-              <li>Choreographer</li>
+              <li className={`${hoverText}`}>Choreographer</li>
             </NavLink>
             <NavLink
               to="/pedagog"
               aria-label="Link to Pedagog"
               onClick={toggleMenu}
             >
-              <li>Pedagog</li>
+              <li className={`${hoverText}`}>Pedagog</li>
             </NavLink>
             <NavLink
               to="/about"
               aria-label="Link to About"
               onClick={toggleMenu}
             >
-              <li>About</li>
+              <li className={`${hoverText}`}>About</li>
             </NavLink>
             <NavLink
               to="/contact"
               aria-label="Link to Contact"
               onClick={toggleMenu}
             >
-              <li>Contact</li>
+              <li className={`${hoverText}`}>Contact</li>
             </NavLink>
             {loggedIn && (<NavLink
               to="/admin"
               aria-label="Link to Admin"
               onClick={toggleMenu}
             >
-              <li className="text-peach">Admin</li>
+              <li className={`${hoverText} text-peach`}>Admin</li>
             </NavLink>)}
           </ul>
         </div>
@@ -115,22 +116,22 @@ export const Header = () => {
       {/* Laptop */}
       <ul className="hidden laptop:flex gap-16">
         <NavLink to="/dancer" aria-label="Link to dancer">
-          <li>Dancer</li>
+          <li className={`${hoverText}`}>Dancer</li>
         </NavLink>
         <NavLink to="/choreographer" aria-label="Link to choreographer">
-          <li>Choreographer</li>
+          <li className={`${hoverText}`}>Choreographer</li>
         </NavLink>
         <NavLink to="/pedagog" aria-label="Link to Pedagog">
-          <li>Pedagog</li>
+          <li className={`${hoverText}`}>Pedagog</li>
         </NavLink>
         <NavLink to="/about" aria-label="Link to About">
-          <li>About</li>
+          <li className={`${hoverText}`}>About</li>
         </NavLink>
         <NavLink to="/contact" aria-label="Link to Contact">
-          <li>Contact</li>
+          <li className={`${hoverText}`}>Contact</li>
         </NavLink>
         {loggedIn && (<NavLink to="/admin" aria-label="Link to Admin">
-          <li className="text-peach">Admin</li>
+          <li className={`${hoverText} text-peach`}>Admin</li>
         </NavLink>)}
       </ul>
     </header>

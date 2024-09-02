@@ -117,7 +117,7 @@ export const UploadProject = () => {
   return (
   <>
    {uploadSuccessful && <PopupMessage />}
-    <section className="w-full h-full tablet:w-2/3 tablet:m-auto">
+    <section className="w-full h-full tablet:w-2/3 tablet:m-auto animate-fadeIn">
        <div className="flex justify-between "><h2 className="text-2xl mb-16 font-heading text-main-dark laptop:mb-8">New project</h2>
        <button
                   className="text-peach bg-main-white h-fit rounded-xl p-2 hidden laptop:flex"

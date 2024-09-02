@@ -31,7 +31,7 @@ export const Login = () => {
     return (
       <>
       {showUserPopupMessage && <PopupMessage />}
-      <section className="w-full flex">
+      <section className="w-full flex animate-fadeIn">
       <form className="w-3/4 tablet:w-1/2 max-w-[400px] bg-main-white m-auto mt-20 p-8 rounded shadow-md"
       onSubmit={handleLogin}>
           <h2 className="text-2xl mb-6 font-semibold text-center font-heading text-main-dark">Login</h2>
