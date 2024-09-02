@@ -80,6 +80,29 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// Route to get all users
+router.get("/all", async (req, res) => {
+  try {
+    const users = await User.find({}).exec(); // Fetch all users
+
+    if (users.length > 0) {
+      res.status(200).json({
+        users: users,
+        message: "Success in retrieving all users.",
+      });
+    } else {
+      res.status(404).json({
+        message: "No users found.",
+      });
+    }
+  } catch (error) {
+    console.error("Get all users endpoint:", error);
+    res.status(500).json({
+      message: "Sorry, we couldn't retrieve users at this time. Please try again later.",
+    });
+  }
+});
+
 router.get("/profile/:userId", authenticateUser);
 router.get("/profile/:userId", async (req, res) => {
   try {
