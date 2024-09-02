@@ -8,7 +8,7 @@ export const About = () => {
 console.log(position)
 
   return (
-    <section className="text-main-dark w-full flex flex-col laptop:w-9/12 laptop:m-auto">
+    <section className="text-main-dark w-full flex flex-col laptop:w-9/12 laptop:m-auto animate-fadeIn">
       <h3 className="text-2xl font-heading text-right mb-10">About</h3>
       {/* Mobile */}
       <div className="flex flex-col gap-12 tablet:hidden">

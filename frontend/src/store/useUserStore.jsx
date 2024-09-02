@@ -5,24 +5,29 @@ export const useUserStore = create(
   persist(
     (set, get) => ({
       loggedIn: false,
-      showPopupMessage: false,
       loggedOut: false,
-      automaticLogOut: false,
-      backgroundColor: "#5d805f",
-      textColor: "#FFFF",
+      showPopupMessage: false,
       userId: "",
       accessToken: "",
+      loadingUser: false,
+      loginError: false,
+      signUpError: false,
+      signedUp: false,
+      signupMessage: "",
+      loginMessage: "",
+/*       backgroundColor: "#5d805f",
+      textColor: "#FFFF", */
+
 
       setLoggedIn: () => set({ loggedIn: true, loggedOut: false }),
       setShowPopupMessage: (input) => set({ showPopupMessage: input }),
-      setLoggedOut: () => set({ loggedOut: true, loggedIn: false, userId: "", accessToken: "",}),
-      setAutomaticLogOut: () => set({ automaticLogOut: true, loggedOut: true, loggedIn: false }),
+      setLoggedOut: () => set({ loggedOut: true, loggedIn: false, userId: "", accessToken: "", loginMessage: "", showPopupMessage: true}), 
       setBackgroundColor: (input) => set({ backgroundColor: input }),
       setTextColor: (input) => set({ textColor: input }),
 
 
       loginUser: async (userName, password) => {
-        set({ loadingUser: true, loginError: false });
+        set({ loadingUser: true, loginError: false, loggedIn: false });
         const URL_login = "https://amakyei.onrender.com/users/login";
         try {
           const response = await fetch(URL_login, {
@@ -42,14 +47,17 @@ export const useUserStore = create(
             set({
               userId: data.id,
               accessToken: data.accessToken,
-            });
-            await get().fetchUser(data.id, data.accessToken);
+              loginMessage: data.message,
+              loggedIn: true,
+              loggedOut: false,
+              showPopupMessage: true
+            })
           }
         } catch (error) {
           console.error("error in login:", error);
           set({ error: error, loginError: true });
         } finally {
-          /*  fetchUser(userId, accessToken); */
+
           set({ loadingUser: false });
         }
       },

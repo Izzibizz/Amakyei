@@ -3,11 +3,14 @@ import { create } from 'zustand';
 export const useProjectsStore = create((set) => ({
 
     projectsData: [],
-    loading: false,
+    loadingProjects: false,
     error: null,
+    uploadSuccessful: false,
+
+    setUploadSuccessful:  () => set({ uploadSuccessFul: true }),
 
    fetchProjects: async () => {
-  set({ loading: true, error: null }); // Set loading and clear error
+  set({ loadingProjects: true, error: null }); // Set loading and clear error
   
   try {
     const response = await fetch('https://amakyei.onrender.com/projects', {
@@ -31,6 +34,6 @@ export const useProjectsStore = create((set) => ({
     console.log('error:', error);
     set({ error: error });
   } finally {
-    set({ loading: false }); // Set loading to false when done
+    set({ loadingProjects: false }); // Set loading to false when done
   }
 }}))

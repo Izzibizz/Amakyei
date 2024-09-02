@@ -1,17 +1,20 @@
 import { useUserStore } from "../store/useUserStore"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { PopupMessage } from "../components/PopupMessage"
 
 export const Login = () => {
 
-  const { loginUser, loggedIn } = useUserStore()
+  const { loginUser, loggedIn, loginError, loadingUser, loginMessage, showUserPopupMessage } = useUserStore()
   const navigate = useNavigate()
-  const [ userName, setUserName ] = useState()
-  const [ password, setPassword ] = useState()
+  const [ userName, setUserName ] = useState("")
+  const [ password, setPassword ] = useState("")
 
   useEffect(() => {
     if (loggedIn) {
       navigate("/admin");
+      setUserName("")
+      setPassword("")
     }
   }, [loggedIn, navigate]);
 
@@ -22,9 +25,15 @@ export const Login = () => {
     console.log("loginUser:", loginUser);
   };
 
+
+  console.log(loginError, "loading:", loadingUser, loggedIn, loginMessage)
+
     return (
+      <>
+      {showUserPopupMessage && <PopupMessage />}
       <section className="w-full flex">
-      <form className="w-3/4 tablet:w-1/2 max-w-[400px] bg-main-white m-auto mt-20 p-8 rounded shadow-md">
+      <form className="w-3/4 tablet:w-1/2 max-w-[400px] bg-main-white m-auto mt-20 p-8 rounded shadow-md"
+      onSubmit={handleLogin}>
           <h2 className="text-2xl mb-6 font-semibold text-center font-heading text-main-dark">Login</h2>
           
           <div className="mb-4 font-body">
@@ -34,6 +43,7 @@ export const Login = () => {
               id="user"
               name="user"
               value={userName}
+              onChange={(e) => setUserName(e.target.value)}
               placeholder="User"
               className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent"
               required
@@ -46,6 +56,7 @@ export const Login = () => {
               type="text"
               id="password"
               value={password}
+              onChange={(e) => setPassword(e.target.value)}
               name="password"
               placeholder="Password"
               className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-main focus:border-transparent"
@@ -60,8 +71,8 @@ export const Login = () => {
             Login
           </button>
         </form>
-        <button onClick={handleLogin}>Login</button>
       </section>
+      </>
     )
   }
   

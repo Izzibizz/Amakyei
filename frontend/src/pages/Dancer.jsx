@@ -9,7 +9,7 @@ export const Dancer = () => {
 
 
   return (
-    <section className="text-main-dark w-full flex flex-col">
+    <section className="text-main-dark w-full flex flex-col animate-fadeIn">
       <h3 className="text-2xl font-heading text-right mb-10">Dancer</h3>
       <ProjectsOverview category={category} />
       </section>

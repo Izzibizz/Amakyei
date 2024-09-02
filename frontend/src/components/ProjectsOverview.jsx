@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useProjectsStore } from '../store/useProjectsStore';
+import { Loading } from "./Loading"
 import 'swiper/css';
 import 'swiper/css/controller';
 import 'swiper/css/navigation';
@@ -9,7 +10,7 @@ import 'swiper/css/effect-fade';
 import { Autoplay, Navigation, Pagination, A11y } from 'swiper/modules';
 
 export const ProjectsOverview = ({category}) => {
-  const { projectsData } = useProjectsStore();
+  const { projectsData, loadingProjects } = useProjectsStore();
   const [filteredProjects, setFilteredProjects] = useState([]);
 
   useEffect(() => {
@@ -21,6 +22,13 @@ export const ProjectsOverview = ({category}) => {
 
 
   return (
+    <>
+{ loadingProjects ? (
+  <div className="w-1/2 m-auto">
+  <Loading />
+  </div>
+
+): (
 <>
       <ul className="grid grid-cols-2 gap-4 tablet:grid-cols-3 flex-wrap laptop:hidden">
         {filteredProjects.map((project, index) => {
@@ -86,5 +94,7 @@ export const ProjectsOverview = ({category}) => {
         </Swiper>
       </div>
     </>
+  )}
+  </>
   );
 };

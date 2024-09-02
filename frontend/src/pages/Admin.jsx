@@ -2,20 +2,25 @@ import { useUserStore } from "../store/useUserStore";
 import { useNavigate, NavLink } from "react-router-dom";
 import { FiPlusCircle } from "react-icons/fi";
 import { useEffect, useState } from "react";
+import { PopupMessage } from "../components/PopupMessage"
 /* import { FaPen } from "react-icons/fa";
 import { MdDone } from "react-icons/md"; */
 
 export const Admin = () => {
-  const { loggedOut, setLoggedOut, setBackgroundColor, backgroundColor, textColor, setTextColor } =
+  const { loggedOut, setLoggedOut, showPopupMessage, setShowPopupMessage, setBackgroundColor, backgroundColor, textColor, setTextColor } =
     useUserStore();
   const navigate = useNavigate();
 /*   const [isEditingColor, setIsEditingColor] = useState(false);
   const [editingField, setEditingField] = useState(null); */
 
   const handleLogOut = () => {
+    setShowPopupMessage(true);  // Show the popup message
     setLoggedOut();
-    navigate("/");
+    setTimeout(() => {
+      navigate("/");
+    }, 2000); 
   };
+
 
 
   /* if I choose to let user change colors */
@@ -39,12 +44,15 @@ export const Admin = () => {
 
 
   useEffect(() => {
-    if (loggedOut) {
+    if (loggedOut && !showPopupMessage) {
       navigate("/login");
     }
+    
   }, [loggedOut, navigate]);
 
   return (
+    <>
+    {showPopupMessage && <PopupMessage />}
     <section className="w-full h-full">
       <div className=" flex justify-between">
         <h2 className="text-2xl mb-6 font-heading text-main-dark">Admin</h2>
@@ -55,7 +63,8 @@ export const Admin = () => {
           Log out
         </button>
       </div>
-      <div className="flex flex-col gap-8">
+      {!showPopupMessage &&
+      <div className="flex flex-col gap-8 animate-fadeIn">
         <NavLink to="/upload" aria-label="Link to upload project">
           <div className="bg-main-white w-2/3 max-w-[400px] m-auto flex p-4 rounded-2xl mt-20">
             <FiPlusCircle className="w-10 h-10 text-peach" />
@@ -115,7 +124,8 @@ export const Admin = () => {
             </div>
           )}
         </div> */}
-      </div>
+      </div>}
     </section>
+    </>
   );
 };

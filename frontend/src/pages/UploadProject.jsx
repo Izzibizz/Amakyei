@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { useUserStore } from "../store/useUserStore";
+import { useUserStore } from "../store/useUserStore"; 
+import { useProjectsStore } from "../store/useProjectsStore"
+import { PopupMessage } from "../components/PopupMessage";
 import { useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -19,8 +21,12 @@ import "swiper/css/effect-fade";
 import { Navigation, Pagination } from "swiper/modules";
 
 export const UploadProject = () => {
+
   const { loggedOut } = useUserStore();
+  const { uploadSuccessful } = useProjectsStore()
   const navigate = useNavigate();
+
+  /* Input for upload */
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
   const [year, setYear] = useState("");
@@ -109,6 +115,8 @@ export const UploadProject = () => {
   }, []);
 
   return (
+  <>
+   {uploadSuccessful && <PopupMessage />}
     <section className="w-full h-full tablet:w-2/3 tablet:m-auto">
        <div className="flex justify-between "><h2 className="text-2xl mb-16 font-heading text-main-dark laptop:mb-8">New project</h2>
        <button
@@ -438,6 +446,7 @@ export const UploadProject = () => {
       </div>
       </div>
     </section>
+    </>
   )
 }
 

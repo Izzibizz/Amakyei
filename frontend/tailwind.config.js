@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        "background": "#C2CCB1",
-        "main-dark": "#474800",
+        "background": "#FFB393",
+        "main-dark": "#DC3636",
         "main-white": "#FFFBF4",
         "peach": "#F0826A"
       },
@@ -20,6 +20,15 @@ export default {
         tablet: "600px", 
         laptop: "1281px", 
         desktop: "1511px", 
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+      },
+      animation: {
+        fadeIn: 'fadeIn 1s ease-out',
       },
     },
   },
