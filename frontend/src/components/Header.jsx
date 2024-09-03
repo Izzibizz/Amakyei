@@ -24,17 +24,18 @@ export const Header = () => {
   const isHomePage = location.pathname === "/";
   const headerOpacity = isHomePage ? "bg-opacity-0" : "bg-opacity-95";
   const textColor = isHomePage ? "text-main-white" : "text-main-dark";
-  const hoverText = isHomePage ? "hover:text-main-dark" : "hover:text-main-white"
+  const hoverText = "hover:scale-110"
   const menuColor = isHomePage ? "bg-main-white" : "bg-main-dark";
+  const adminText = isHomePage ? "text-peach" : "text-main-white"
 
   console.log(loggedIn)
 
   return (
     <header
-      className={`fixed top-0 w-full h-24 p-7 laptop:px-20 laptop:py-12 flex justify-between font-heading z-10 bg-background transition-opacity duration-300 ease-in-out ${headerOpacity} ${textColor} `}
+      className={`fixed top-0 w-full h-24 p-7 laptop:px-20 laptop:py-10 laptop:pt-14 flex justify-between font-heading items-center z-10 bg-background transition-opacity duration-300 ease-in-out  ${headerOpacity} ${textColor} `}
     >
       <NavLink to="/" aria-label="Link to Home" className="flex gap-4">
-        <h1 className={`${hoverText} text-3xl laptop:text-4xl`}>Ama Kyei</h1>
+        <h1 className={` text-3xl laptop:text-4xl`}>Ama Kyei</h1>
       </NavLink>
       {/* Mobile and tablet */}
       <button
@@ -108,7 +109,7 @@ export const Header = () => {
               aria-label="Link to Admin"
               onClick={toggleMenu}
             >
-              <li className={`${hoverText} text-peach`}>Admin</li>
+              <li className={`${hoverText} ${adminText}`}>Admin</li>
             </NavLink>)}
           </ul>
         </div>
@@ -131,7 +132,7 @@ export const Header = () => {
           <li className={`${hoverText}`}>Contact</li>
         </NavLink>
         {loggedIn && (<NavLink to="/admin" aria-label="Link to Admin">
-          <li className={`${hoverText} text-peach`}>Admin</li>
+          <li className={`${hoverText} ${adminText}`}>Admin</li>
         </NavLink>)}
       </ul>
     </header>

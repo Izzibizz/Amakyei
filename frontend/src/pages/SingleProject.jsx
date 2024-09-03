@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useState, useRef, useEffect  } from "react"
 import { useProjectsStore } from "../store/useProjectsStore";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { IoIosArrowBack } from "react-icons/io";
@@ -13,13 +14,45 @@ import "swiper/css/effect-fade";
 // Import required modules for Swiper
 import { Navigation, Pagination, Autoplay, A11y } from "swiper/modules";
 
+const ImageModal = ({ src, onClose }) => {
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose(); // Close the modal if clicked outside
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 cursor-pointer">
+      <div ref={modalRef} className="max-w-full">
+        <img src={src} alt="Enlarged" className="object-contain max-w-full max-h-screen cursor-pointer" onClick={onClose} />
+      </div>
+    </div>
+  );
+};
+
+
 export const SingleProject = () => {
 
   const { projectsData } = useProjectsStore()
   const navigate = useNavigate();
   const { id } = useParams();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [imageSrc, setImageSrc] = useState("");
+
+
+
   const currentProject = projectsData.find((project) => {
-    const projectEndpoint = project.title
+  const projectEndpoint = project.title
   .replaceAll('/', '')    // Remove all '/' characters
   .replace(/\s+/g, '-') // Replace spaces with dashes
   .toLowerCase();  
@@ -29,6 +62,16 @@ export const SingleProject = () => {
   if (!currentProject) {
     return <NotFound />; // Handle the case where the project is not found
   }
+
+  const handleImageClick = (src) => {
+    setImageSrc(src);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   console.log(currentProject.images)
 
   return (
@@ -60,7 +103,8 @@ export const SingleProject = () => {
               <img
                 src={file.url}
                 alt={file.photographer}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover cursor-pointer"
+                onClick={() => handleImageClick(file.url)}
               />
             </SwiperSlide>
           ))}
@@ -69,7 +113,8 @@ export const SingleProject = () => {
         <img
           src={currentProject.images[0].url}
           alt={currentProject.images[0].photographer}
-          className="w-full h-auto aspect-[2/3] object-cover"
+          onClick={() => handleImageClick(currentProject.images[0].url)}
+          className="w-full h-auto aspect-[2/3] object-cover cursor-pointer "
         />
       )}
       <div className="tablet:flex-col-reverse flex flex-col h-fit self-end gap-4 tablet:gap-8">
@@ -95,7 +140,7 @@ export const SingleProject = () => {
       <p className="font-body text-justify">{currentProject.description}</p>
       </div>
       { currentProject.video && (<iframe src={currentProject.video.url} className="w-full my-8 aspect-[3/2] tablet:col-span-2"  />)}
-      
+      {isModalOpen && <ImageModal src={imageSrc} onClose={handleCloseModal} />}
     </section>
   );
 };
