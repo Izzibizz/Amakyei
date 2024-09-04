@@ -24,7 +24,6 @@ export const Header = () => {
   const isHomePage = location.pathname === "/";
   const headerOpacity = isHomePage ? "bg-opacity-0" : "bg-opacity-95";
   const textColor = isHomePage ? "text-main-white" : "text-main-dark";
-  const hoverText = "hover:scale-110"
   const menuColor = isHomePage ? "bg-main-white" : "bg-main-dark";
   const adminText = isHomePage ? "text-peach" : "text-main-white"
 

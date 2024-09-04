@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PopupMessage } from "../components/PopupMessage";
 import Lottie from "lottie-react";
-import animation from "../assets/Circle-loading-animation.json";
+import animation from "../assets/Circle-loading-Animation.json";
 
 export const Login = () => {
   const {

@@ -24,7 +24,7 @@ export const ProjectsOverview = ({category}) => {
   return (
     <>
 { loadingProjects ? (
-  <div className="w-1/2 m-auto">
+  <div className="w-1/3 laptop: w-2/12 m-auto mt-20">
   <Loading />
   </div>
 
