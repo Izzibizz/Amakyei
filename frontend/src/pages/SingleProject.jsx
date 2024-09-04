@@ -3,6 +3,7 @@ import { useState, useRef, useEffect  } from "react"
 import { useProjectsStore } from "../store/useProjectsStore";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { IoIosArrowBack } from "react-icons/io";
+import { SlArrowDown } from "react-icons/sl";
 import { NotFound } from "./NotFound";
 
 // Import Swiper styles
@@ -48,7 +49,7 @@ export const SingleProject = () => {
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageSrc, setImageSrc] = useState("");
-
+  const [imageHeight, setImageHeight] = useState(0)
 
 
   const currentProject = projectsData.find((project) => {
@@ -63,6 +64,19 @@ export const SingleProject = () => {
     return <NotFound />; // Handle the case where the project is not found
   }
 
+  useEffect(() => {
+    const updateImageHeight= () => {
+      const screenHeight = window.innerHeight;
+      setImageHeight(screenHeight);
+    };
+
+    // Update on mount
+    updateImageHeight();
+
+    window.addEventListener("resize", updateImageHeight);
+    return () => window.removeEventListener("resize", updateImageHeight);
+  }, []);
+
   const handleImageClick = (src) => {
     setImageSrc(src);
     setIsModalOpen(true);
@@ -76,17 +90,16 @@ export const SingleProject = () => {
 
   return (
     <section className="w-full animate-fadeIn">
-      <IoIosArrowBack onClick={() => navigate(-1)} className="cursor-pointer laptop:w-8 laptop:h-8 text-main-dark"/>
-        <div className="laptop:m-auto laptop:w-8/12 grid grid-cols-1 gap-8 tablet:grid-cols-2 tablet:gap-6 laptop:gap-8 text-main-dark ">
-        <div className="tablet:hidden">
+      <IoIosArrowBack onClick={() => navigate(-1)} className="cursor-pointer w-10 h-10 text-main-white fixed z-20 top-32"/>
+      <div className="absolute bottom-20 right-10 tablet:right-20 z-10 text-main-white flex flex-col items-end justify-end">
       <h2 className="text-lg font-heading text-end">{currentProject.title}</h2>
       <h3 className="text-lg font-heading text-end">{currentProject.year}</h3>
+      <SlArrowDown className="animate-fadeInOut my-4 mr-2"/>
       </div>
-      <div className="">
+      <div className="w-screen h-screen absolute inset-0 top-0 left-0">
       {currentProject.images.length > 1 ? (
         <Swiper
           slidesPerView={1}
-          navigation
           speed={1200}
           loop
           zoom
@@ -98,7 +111,7 @@ export const SingleProject = () => {
           }}
           effect="fade"
           modules={[Navigation, Pagination, A11y, Autoplay]}
-          className="w-full h-full aspect-[2/3] tablet:order-1"
+          className="w-full h-full min-h-screen max-w-screen desktop:aspect-[4/2] object-cover tablet:order-1"
         >
           {currentProject.images.map((file, index) => (
             <SwiperSlide key={index}>
@@ -116,22 +129,23 @@ export const SingleProject = () => {
           src={currentProject.images[0].url}
           alt={currentProject.images[0].photographer}
           onClick={() => handleImageClick(currentProject.images[0].url)}
-          className="w-full h-auto aspect-[2/3] object-cover cursor-pointer "
+          className="w-full h-full min-h-screen max-w-screen desktop:aspect-[4/2] object-cover cursor-pointer "
         />
       )}
       </div>
-      <div className="flex flex-col justify-between">
-      <div className="hidden tablet:block">
-      <h2 className="text-lg font-heading text-end">{currentProject.title}</h2>
-      <h3 className="text-lg font-heading text-end">{currentProject.year}</h3>
+        <div className="relative laptop:m-auto laptop:w-10/12 grid grid-cols-1 gap-8 tablet:grid-cols-2 tablet:gap-6 laptop:gap-8 text-main-dark " style={{ marginTop: imageHeight }}>
+      <div className="mb-4 col-span-2">
+      <h2 className="text-lg font-heading">{currentProject.title}</h2>
+      <h3 className="text-lg font-heading">{currentProject.year}</h3>
       </div>
-      <div className="tablet:flex-col-reverse flex flex-col h-fit self-end gap-4 tablet:gap-8">
-      <div className="p-4 bg-main-white font-body">
+      <p className="font-body text-justify max-w-full col-span-2 tablet:col-span-1">{currentProject.description}</p>
+      <div className="p-4 bg-main-white font-body col-span-2 tablet:col-span-1">
       {currentProject.credits.map((credit, index) => (
-          <ul key={index} className="flex ">
-            <h3 className="font-heading text-bold text-sm mr-2">{credit.role}:</h3>
+          <ul key={index} className="flex flex-wrap">
+            <li className="flex flex-wrap gap-2">
+            <h3 className="font-heading text-bold text-base mr-2 underline ">{credit.role}:</h3>
               {credit.names.map((person, i) => (
-             <span key={i} className="flex gap-2 flex-wrap">
+             <span key={i} className="mr-4">
              {person.link ? (
                <a href={person.link} target="_blank" rel="noopener noreferrer" className="text-peach">
                  {person.name}
@@ -142,15 +156,13 @@ export const SingleProject = () => {
              {i < credit.names.length - 1 && ', '} {/* Add comma if not the last item */}
            </span>
               ))}
+              </li>
             </ul>
         ))}
-      </div>
-      <p className="font-body text-justify">{currentProject.description}</p>
       </div>
       </div>
       { currentProject.video && (<iframe src={currentProject.video.url} className="w-full my-8 aspect-[3/2] tablet:col-span-2"  />)}
       {isModalOpen && <ImageModal src={imageSrc} onClose={handleCloseModal} />}
-      </div>
     </section>
   );
 };

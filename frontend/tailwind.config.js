@@ -26,9 +26,15 @@ export default {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
+        fadeInOut: {
+          '0%': { opacity: '0' },
+          '50%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
       },
       animation: {
         fadeIn: 'fadeIn 1s ease-out',
+        fadeInOut: 'fadeInOut 3s ease-in-out infinite',
       },
     },
   },

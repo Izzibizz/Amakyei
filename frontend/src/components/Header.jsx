@@ -7,6 +7,8 @@ export const Header = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const endpoint = location.pathname.split('/')
+  
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -22,12 +24,13 @@ export const Header = () => {
   }, [location]);
 
   const isHomePage = location.pathname === "/";
-  const headerOpacity = isHomePage ? "bg-opacity-0" : "bg-opacity-95";
-  const textColor = isHomePage ? "text-main-white" : "text-main-dark";
-  const menuColor = isHomePage ? "bg-main-white" : "bg-main-dark";
+  const isSingleProject = endpoint[1] === "project"
+  const headerOpacity = isHomePage || isSingleProject ? "bg-opacity-0" : "bg-opacity-95";
+  const textColor = isHomePage || isSingleProject ? "text-main-white" : "text-main-dark";
+  const menuColor = isHomePage || isSingleProject ?  "bg-main-white" : "bg-main-dark";
   const adminText = isHomePage ? "text-peach" : "text-main-white"
 
-  console.log(loggedIn)
+  console.log(isSingleProject, endpoint , "location:", location)
 
   return (
     <header
@@ -40,7 +43,7 @@ export const Header = () => {
       <button
         onClick={toggleMenu}
         aria-label="Toggle Menu"
-        className="flex flex-col justify-center items-center laptop:hidden z-30"
+        className="flex flex-col justify-center items-center laptop:hidden z-40 "
       >
         <span
           className={`${menuColor} block transition-all duration-300 ease-out 
