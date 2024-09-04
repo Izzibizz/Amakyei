@@ -75,12 +75,14 @@ export const SingleProject = () => {
   console.log(currentProject.images)
 
   return (
-    <section className="w-full laptop:m-auto laptop:w-8/12 grid grid-cols-1 gap-8 tablet:grid-cols-2 tablet:gap-6 laptop:gap-8 text-main-dark ">
-      <IoIosArrowBack onClick={() => navigate(-1)} className="cursor-pointer laptop:w-8 laptop:h-8"/>
-        <div>
+    <section className="w-full animate-fadeIn">
+      <IoIosArrowBack onClick={() => navigate(-1)} className="cursor-pointer laptop:w-8 laptop:h-8 text-main-dark"/>
+        <div className="laptop:m-auto laptop:w-8/12 grid grid-cols-1 gap-8 tablet:grid-cols-2 tablet:gap-6 laptop:gap-8 text-main-dark ">
+        <div className="tablet:hidden">
       <h2 className="text-lg font-heading text-end">{currentProject.title}</h2>
       <h3 className="text-lg font-heading text-end">{currentProject.year}</h3>
       </div>
+      <div className="">
       {currentProject.images.length > 1 ? (
         <Swiper
           slidesPerView={1}
@@ -96,7 +98,7 @@ export const SingleProject = () => {
           }}
           effect="fade"
           modules={[Navigation, Pagination, A11y, Autoplay]}
-          className="w-full h-full aspect-[2/3]"
+          className="w-full h-full aspect-[2/3] tablet:order-1"
         >
           {currentProject.images.map((file, index) => (
             <SwiperSlide key={index}>
@@ -117,6 +119,12 @@ export const SingleProject = () => {
           className="w-full h-auto aspect-[2/3] object-cover cursor-pointer "
         />
       )}
+      </div>
+      <div className="flex flex-col justify-between">
+      <div className="hidden tablet:block">
+      <h2 className="text-lg font-heading text-end">{currentProject.title}</h2>
+      <h3 className="text-lg font-heading text-end">{currentProject.year}</h3>
+      </div>
       <div className="tablet:flex-col-reverse flex flex-col h-fit self-end gap-4 tablet:gap-8">
       <div className="p-4 bg-main-white font-body">
       {currentProject.credits.map((credit, index) => (
@@ -139,8 +147,10 @@ export const SingleProject = () => {
       </div>
       <p className="font-body text-justify">{currentProject.description}</p>
       </div>
+      </div>
       { currentProject.video && (<iframe src={currentProject.video.url} className="w-full my-8 aspect-[3/2] tablet:col-span-2"  />)}
       {isModalOpen && <ImageModal src={imageSrc} onClose={handleCloseModal} />}
+      </div>
     </section>
   );
 };
