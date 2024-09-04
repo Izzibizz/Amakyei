@@ -76,7 +76,7 @@ export const SingleProject = () => {
 
   return (
     <section className="w-full laptop:m-auto laptop:w-8/12 grid grid-cols-1 gap-8 tablet:grid-cols-2 tablet:gap-6 laptop:gap-8 text-main-dark ">
-      <IoIosArrowBack onClick={() => navigate(-1)} className="cursor-pointer"/>
+      <IoIosArrowBack onClick={() => navigate(-1)} className="cursor-pointer laptop:w-8 laptop:h-8"/>
         <div>
       <h2 className="text-lg font-heading text-end">{currentProject.title}</h2>
       <h3 className="text-lg font-heading text-end">{currentProject.year}</h3>

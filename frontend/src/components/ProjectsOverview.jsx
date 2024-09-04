@@ -6,7 +6,9 @@ import { Loading } from "./Loading"
 import 'swiper/css';
 import 'swiper/css/controller';
 import 'swiper/css/navigation';
+import '../custom-swiper.css'
 import 'swiper/css/effect-fade';
+
 import { Autoplay, Navigation, Pagination, A11y } from 'swiper/modules';
 
 export const ProjectsOverview = ({category}) => {
