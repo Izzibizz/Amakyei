@@ -74,42 +74,42 @@ export const Header = () => {
               aria-label="Link to Dancer"
               onClick={toggleMenu}
             >
-              <li className={`${hoverText}`}>Dancer</li>
+              <li className="hover:scale-110">Dancer</li>
             </NavLink>
             <NavLink
               to="/choreographer"
               aria-label="Link to Choreographer"
               onClick={toggleMenu}
             >
-              <li className={`${hoverText}`}>Choreographer</li>
+              <li className="hover:scale-110">Choreographer</li>
             </NavLink>
             <NavLink
               to="/pedagog"
               aria-label="Link to Pedagog"
               onClick={toggleMenu}
             >
-              <li className={`${hoverText}`}>Pedagog</li>
+              <li className="hover:scale-110">Pedagog</li>
             </NavLink>
             <NavLink
               to="/about"
               aria-label="Link to About"
               onClick={toggleMenu}
             >
-              <li className={`${hoverText}`}>About</li>
+              <li className="hover:scale-110">About</li>
             </NavLink>
             <NavLink
               to="/contact"
               aria-label="Link to Contact"
               onClick={toggleMenu}
             >
-              <li className={`${hoverText}`}>Contact</li>
+              <li className="hover:scale-110">Contact</li>
             </NavLink>
             {loggedIn && (<NavLink
               to="/admin"
               aria-label="Link to Admin"
               onClick={toggleMenu}
             >
-              <li className={`${hoverText} ${adminText}`}>Admin</li>
+              <li className={`hover:scale-110 ${adminText}`}>Admin</li>
             </NavLink>)}
           </ul>
         </div>
@@ -117,22 +117,22 @@ export const Header = () => {
       {/* Laptop */}
       <ul className="hidden laptop:flex gap-16">
         <NavLink to="/dancer" aria-label="Link to dancer">
-          <li className={`${hoverText}`}>Dancer</li>
+          <li className="hover:scale-110">Dancer</li>
         </NavLink>
         <NavLink to="/choreographer" aria-label="Link to choreographer">
-          <li className={`${hoverText}`}>Choreographer</li>
+          <li className="hover:scale-110">Choreographer</li>
         </NavLink>
         <NavLink to="/pedagog" aria-label="Link to Pedagog">
-          <li className={`${hoverText}`}>Pedagog</li>
+          <li className="hover:scale-110">Pedagog</li>
         </NavLink>
         <NavLink to="/about" aria-label="Link to About">
-          <li className={`${hoverText}`}>About</li>
+          <li className="hover:scale-110">About</li>
         </NavLink>
         <NavLink to="/contact" aria-label="Link to Contact">
-          <li className={`${hoverText}`}>Contact</li>
+          <li className="hover:scale-110">Contact</li>
         </NavLink>
         {loggedIn && (<NavLink to="/admin" aria-label="Link to Admin">
-          <li className={`${hoverText} ${adminText}`}>Admin</li>
+          <li className={`hover:scale-110 ${adminText}`}>Admin</li>
         </NavLink>)}
       </ul>
     </header>

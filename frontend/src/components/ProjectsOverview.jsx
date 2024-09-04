@@ -50,6 +50,7 @@ export const ProjectsOverview = ({category}) => {
           );
         })}
       </ul>
+      {/* Laptop */}
       <div className="hidden laptop:block">
         <Swiper
           spaceBetween={30}
@@ -73,7 +74,7 @@ export const ProjectsOverview = ({category}) => {
               .toLowerCase();
 
             return (
-              <SwiperSlide key={index}>
+              <SwiperSlide key={index} className="hover:scale-110 pt-2 pb-10">
                 <NavLink
                   to={`/project/${projectEndpoint}`}
                   aria-label={`Link to ${project.title}`}
