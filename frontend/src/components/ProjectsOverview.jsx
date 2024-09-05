@@ -49,7 +49,7 @@ export const ProjectsOverview = ({category}) => {
           return (
             <li key={index} className="w-full">
               <NavLink to={`/project/${projectEndpoint}`} aria-label={`Link to ${project.title}`}>
-                <img src={project.images[0].url} alt={project.title} className="aspect-square object-cover" />
+                <img src={project.images[0].url} alt={project.title} className="aspect-square object-cover rounded-xl" />
                 <div className="font-heading text-xs pt-2">
                   <p>{project.title}</p>
                   <p>{project.year}</p>
@@ -84,7 +84,7 @@ export const ProjectsOverview = ({category}) => {
               .toLowerCase();
 
             return (
-              <SwiperSlide key={index} className="hover:scale-110 pt-2 pb-10">
+              <SwiperSlide key={index} className="hover:scale-105 py-6 ">
                 <NavLink
                   to={`/project/${projectEndpoint}`}
                   aria-label={`Link to ${project.title}`}
@@ -92,7 +92,7 @@ export const ProjectsOverview = ({category}) => {
                   <img
                     src={project.images[0].url}
                     alt={project.title}
-                    className="aspect-square object-cover"
+                    className="aspect-square object-cover rounded-xl"
                   />
                   <div className="font-heading text-xs pt-2">
                     <p>{project.title}</p>

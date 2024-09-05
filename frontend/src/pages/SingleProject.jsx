@@ -69,7 +69,7 @@ export const SingleProject = () => {
 
   const contentRef = useRef(null);
 
-  const handleScroll = () => {
+  const handleClickScroll = () => {
     const yOffset = -100; // Adjust this value for how much higher you want the scroll to stop
   const yPosition = contentRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
   
@@ -119,10 +119,10 @@ export const SingleProject = () => {
     <section className="w-full animate-fadeIn">
       <IoIosArrowBack
         onClick={() => navigate(-1)}
-        className="cursor-pointer w-10 h-10 text-main-white fixed z-20 top-32"
+        className="cursor-pointer w-10 h-10 text-main-white absolute z-20 top-32"
       />
       <div
-        className={`absolute bottom-20 right-10 tablet:right-20 z-10 text-main-white flex flex-col items-end justify-end transition-opacity duration-500 ${
+        className={`absolute bottom-10 tablet:bottom-20 right-10 tablet:right-20 z-10 text-main-white flex flex-col items-end justify-end transition-opacity duration-500 ${
           contentIsVisible ? "opacity-0" : "opacity-100"
         }`}
       >
@@ -130,7 +130,7 @@ export const SingleProject = () => {
           {currentProject.title}
         </h2>
         <h3 className="text-lg font-heading text-end">{currentProject.year}</h3>
-        <SlArrowDown className="cursor-pointer animate-fadeInOut my-4 mr-2" onClick={handleScroll} />
+        <SlArrowDown className="cursor-pointer animate-fadeInOut my-4 mr-2" onClick={handleClickScroll} />
       </div>
       <div className="w-screen h-screen absolute inset-0 top-0 left-0">
         {currentProject.images.length > 1 ? (
@@ -171,7 +171,7 @@ export const SingleProject = () => {
       </div>
       <div
         ref={contentRef}
-        className={`relative laptop:m-auto laptop:w-10/12 grid grid-cols-1 gap-8 tablet:grid-cols-2 tablet:gap-6 laptop:gap-8 text-main-dark transition-opacity duration-700 ${
+        className={`relative laptop:m-auto laptop:w-10/12 grid grid-cols-1 tablet:grid-cols-2 tablet:gap-6 laptop:gap-8 text-main-dark transition-opacity duration-700 ${
           contentIsVisible ? "opacity-100" : "opacity-0"
         }`}
         style={{ marginTop: imageHeight }}
@@ -187,7 +187,7 @@ export const SingleProject = () => {
         {currentProject.video && currentProject.video.length > 0 ? (
         <iframe
           src={currentProject.video[0].url}
-          className="w-full my-8 aspect-[3/2] "
+          className="w-full my-8 aspect-[3/2] rounded-xl "
           title="Project Video"
           allowFullScreen
         />
@@ -200,24 +200,25 @@ export const SingleProject = () => {
                 <img
                   src={file.url}
                   alt={file.photographer}
-                  className="w-full h-full object-cover cursor-pointer"
+                  className="w-full h-full aspect-[3/4] object-cover cursor-pointer rounded-xl "
                   onClick={() => handleImageClick(file.url)}
                 />
               </li>
             ))}
             </ul>
             </>
-        ) : (
+        ) : (<>
           <img
             src={currentProject.images[0].url}
             alt={currentProject.images[0].photographer}
             onClick={() => handleImageClick(currentProject.images[0].url)}
-            className="w-full h-full object-cover cursor-pointer"
-          />
+            className="aspect-[3/4] laptop:max-w-1/2 object-cover cursor-pointer rounded-xl "
+          /><p>photographer: {currentProject.images[0].photographer}</p>
+          </>
         )
       )}
       </div>
-        <div className="p-4 bg-main-white font-body col-span-2 tablet:col-span-1">
+        <div className="p-4 bg-main-white border border-green rounded-xl font-body col-span-2 tablet:col-span-1">
           {currentProject.credits.map((credit, index) => (
             <ul key={index} className="flex flex-wrap">
               <li className="flex flex-wrap gap-2">
