@@ -3,7 +3,7 @@ import { FiMail } from "react-icons/fi";
 
 export const Contact = () => {
   return (
-    <section className="text-main-dark w-full flex flex-col laptop:w-9/12 laptop:m-auto">
+    <section className="text-main-dark w-full flex flex-col laptop:w-9/12 laptop:m-auto animate-fadeIn">
       <h3 className="text-2xl font-heading text-right mb-10">Contact</h3>
       <div className="w-full h-full flex flex-col justify-center items-center mt-20">
         <div className="w-fit flex flex-col gap-4">

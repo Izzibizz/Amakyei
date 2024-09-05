@@ -14,6 +14,7 @@ import { Autoplay, Navigation, Pagination, A11y } from 'swiper/modules';
 export const ProjectsOverview = ({category}) => {
   const { projectsData, loadingProjects } = useProjectsStore();
   const [filteredProjects, setFilteredProjects] = useState([]);
+  const [listIsVisible, setListIsVisible] = useState(false);
 
   useEffect(() => {
     if (projectsData && category) {
@@ -21,6 +22,11 @@ export const ProjectsOverview = ({category}) => {
       setFilteredProjects(filtered);
     }
   }, [projectsData, category]);
+
+  const handleProjectsDisplayVersion = () => {
+    setListIsVisible(!listIsVisible)
+    window.scrollTo(0, 0);
+  }
 
 
   return (
@@ -32,7 +38,8 @@ export const ProjectsOverview = ({category}) => {
 
 ): (
 <>
-      <ul className="grid grid-cols-2 gap-4 tablet:grid-cols-3 flex-wrap laptop:hidden">
+      <ul className={`grid grid-cols-2 gap-4 tablet:grid-cols-3  flex-wrap ${listIsVisible ? "laptop:grid" : "laptop:hidden"
+        }`}>
         {filteredProjects.map((project, index) => {
           const projectEndpoint = project.title
             .replaceAll('/', '')
@@ -53,7 +60,8 @@ export const ProjectsOverview = ({category}) => {
         })}
       </ul>
       {/* Laptop */}
-      <div className="hidden laptop:block">
+      <div className= {`hidden ${listIsVisible ? "laptop:hidden" : "laptop:block"
+        }`}>
         <Swiper
           spaceBetween={30}
           slidesPerView={3}
@@ -96,6 +104,7 @@ export const ProjectsOverview = ({category}) => {
           })}
         </Swiper>
       </div>
+      <button className="bg-peach text-main-white font-body rounded-2xl w-fit py-2 px-4 ml-auto hidden laptop:block" onClick={handleProjectsDisplayVersion}>{ listIsVisible ? "Show slider" : "List all projects" }</button>
     </>
   )}
   </>

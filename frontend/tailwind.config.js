@@ -7,10 +7,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        "background": "#FFB393",
+        "background": "#E5E3DA", 
+        "main-dark": "#645933", 
+        "main-white": "#FFFBF4",
+        "peach": "#BEB8A0",
+        "green": "#BEB8A0" 
+        
+/*         "background": "#FFB393",
         "main-dark": "#DC3636",
         "main-white": "#FFFBF4",
-        "peach": "#F0826A"
+        "peach": "#F0826A",
+        "green": "#BEB8A0" */
+        
       },
       fontFamily: {
         body: ["Raleway", "sans-serif"],

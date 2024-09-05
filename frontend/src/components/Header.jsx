@@ -75,66 +75,72 @@ export const Header = () => {
               to="/dancer"
               aria-label="Link to Dancer"
               onClick={toggleMenu}
+              className={({ isActive }) => ` ${isActive ? "font-bold" : "hover:scale-110"}`}
             >
-              <li className="hover:scale-110">Dancer</li>
+              <li>Dancer</li>
             </NavLink>
             <NavLink
               to="/choreographer"
               aria-label="Link to Choreographer"
               onClick={toggleMenu}
+              className={({ isActive }) => ` ${isActive ? "font-bold" : "hover:scale-110"}`}
             >
-              <li className="hover:scale-110">Choreographer</li>
+              <li>Choreographer</li>
             </NavLink>
             <NavLink
               to="/pedagog"
               aria-label="Link to Pedagog"
               onClick={toggleMenu}
+              className={({ isActive }) => ` ${isActive ? "font-bold" : "hover:scale-110"}`}
             >
-              <li className="hover:scale-110">Pedagog</li>
+              <li>Pedagog</li>
             </NavLink>
             <NavLink
               to="/about"
               aria-label="Link to About"
               onClick={toggleMenu}
+              className={({ isActive }) => ` ${isActive ? "font-bold" : "hover:scale-110"}`}
             >
-              <li className="hover:scale-110">About</li>
+              <li>About</li>
             </NavLink>
             <NavLink
               to="/contact"
               aria-label="Link to Contact"
               onClick={toggleMenu}
+              className={({ isActive }) => ` ${isActive ? "font-bold" : "hover:scale-110"}`}
             >
-              <li className="hover:scale-110">Contact</li>
+              <li>Contact</li>
             </NavLink>
             {loggedIn && (<NavLink
               to="/admin"
               aria-label="Link to Admin"
               onClick={toggleMenu}
+              className={({ isActive }) => ` ${isActive ? "font-bold" : "hover:scale-110"}`}
             >
-              <li className={`hover:scale-110 ${adminText}`}>Admin</li>
+              <li className={`${adminText}`}>Admin</li>
             </NavLink>)}
           </ul>
         </div>
       )}
       {/* Laptop */}
       <ul className="hidden laptop:flex gap-16">
-        <NavLink to="/dancer" aria-label="Link to dancer">
-          <li className="hover:scale-110">Dancer</li>
+        <NavLink to="/dancer" aria-label="Link to dancer"  className={({ isActive }) => ` ${isActive ? "font-bold" : "hover:scale-110"}`}>
+          <li>Dancer</li>
         </NavLink>
-        <NavLink to="/choreographer" aria-label="Link to choreographer">
-          <li className="hover:scale-110">Choreographer</li>
+        <NavLink to="/choreographer" aria-label="Link to choreographer"  className={({ isActive }) => ` ${isActive ? "font-bold" : "hover:scale-110"}`}>
+          <li >Choreographer</li>
         </NavLink>
-        <NavLink to="/pedagog" aria-label="Link to Pedagog">
-          <li className="hover:scale-110">Pedagog</li>
+        <NavLink to="/pedagog" aria-label="Link to Pedagog" className={({ isActive }) => ` ${isActive ? "font-bold" : "hover:scale-110"}`}>
+          <li>Pedagog</li>
         </NavLink>
-        <NavLink to="/about" aria-label="Link to About">
-          <li className="hover:scale-110">About</li>
+        <NavLink to="/about" aria-label="Link to About"  className={({ isActive }) => ` ${isActive ? "font-bold" : "hover:scale-110"}`}>
+          <li>About</li>
         </NavLink>
-        <NavLink to="/contact" aria-label="Link to Contact">
-          <li className="hover:scale-110">Contact</li>
+        <NavLink to="/contact" aria-label="Link to Contact"  className={({ isActive }) => ` ${isActive ? "font-bold" : "hover:scale-110"}`}>
+          <li>Contact</li>
         </NavLink>
-        {loggedIn && (<NavLink to="/admin" aria-label="Link to Admin">
-          <li className={`hover:scale-110 ${adminText}`}>Admin</li>
+        {loggedIn && (<NavLink to="/admin" aria-label="Link to Admin"  className={({ isActive }) => ` ${isActive ? "font-bold" : "hover:scale-110"}`}>
+          <li className={` ${adminText}`}>Admin</li>
         </NavLink>)}
       </ul>
     </header>
