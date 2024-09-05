@@ -3,6 +3,8 @@ import { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useProjectsStore } from '../store/useProjectsStore';
 import { Loading } from "./Loading"
+import { SlArrowDown } from "react-icons/sl";
+import { SlArrowUp } from "react-icons/sl";
 import 'swiper/css';
 import 'swiper/css/controller';
 import 'swiper/css/navigation';
@@ -38,7 +40,7 @@ export const ProjectsOverview = ({category}) => {
 
 ): (
 <>
-      <ul className={`grid grid-cols-2 gap-4 tablet:grid-cols-3  flex-wrap ${listIsVisible ? "laptop:grid" : "laptop:hidden"
+      <ul className={`grid grid-cols-2 gap-4 tablet:grid-cols-3  flex-wrap ${listIsVisible ? "laptop:grid laptop:animate-fadeIn" : "laptop:hidden"
         }`}>
         {filteredProjects.map((project, index) => {
           const projectEndpoint = project.title
@@ -60,7 +62,7 @@ export const ProjectsOverview = ({category}) => {
         })}
       </ul>
       {/* Laptop */}
-      <div className= {`hidden ${listIsVisible ? "laptop:hidden" : "laptop:block"
+      <div className= {`hidden ${listIsVisible ? "laptop:hidden" : "laptop:block laptop:animate-fadeIn"
         }`}>
         <Swiper
           spaceBetween={30}
@@ -104,7 +106,18 @@ export const ProjectsOverview = ({category}) => {
           })}
         </Swiper>
       </div>
-      <button className="bg-peach text-main-white font-body rounded-2xl w-fit py-2 px-4 ml-auto hidden laptop:block" onClick={handleProjectsDisplayVersion}>{ listIsVisible ? "Show slider" : "List all projects" }</button>
+      <button className="cursor-pointer flex items-center text-main-dark font-body rounded-2xl w-fit py-2 px-4 ml-auto hidden laptop:block" onClick={handleProjectsDisplayVersion}>
+      {listIsVisible ? (
+      <>
+      Show slider
+      <SlArrowUp className="ml-2 inline-block" />
+      </>
+  ) : (
+    <>
+    List all projects
+    <SlArrowDown className="ml-2 inline-block" />
+    </>
+  )} </button>
     </>
   )}
   </>

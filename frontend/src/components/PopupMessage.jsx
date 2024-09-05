@@ -2,7 +2,7 @@ import { useUserStore } from "../store/useUserStore"
 import { useProjectsStore } from "../store/useProjectsStore"
 import { useEffect } from "react" 
 import Lottie from "lottie-react";
-import animation from "../assets/Done-animation.json"
+import animation from "../assets/Animation-green-done.json"
 
 
 export const PopupMessage = () => {

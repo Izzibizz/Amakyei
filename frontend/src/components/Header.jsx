@@ -28,13 +28,13 @@ export const Header = () => {
   const headerOpacity = isHomePage || isSingleProject ? "bg-opacity-0" : "bg-opacity-95";
   const textColor = isHomePage || isSingleProject ? "text-main-white" : "text-main-dark";
   const menuColor = isHomePage || isSingleProject ?  "bg-main-white" : "bg-main-dark";
-  const adminText = isHomePage ? "text-peach" : "text-main-white"
+  const adminText = isHomePage ? "text-peach" : "text-main-dark font-bold"
 
   console.log(isSingleProject, endpoint , "location:", location)
 
   return (
     <header
-      className={`fixed top-0 w-full h-24 p-7 laptop:px-20 laptop:py-10 laptop:pt-14 flex justify-between font-heading items-center z-10 bg-background transition-opacity duration-300 ease-in-out  ${headerOpacity} ${textColor} `}
+      className={`fixed top-0 w-full h-24 px-6 laptop:px-20 laptop:py-10 laptop:pt-14 flex justify-between font-heading items-center z-10 bg-background transition-opacity duration-300 ease-in-out  ${headerOpacity} ${textColor} `}
     >
       <NavLink to="/" aria-label="Link to Home" className="flex gap-4">
         <h1 className={` text-3xl laptop:text-4xl`}>Ama Kyei</h1>
@@ -68,7 +68,7 @@ export const Header = () => {
       </button>
       {isOpen && (
         <div
-          className={`absolute top-24 right-0 w-fit text-xl bg-background ${headerOpacity} ${textColor}`}
+          className={`absolute top-24 right-0 w-fit text-xl bg-background rounded-bl-xl ${headerOpacity} ${textColor}`}
         >
           <ul className="flex flex-col items-end gap-6 p-8 pr-8 tablet:pb-20">
             <NavLink

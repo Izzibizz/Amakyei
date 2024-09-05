@@ -66,7 +66,7 @@ export const Admin = () => {
       {!showPopupMessage &&
       <div className="flex flex-col gap-8 animate-fadeIn">
         <NavLink to="/upload" aria-label="Link to upload project">
-          <div className="bg-main-white w-2/3 max-w-[400px] m-auto flex p-4 rounded-2xl mt-20">
+          <div className="bg-main-white border border-green w-2/3 max-w-[400px] m-auto flex p-4 rounded-2xl mt-20">
             <FiPlusCircle className="w-10 h-10 text-peach" />
             <p className="p-2 text-main-dark font-body inline-block ">
               Add new project

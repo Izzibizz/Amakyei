@@ -8,7 +8,7 @@ export const About = () => {
 console.log(position)
 
   return (
-    <section className="text-main-dark w-full flex flex-col laptop:w-9/12 laptop:m-auto animate-fadeIn">
+    <section className="text-main-dark w-full flex flex-col laptop:w-10/12 laptop:m-auto animate-fadeIn">
       <h3 className="text-2xl font-heading text-right mb-10">About</h3>
       {/* Mobile */}
       <div className="flex flex-col gap-12 tablet:hidden">
@@ -119,7 +119,7 @@ console.log(position)
             Im a Finnish- Ghanaian dancer, dance teacher, choreographer and
             doula.{" "}
           </p>
-          <p className="font-body text-justify w-3/4 self-end">
+          <p className="font-body text-justify self-end">
             I looove groove, flow, music and presence also known as dance.
             Besides my passion for dance I love nature, children, colors and
             community. My heart burns for creating for and with children and
@@ -166,6 +166,7 @@ console.log(position)
           </p>
         </div>
       </div>
+      
     </section>
   );
 };
