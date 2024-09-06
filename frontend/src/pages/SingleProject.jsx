@@ -36,11 +36,11 @@ const ImageModal = ({ src, onClose, photographer }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 cursor-pointer">
-      <div ref={modalRef} className="flex flex-col max-w-full max-h-full">
+      <div ref={modalRef} className="flex flex-col max-w-[90vw] max-h-[90vh]">
         <img
           src={src}
           alt={photographer}
-          className="object-contain max-w-full max-h-[90vh] cursor-pointer"
+          className="object-contain cursor-pointer"
           onClick={onClose}
         />
         {photographer && <p className="font-body text-main-white p-4 ">Photographer: {photographer}</p>}
@@ -91,7 +91,7 @@ export const SingleProject = () => {
       window.removeEventListener("resize", updateImageHeight);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [imageHeight]);
+  }, []);
 
   useEffect(() => {
     if (loadingProjects || !projectsData.length) return;
@@ -133,6 +133,17 @@ export const SingleProject = () => {
       navigate(`/project/${nextProjectId}`);
     }
   };
+
+  const handlePreviousProject = () => {
+    navigate(-1);
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100); // Delay to ensure it happens after navigation
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]); 
 
   const handleImageClick = (src, photographer) => {
     setImageSrc(src);
@@ -177,10 +188,10 @@ export const SingleProject = () => {
   </div>
 ): (
 <>
-      <SlArrowLeft
-        onClick={() => navigate(-1)}
-        className="cursor-pointer w-8 h-8 text-main-white absolute z-20 top-32"
-      />
+<NavLink to={`/${currentProject.category}`} className="text-main-white ">
+      <SlArrowLeft className="cursor-pointer w-8 h-8  absolute z-20 top-32 hover:scale-125"
+      /> </NavLink>
+      
       <div
         className={`absolute bottom-10 tablet:bottom-20 right-10 tablet:right-20 z-10 text-main-white flex flex-col items-end justify-end transition-opacity duration-500 ${
           contentIsVisible ? "opacity-0" : "opacity-100"
@@ -190,7 +201,7 @@ export const SingleProject = () => {
           {currentProject.title}
         </h2>
         <h3 className="text-lg font-heading text-end">{currentProject.year}</h3>
-        <SlArrowDown className="cursor-pointer animate-fadeInOut my-4 mr-2" onClick={handleClickScroll} />
+        <SlArrowDown className="cursor-pointer animate-fadeInOut my-4 mr-2 hover:scale-150 hover:animate-none" onClick={handleClickScroll} />
       </div>
       <div className="w-screen h-screen absolute inset-0 top-0 left-0">
         {currentProject.images.length > 1 ? (
@@ -234,7 +245,7 @@ export const SingleProject = () => {
         className={`relative laptop:m-auto laptop:w-10/12 grid grid-cols-1 tablet:grid-cols-2 tablet:gap-6 laptop:gap-8 text-main-dark transition-opacity duration-700 ${
           contentIsVisible ? "opacity-100" : "opacity-0"
         }`}
-        style={{ marginTop: imageHeight }}
+        style={{ marginTop: imageHeight || "50px" }}
       >
         <div className="mb-4 col-span-2">
           <h2 className="text-lg font-heading">{currentProject.title}</h2>
@@ -260,7 +271,7 @@ export const SingleProject = () => {
         const showPhotographerName = index === 0 || file.photographer !== array[index - 1].photographer;
 
         return (
-          <li key={index} className="flex flex-col items-center w-full max-w-xs">
+          <li key={index} className="flex flex-col w-full max-w-xs">
             <img
               src={file.url}
               alt={file.photographer}
@@ -280,7 +291,7 @@ export const SingleProject = () => {
             src={currentProject.images[0].url}
             alt={currentProject.images[0].photographer}
             onClick={() => handleImageClick(currentProject.images[0].url, currentProject.images[0].photographer)}
-            className="aspect-[3/4] laptop:max-w-1/2 object-cover cursor-pointer rounded-xl "
+            className="aspect-[3/4] laptop:w-2/3 laptop:max-w-2/3 object-cover cursor-pointer rounded-xl "
           /><p className="font-body text-main-dark mt-4 italic">Photographer: {currentProject.images[0].photographer}</p>
           </div>
         )
@@ -317,10 +328,11 @@ export const SingleProject = () => {
         </div>
       </div>
       <div className="w-full flex justify-between mt-20">
-      <NavLink to={`/${currentProject.category}`} className="text-main-dark font-body">
-      <SlArrowLeft className="cursor-pointer w-8 h-8  inline-block"
-      /> All projects </NavLink>
-      <button  onClick={handleNextProject} className="text-main-dark font-body">
+        <button className="font-body text-main-dark hover:scale-110"  onClick={handlePreviousProject}>
+      <SlArrowLeft
+        className="cursor-pointer w-8 h-8 inline-block"
+      />Previous</button>
+      <button  onClick={handleNextProject} className="text-main-dark font-body  hover:scale-110">
       Next
       <SlArrowRight className="cursor-pointer w-8 h-8  inline-block"
       /> </button>
