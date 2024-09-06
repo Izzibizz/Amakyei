@@ -71,27 +71,32 @@ export const SingleProject = () => {
   useEffect(() => {
     const updateImageHeight = () => {
       const screenHeight = window.innerHeight;
-      setImageHeight(screenHeight - 50);
+      setImageHeight(screenHeight - 50); // Calculate height once on resize
     };
-
+  
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      if (scrollPosition > imageHeight - 500) {
+      // Use a fixed threshold instead of `imageHeight` to determine visibility
+      if (scrollPosition > window.innerHeight - 500) {
         setContentIsVisible(true);
       } else {
         setContentIsVisible(false);
       }
     };
-
+  
+    // Calculate initial image height on component mount
     updateImageHeight();
+  
+    // Set up event listeners
     window.addEventListener("resize", updateImageHeight);
     window.addEventListener("scroll", handleScroll);
-
+  
     return () => {
+      // Clean up event listeners on unmount
       window.removeEventListener("resize", updateImageHeight);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, []); 
 
   useEffect(() => {
     if (loadingProjects || !projectsData.length) return;
