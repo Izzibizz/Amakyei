@@ -275,8 +275,9 @@ const isColorDark = ([r, g, b]) => {
   }
 
   const currentProject = projectsData[currentProjectIndex];
+  
 
-  console.log(currentProject.images[0].photographer);
+  console.log();
 
   return (
     <section className="w-full animate-fadeIn">
@@ -349,7 +350,7 @@ const isColorDark = ([r, g, b]) => {
         className={`relative laptop:m-auto laptop:w-10/12 grid grid-cols-1 tablet:grid-cols-2 tablet:gap-6 laptop:gap-8 text-main-dark transition-opacity duration-[1500ms] ${
           contentIsVisible ? "opacity-100" : "opacity-0"
         }`}
-        style={{ marginTop: "100vh" }}
+        style={{ marginTop: "90vh" }}
       >
         <div className="mb-4 col-span-2">
           <h2 className="text-lg font-heading">{currentProject.title}</h2>
