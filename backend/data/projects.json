@@ -1369,43 +1369,6 @@
     ]
   },
   {
-    "title": "HEARTH",
-    "year": "(2019)",
-    "category": "dancer",
-    "description": "HEARTH was Aurore d'Audiffrets Degree Project when she gratuated from The University of Dance and Circus in Stockholm 2019",
-    "credits": [
-      {
-        "role": "Choreographer",
-        "names": [
-          {
-            "name": "Aurore d'Audiffret",
-            "link": "https://www.instagram.com/auroredaudi/"
-          }
-        ]
-      },
-      {
-        "role": "Dancers",
-        "names": [
-          {
-            "name": "Ama Kyei"
-          },
-          {
-            "name": "Fredriva Burvall"
-          },
-          {
-            "name": "Danilo Alexandre"
-          }
-        ]
-      }
-    ],
-    "images": [
-      {
-        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1724851015/hearth-Aurore-D_Audiffret-Gustav-Cavallin-Ama-kyei_ohcgbw.png",
-        "photographer": "Gustav Cavallin"
-      }
-    ]
-  },
-  {
     "title": "Common Moves",
     "year": "(2023)",
     "category": "choreographer",
