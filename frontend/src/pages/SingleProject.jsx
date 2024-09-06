@@ -37,11 +37,11 @@ const ImageModal = ({ src, onClose, photographer }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 cursor-pointer">
-      <div ref={modalRef} className="flex flex-col max-w-[90vw] max-h-[90vh]">
+      <div ref={modalRef} className="flex flex-col max-w-[90vw] max-h-[80vh]">
         <img
           src={src}
           alt={photographer}
-          className="object-contain cursor-pointer"
+          className="object-contain cursor-pointer  max-w-[90vw] max-h-[80vh]"
           onClick={onClose}
         />
         {photographer && <p className="font-body text-main-white p-4 ">Photographer: {photographer}</p>}
@@ -66,7 +66,7 @@ export const SingleProject = () => {
   const contentRef = useRef(null);
 
   const handleClickScroll = () => {
-    const yOffset = -100;
+    const yOffset = -150;
     const yPosition = contentRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
     window.scrollTo({ top: yPosition, behavior: "smooth" });
   };
@@ -224,7 +224,6 @@ const isColorDark = ([r, g, b]) => {
       .replace(/\s+/g, "-")
       .toLowerCase();
     setNextProjectId(nextProjectEndpoint);
-    console.log(sameCategoryProjects)
   }, [id, projectsData, loadingProjects]);
 
   const handleNextProject = () => {
@@ -277,7 +276,7 @@ const isColorDark = ([r, g, b]) => {
 
   const currentProject = projectsData[currentProjectIndex];
 
-  console.log( );
+  console.log(currentProject.images[0].photographer);
 
   return (
     <section className="w-full animate-fadeIn">
@@ -339,7 +338,7 @@ const isColorDark = ([r, g, b]) => {
           <img
             src={currentProject.images[0].url}
             alt={currentProject.images[0].photographer}
-            onClick={() => handleImageClick(currentProject.images[0].url)}
+            onClick={() => handleImageClick(currentProject.images[0].url, currentProject.images[0].photographer)}
             onLoad={() => analyzeImageColor(currentProject.images[0].url)} 
             className="w-full h-full min-h-screen max-w-screen desktop:aspect-[4/2] object-cover cursor-pointer "
           />
@@ -350,7 +349,7 @@ const isColorDark = ([r, g, b]) => {
         className={`relative laptop:m-auto laptop:w-10/12 grid grid-cols-1 tablet:grid-cols-2 tablet:gap-6 laptop:gap-8 text-main-dark transition-opacity duration-[1500ms] ${
           contentIsVisible ? "opacity-100" : "opacity-0"
         }`}
-        style={{ marginTop: imageHeight || "120vh" }}
+        style={{ marginTop: "100vh" }}
       >
         <div className="mb-4 col-span-2">
           <h2 className="text-lg font-heading">{currentProject.title}</h2>
