@@ -14,9 +14,9 @@ import 'swiper/css/effect-fade';
 import { Autoplay, Navigation, Pagination, A11y } from 'swiper/modules';
 
 export const ProjectsOverview = ({category}) => {
-  const { projectsData, loadingProjects } = useProjectsStore();
+  const { projectsData, loadingProjects, setListIsVisible, listIsVisible } = useProjectsStore();
   const [filteredProjects, setFilteredProjects] = useState([]);
-  const [listIsVisible, setListIsVisible] = useState(false);
+
 
   useEffect(() => {
     if (projectsData && category) {

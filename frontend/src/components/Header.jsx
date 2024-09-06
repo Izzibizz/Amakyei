@@ -1,9 +1,11 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { useUserStore } from "../store/useUserStore";
+import { useProjectsStore } from "../store/useProjectsStore";
 
 export const Header = () => {
   const { loggedIn } = useUserStore();
+  const { headerVisibilityChange, darkTextNeeded } = useProjectsStore()
 
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -25,12 +27,12 @@ export const Header = () => {
 
   const isHomePage = location.pathname === "/";
   const isSingleProject = endpoint[1] === "project"
-  const headerOpacity = isHomePage || isSingleProject ? "bg-opacity-0" : "bg-opacity-95";
-  const textColor = isHomePage || isSingleProject ? "text-main-white" : "text-main-dark";
-  const menuColor = isHomePage || isSingleProject ?  "bg-main-white" : "bg-main-dark";
+  const headerOpacity = isHomePage || isSingleProject && !headerVisibilityChange ? "bg-opacity-0" : "bg-opacity-95";
+  const textColor = isHomePage || isSingleProject && !headerVisibilityChange && !darkTextNeeded ? "text-main-white" : "text-main-dark";
+  const menuColor = isHomePage || isSingleProject  && !headerVisibilityChange  && !darkTextNeeded ?  "bg-main-white" : "bg-main-dark";
   const adminText = isHomePage ? "text-peach" : "text-main-dark font-bold"
 
-  console.log(isSingleProject, endpoint , "location:", location)
+  console.log(darkTextNeeded)
 
   return (
     <header

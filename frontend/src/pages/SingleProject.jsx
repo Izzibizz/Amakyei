@@ -8,6 +8,7 @@ import { SlArrowRight } from "react-icons/sl";
 import { SlArrowDown } from "react-icons/sl";
 import { NotFound } from "./NotFound";
 
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/controller";
@@ -49,8 +50,10 @@ const ImageModal = ({ src, onClose, photographer }) => {
   );
 };
 
+
+
 export const SingleProject = () => {
-  const { projectsData, loadingProjects } = useProjectsStore();
+  const { projectsData, loadingProjects, setHeaderVisibilityChange, setDarkTextNeeded, darkTextNeeded } = useProjectsStore();
   const navigate = useNavigate();
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,7 +74,7 @@ export const SingleProject = () => {
   useEffect(() => {
     const updateImageHeight = () => {
       const screenHeight = window.innerHeight;
-      setImageHeight(screenHeight - 50); // Calculate height once on resize
+      setImageHeight(screenHeight); 
     };
   
     const handleScroll = () => {
@@ -82,8 +85,16 @@ export const SingleProject = () => {
       } else {
         setContentIsVisible(false);
       }
+
+      if (scrollPosition > window.innerHeight) {
+        setHeaderVisibilityChange(true)
+      } else { 
+        setHeaderVisibilityChange(false)
+      }
     };
   
+    
+
     // Calculate initial image height on component mount
     updateImageHeight();
   
@@ -97,6 +108,89 @@ export const SingleProject = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []); 
+
+  const analyzeImageColor = (imgSrc) => {
+    // Remove any existing canvas element before creating a new one
+    let existingCanvas = document.getElementById('color-analyzer-canvas');
+    if (existingCanvas) {
+        existingCanvas.remove();
+    }
+
+    // Create a new canvas
+    const canvas = document.createElement('canvas');
+    canvas.id = 'color-analyzer-canvas';
+    canvas.style.display = 'none'; // Hide the canvas
+    document.body.appendChild(canvas);
+    
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    img.crossOrigin = 'Anonymous'; // Handle potential CORS issues
+    img.src = imgSrc;
+
+    img.onload = () => {
+        // Set canvas size to image size
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        // Draw the image on the canvas
+        ctx.drawImage(img, 0, 0);
+
+        const width = canvas.width;
+        const height = canvas.height;
+
+        // Sample regions across the image, excluding the outer edges
+        const sampleRegions = [
+          { x: Math.floor(width * 0.25), y: Math.floor(height * 0.1) }, // top-left
+          { x: Math.floor(width * 0.5), y: Math.floor(height * 0.1) },  // top-middle
+          { x: Math.floor(width * 0.75), y: Math.floor(height * 0.1) }, // top-right
+      ];
+
+        let r = 0, g = 0, b = 0;
+
+        // Iterate through each sample region
+        sampleRegions.forEach((region) => {
+            const imageData = ctx.getImageData(region.x, region.y, 10, 10).data;
+            const totalPixels = 10 * 10;
+
+            // Sum up the RGB values for each region
+            for (let i = 0; i < imageData.length; i += 4) {
+                r += imageData[i];
+                g += imageData[i + 1];
+                b += imageData[i + 2];
+            }
+        });
+
+        // Calculate the average color across all sampled regions
+        const totalSamples = sampleRegions.length;
+        r = Math.floor(r / (totalSamples * 100));
+        g = Math.floor(g / (totalSamples * 100));
+        b = Math.floor(b / (totalSamples * 100));
+
+        const dominantColor = [r, g, b];
+        console.log('Dominant Color:', dominantColor);
+
+        if (dominantColor) {
+            const isDark = isColorDark(dominantColor);
+
+            // Update text color based on brightness
+            if (isDark) {
+                setDarkTextNeeded(false); // Dark background, use light text
+            } else {
+                setDarkTextNeeded(true); // Light background, use dark text
+            }
+        }
+    };
+
+    img.onerror = (err) => {
+        console.error('Failed to load image for color analysis', err);
+    };
+};
+
+// Helper function to determine if the color is dark
+const isColorDark = ([r, g, b]) => {
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    return brightness < 230;
+};
 
   useEffect(() => {
     if (loadingProjects || !projectsData.length) return;
@@ -183,7 +277,7 @@ export const SingleProject = () => {
 
   const currentProject = projectsData[currentProjectIndex];
 
-  console.log(currentProjectIndex, projectsData );
+  console.log( );
 
   return (
     <section className="w-full animate-fadeIn">
@@ -193,14 +287,15 @@ export const SingleProject = () => {
   </div>
 ): (
 <>
-<NavLink to={`/${currentProject.category}`} className="text-main-white ">
-      <SlArrowLeft className="cursor-pointer w-8 h-8  absolute z-20 top-32 hover:scale-125"
+<NavLink to={`/${currentProject.category}`} className={ darkTextNeeded ? "text-main-dark p-4" : "text-main-white pt-4 pb-8 pr-12"}>
+      <SlArrowLeft className="cursor-pointer w-8 h-8   absolute z-20 top-32 hover:scale-125"
       /> </NavLink>
       
       <div
-        className={`absolute bottom-10 tablet:bottom-20 right-10 tablet:right-20 z-10 text-main-white flex flex-col items-end justify-end transition-opacity duration-500 ${
+        className={`absolute bottom-10 tablet:bottom-20 right-10 tablet:right-20 z-10 flex flex-col items-end text-main-white justify-end transition-opacity duration-500 ${
           contentIsVisible ? "opacity-0" : "opacity-100"
-        }`}
+        }
+        `}
       >
         <h2 className="text-lg font-heading text-end">
           {currentProject.title}
@@ -222,6 +317,10 @@ export const SingleProject = () => {
               disableOnInteraction: false, // Continue autoplay after user interactions
             }}
             effect="fade"
+            onSlideChange={(swiper) => {
+              const currentImage = currentProject.images[swiper.activeIndex];
+              analyzeImageColor(currentImage.url); // Analyze color of the current slide's image
+            }}
             modules={[Navigation, Pagination, A11y, Autoplay]}
             className="w-full h-full min-h-screen max-w-screen desktop:aspect-[4/2] object-cover tablet:order-1"
           >
@@ -241,16 +340,17 @@ export const SingleProject = () => {
             src={currentProject.images[0].url}
             alt={currentProject.images[0].photographer}
             onClick={() => handleImageClick(currentProject.images[0].url)}
+            onLoad={() => analyzeImageColor(currentProject.images[0].url)} 
             className="w-full h-full min-h-screen max-w-screen desktop:aspect-[4/2] object-cover cursor-pointer "
           />
         )}
       </div>
       <div
         ref={contentRef}
-        className={`relative laptop:m-auto laptop:w-10/12 grid grid-cols-1 tablet:grid-cols-2 tablet:gap-6 laptop:gap-8 text-main-dark transition-opacity duration-700 ${
+        className={`relative laptop:m-auto laptop:w-10/12 grid grid-cols-1 tablet:grid-cols-2 tablet:gap-6 laptop:gap-8 text-main-dark transition-opacity duration-[1500ms] ${
           contentIsVisible ? "opacity-100" : "opacity-0"
         }`}
-        style={{ marginTop: imageHeight || "50px" }}
+        style={{ marginTop: imageHeight || "120vh" }}
       >
         <div className="mb-4 col-span-2">
           <h2 className="text-lg font-heading">{currentProject.title}</h2>
