@@ -92,7 +92,7 @@ export const SingleProject = () => {
 
       const screenWidth = window.innerWidth;
       console.log( screenWidth)
-      if ( screenWidth >= 1024 ) {
+      if ( screenWidth >= 1025 ) {
         setLaptopView(true)
       } else {
         setLaptopView(false)
