@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Lager_1" data-name="Lager 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483 160.12">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-2 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-3 {
+        letter-spacing: .01em;
+      }
+
+      .cls-4 {
+        fill: #fff;
+        font-family: BROMANPERSONALUSEONLY;
+      }
+    </style>
+  </defs>
+  <text class="cls-4" transform="translate(0 51.97)"><tspan class="cls-3" x="0" y="0">AMA </tspan><tspan class="cls-2" x="146.19" y="0">K</tspan><tspan class="cls-1" x="183.12" y="0">Y</tspan><tspan class="cls-3" x="224.29" y="0">EI</tspan></text>
+</svg>

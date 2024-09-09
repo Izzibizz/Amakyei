@@ -369,7 +369,7 @@ export const SingleProject = () => {
               onClick={handleClickScroll}
             />
           </div>
-          <div className="w-screen h-screen laptop:w-1/2 laptop:max-w-1/2 absolute inset-0 top-0 left-0">
+          <div className="w-screen h-screen laptop:w-[48%] laptop:max-w-[48%] absolute inset-0 top-0 left-0">
             {currentProject.images.length > 1 ? (
               <Swiper
                 slidesPerView={1}
