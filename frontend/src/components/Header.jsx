@@ -5,7 +5,7 @@ import { useProjectsStore } from "../store/useProjectsStore";
 
 export const Header = () => {
   const { loggedIn } = useUserStore();
-  const { headerVisibilityChange, darkTextNeeded } = useProjectsStore()
+  const { headerVisibilityChange, darkTextNeeded, laptopView } = useProjectsStore()
 
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -30,9 +30,10 @@ export const Header = () => {
   const headerOpacity = isHomePage || isSingleProject && !headerVisibilityChange ? "bg-opacity-0" : "bg-opacity-95";
   const textColor = isHomePage || isSingleProject && !headerVisibilityChange && !darkTextNeeded ? "text-main-white" : "text-main-dark";
   const menuColor = isHomePage || isSingleProject  && !headerVisibilityChange  && !darkTextNeeded ?  "bg-main-white" : "bg-main-dark";
-  const adminText = isHomePage ? "text-peach" : "text-main-dark font-bold"
+  const adminText = isHomePage ? "text-peach" : "text-main-dark font-bold";
+  const laptopTextColor = laptopView ? "text-main-dark" : "";
 
-  console.log(darkTextNeeded)
+  console.log(laptopView)
 
   return (
     <header
@@ -125,7 +126,7 @@ export const Header = () => {
         </div>
       )}
       {/* Laptop */}
-      <ul className="hidden laptop:flex gap-16">
+      <ul className={`hidden laptop:flex gap-16  ${laptopTextColor}`}>
         <NavLink to="/dancer" aria-label="Link to dancer"  className={({ isActive }) => ` ${isActive ? "font-bold" : "hover:scale-110"}`}>
           <li>Dancer</li>
         </NavLink>

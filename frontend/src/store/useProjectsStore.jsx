@@ -8,11 +8,13 @@ export const useProjectsStore = create((set) => ({
   headerVisibilityChange: false,
   darkTextNeeded: false,
   listIsVisible: false,
+  laptopView: false,
 
   setUploadSuccessful: () => set({ uploadSuccessFul: true }),
   setHeaderVisibilityChange: (input) => set({ headerVisibilityChange: input }),
   setDarkTextNeeded: (input) => set({ darkTextNeeded: input}),
   setListIsVisible: (input) => set({ listIsVisible: input }),
+  setLaptopView: (input) => set({ laptopView: input }), 
 
   fetchProjects: async () => {
     set({ loadingProjects: true, error: null }); // Set loading and clear error

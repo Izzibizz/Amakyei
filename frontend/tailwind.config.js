@@ -26,8 +26,8 @@ export default {
       },
       screens: {
         tablet: "600px", 
-        laptop: "1281px", 
-        desktop: "1511px", 
+        laptop: "1024px", 
+        desktop: "1300px", 
       },
       keyframes: {
         fadeIn: {
