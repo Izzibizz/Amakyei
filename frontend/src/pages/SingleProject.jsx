@@ -2,6 +2,7 @@ import { useParams, useNavigate, NavLink } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { useProjectsStore } from "../store/useProjectsStore";
 import { Loading } from "../components/Loading";
+import { ImageModal } from "../components/ImageModal"
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
@@ -17,41 +18,6 @@ import "swiper/css/effect-fade";
 // Import required modules for Swiper
 import { Navigation, Pagination, Autoplay, A11y } from "swiper/modules";
 
-const ImageModal = ({ src, onClose, photographer }) => {
-  const modalRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        onClose(); // Close the modal if clicked outside
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [onClose]);
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 cursor-pointer">
-      <div ref={modalRef} className="flex flex-col max-w-[90vw] max-h-[80vh]">
-        <img
-          src={src}
-          alt={photographer}
-          className="object-contain cursor-pointer  max-w-[90vw] max-h-[80vh]"
-          onClick={onClose}
-        />
-        {photographer && (
-          <p className="font-body text-main-white p-4 ">
-            Photographer: {photographer}
-          </p>
-        )}
-      </div>
-    </div>
-  );
-};
 
 export const SingleProject = () => {
   const {

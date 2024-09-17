@@ -133,7 +133,7 @@ export const About = () => {
         </div>
       </div>
 {/* Laptop */}
-<div className="hidden laptop:grid grid-cols-3 grid-rows-3 gap-20">
+<div className="hidden laptop:grid grid-cols-3 grid-rows-2 gap-20">
   {/* Video spanning all three columns in the top row */}
   <div className="col-span-2 row-span-1 flex justify-center">
     <video

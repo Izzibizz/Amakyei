@@ -17,10 +17,16 @@ export const ProjectsOverview = ({category}) => {
   const { projectsData, loadingProjects, setListIsVisible, listIsVisible } = useProjectsStore();
   const [filteredProjects, setFilteredProjects] = useState([]);
 
+  const extractYear = (yearString) => {
+    const match = yearString.match(/\d+/); // Extracts the numeric part
+    return match ? parseInt(match[0], 10) : 0; // Converts to number
+  };
 
   useEffect(() => {
     if (projectsData && category) {
       const filtered = projectsData.filter(project => project.category === category);
+      filtered.sort((a, b) => extractYear(b.year) - extractYear(a.year));
+      console.log(filtered);
       setFilteredProjects(filtered);
     }
   }, [projectsData, category]);
@@ -29,6 +35,10 @@ export const ProjectsOverview = ({category}) => {
     setListIsVisible(!listIsVisible)
     window.scrollTo(0, 0);
   }
+
+ 
+
+
 
 
   return (
