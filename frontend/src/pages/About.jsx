@@ -13,12 +13,12 @@ export const About = () => {
       <div className="flex flex-col gap-12 tablet:hidden">
         <video
           src="https://res.cloudinary.com/dbf8xygxz/video/upload/v1726561289/about_Ama-kyei-wanda.mp4"
+          type="video/mp4"
           alt="about video"
           className="w-full rounded-xl"
           autoPlay
           muted
           loop
-          controls
         />
         <p className="font-heading">
           Im a Finnish- Ghanaian dancer, dance teacher, choreographer and doula.{" "}
