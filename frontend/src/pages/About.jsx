@@ -19,6 +19,7 @@ export const About = () => {
           autoPlay
           muted
           loop
+          playsInline
         />
         <p className="font-heading">
           Im a Finnish- Ghanaian dancer, dance teacher, choreographer and doula.{" "}
