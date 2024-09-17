@@ -26,6 +26,7 @@ export const Header = () => {
   }, [location]);
 
   const isHomePage = location.pathname === "/";
+  const isAboutPage = location.pathname === "/about";
   const isSingleProject = endpoint[1] === "project"
   const headerOpacity = isHomePage || isSingleProject && !headerVisibilityChange ? "bg-opacity-0" : "bg-opacity-95";
   const textColor = isHomePage || isSingleProject && !headerVisibilityChange && !darkTextNeeded ? "text-main-white" : "text-main-dark";

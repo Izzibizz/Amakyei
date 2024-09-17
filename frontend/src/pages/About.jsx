@@ -9,14 +9,16 @@ console.log(position)
 
   return (
     <section className="text-main-dark w-full flex flex-col laptop:w-10/12 laptop:m-auto animate-fadeIn">
-      <h3 className="text-2xl font-heading text-right mb-10">About</h3>
+      <h3 className="text-2xl font-heading text-right mb-10 z-20">About</h3>
       {/* Mobile */}
       <div className="flex flex-col gap-12 tablet:hidden">
-        <img src={blue} className="w-full rounded-xl" />
+        <video src="https://res.cloudinary.com/dbf8xygxz/video/upload/v1726561289/about_Ama-kyei-wanda.mp4" alt="about video" className="w-full" autoPlay
+     muted
+     loop />
         <p className="font-heading">
           Im a Finnish- Ghanaian dancer, dance teacher, choreographer and doula.{" "}
         </p>
-        <img src={green} className="w-full rounded-xl" />
+  
         <p className="font-body">
           I looove groove, flow, music and presence also known as dance. Besides
           my passion for dance I love nature, children, colors and community. My
@@ -29,7 +31,7 @@ console.log(position)
           <h4 className="font-heading mb-4">Education</h4>
           <ul className="flex flex-col gap-4 font-body">
             <li>
-              <span className="font-semibold">Streetdance</span>
+              <span className="font-semibold">Dancer</span>
               <br />
               Åsa folkhögskola (2014-2016)
             </li>
