@@ -1,24 +1,29 @@
 import blue from "../assets/Ama.jpg";
 import green from "../assets/Ama-kyei-dancer.jpg";
-import {  useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
 
 export const About = () => {
-
-  const { position } = useParams()
-console.log(position)
+  const { position } = useParams();
+  console.log(position);
 
   return (
     <section className="text-main-dark w-full flex flex-col laptop:w-10/12 laptop:m-auto animate-fadeIn">
       <h3 className="text-2xl font-heading text-right mb-10">About</h3>
       {/* Mobile */}
       <div className="flex flex-col gap-12 tablet:hidden">
-        <video src="https://res.cloudinary.com/dbf8xygxz/video/upload/v1726561289/about_Ama-kyei-wanda.mp4" alt="about video" className="w-full rounded-xl" autoPlay
-     muted
-     loop />
+        <video
+          src="https://res.cloudinary.com/dbf8xygxz/video/upload/v1726561289/about_Ama-kyei-wanda.mp4"
+          alt="about video"
+          className="w-full rounded-xl"
+          autoPlay
+          muted
+          loop
+          controls
+        />
         <p className="font-heading">
           Im a Finnish- Ghanaian dancer, dance teacher, choreographer and doula.{" "}
         </p>
-  
+
         <p className="font-body">
           I looove groove, flow, music and presence also known as dance. Besides
           my passion for dance I love nature, children, colors and community. My
@@ -168,7 +173,6 @@ console.log(position)
           </p>
         </div>
       </div>
-      
     </section>
   );
 };
