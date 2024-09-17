@@ -34,6 +34,10 @@ export default {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
+        fadeInVideo: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
         fadeInOut: {
           '0%': { opacity: '0' },
           '50%': { opacity: '1' },
@@ -42,6 +46,7 @@ export default {
       },
       animation: {
         fadeIn: 'fadeIn 1s ease-out',
+        fadeInVideo: 'fadeInVideo 2s ease-out',
         fadeInOut: 'fadeInOut 3s ease-in-out infinite',
       },
     },

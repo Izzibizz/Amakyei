@@ -1,10 +1,11 @@
 import blue from "../assets/Ama.jpg";
 import green from "../assets/Ama-kyei-dancer.jpg";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export const About = () => {
-  const { position } = useParams();
-  console.log(position);
+  const location = useLocation();
+  const page = location.pathname
+  console.log(page);
 
   return (
     <section className="text-main-dark w-full flex flex-col laptop:w-10/12 laptop:m-auto animate-fadeIn">
@@ -15,7 +16,7 @@ export const About = () => {
           src="https://res.cloudinary.com/dbf8xygxz/video/upload/v1726561289/about_Ama-kyei-wanda.mp4"
           type="video/mp4"
           alt="about video"
-          className="w-full rounded-xl"
+          className="w-full rounded-xl animate-fadeInVideo"
           autoPlay
           muted
           loop
@@ -43,7 +44,7 @@ export const About = () => {
             </li>
             <li>
               <span className="font-semibold">
-                Bachelors in dance pedagogy <br />
+                Bachelor in dance pedagogy <br />
               </span>
               University of Arts in Stockholm (2017-2020)
             </li>
@@ -99,13 +100,13 @@ export const About = () => {
             <h4 className="font-heading mb-4">Education</h4>
             <ul className="flex flex-col gap-4 font-body">
               <li>
-                <span className="font-semibold">Streetdance</span>
+                <span className="font-semibold">Dancer</span>
                 <br />
                 Åsa folkhögskola (2014-2016)
               </li>
               <li>
                 <span className="font-semibold">
-                  Bachelors in dance pedagogy <br />
+                  Bachelor in dance pedagogy <br />
                 </span>
                 University of Arts in Stockholm (2017-2020)
               </li>
@@ -144,13 +145,13 @@ export const About = () => {
             <h4 className="font-heading mb-4">Education</h4>
             <ul className="flex flex-col gap-4 font-body">
               <li>
-                <span className="font-semibold">Streetdance</span>
+                <span className="font-semibold">Dancer</span>
                 <br />
                 Åsa folkhögskola (2014-2016)
               </li>
               <li>
                 <span className="font-semibold">
-                  Bachelors in dance pedagogy <br />
+                  Bachelor in dance pedagogy <br />
                 </span>
                 University of Arts in Stockholm (2017-2020)
               </li>
