@@ -1393,6 +1393,21 @@
         "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1724852296/Common-moves-Sonya-Lindfors-Ama-kyei-Sonja-Hyytiainen_vy1sge.png",
         "photographer": "Sonja Hyytiäinen",
         "link": "https://www.imdb.com/name/nm9966299/"
+      },
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650557/CommonMoves_AmaKyei_SonjaHyytia%CC%88inen1_ebo6zz.png",
+        "photographer": "Sonja Hyytiäinen",
+        "link": "https://www.imdb.com/name/nm9966299/"
+      },
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650553/CommonMoves__Ama_Kyei__Sonja_Hyytia%CC%88inen_bosx98.jpg",
+        "photographer": "Sonja Hyytiäinen",
+        "link": "https://www.imdb.com/name/nm9966299/"
+      },
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650552/CommonMoves__AmaKyei_SonjaHyytia%CC%88inen__yd06tx.jpg",
+        "photographer": "Sonja Hyytiäinen",
+        "link": "https://www.imdb.com/name/nm9966299/"
       }
     ]
   },
@@ -1460,6 +1475,11 @@
         "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1724852989/Blomdanser-jonathan-morell-Ama-kyei_c828t5.png",
         "photographer": "Jonathan Morell",
         "link": "https://www.instagram.com/jonathanmorell/"
+      },
+      {
+        "url": "hhttps://res.cloudinary.com/dbf8xygxz/image/upload/v1726650565/Blomdanser__Ama_Kyei__Jonathan_Morell_qjjmen.png",
+        "photographer": "Jonathan Morell",
+        "link": "https://www.instagram.com/jonathanmorell/"
       }
     ],
     "video": [
@@ -1502,9 +1522,22 @@
     ],
     "images": [
       {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650552/kokonainen_AfraAmaJudithKai__YingChouHan2_dqssew.png",
+        "photographer": "Ying Chouhan"
+      },
+      {
         "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1724853600/Kokonainen-%E1%88%99%E1%88%89kokonainen%D8%AA%D9%85%D8%A7%D9%85%DB%8C-Ama-kyei_pjome8.png",
         "photographer": "Ying Chouhan"
+      },
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650552/kokonainen_AfraAmaJudithKai__YingChouHan1_kbrufl.png",
+        "photographer": "Ying Chouhan"
+      },
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650559/kokonainen_AfraAmaJudithKai__YingChouHan4-new_drsdgj.png",
+        "photographer": "Ying Chouhan"
       }
+      
     ]
   },
   {
@@ -1634,6 +1667,479 @@
       {
         "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1724916732/say-my-name-Ama-kyei-Afra-Hosseini-Love-Andersson-Karin-Raudsepp_blgvwa.png",
         "photographer": "Love Andersson and Afra Hosseini"
+      }
+    ]
+  },
+  {
+    "title": "Basically",
+    "year": "(2024)",
+    "category": "dancer",
+    "description": "Basically is an ongoing live project that grows through accumulation and divergence. The exhibition format is a hybrid production site, residency space and schoolyard where visitors are invited to experience how the works' characters write the world of Basically into existence—and to become a part of this open-world, role playing game. Jagudajev is interested in social relations as spatial relations and how we come together in meaningful and considerate ways. They call their collaborative, prefigurative practice “re-schooling”—inspired by playful ways students subvert the educational system. Some of the most creative and heartfelt acts of our early education, like self-organized play, gossip, flirting, passing notes, were extra-curricular yet located within the institution.",
+    "credits": [
+      {
+        "role": "Idea, direction & choreography",
+        "names": [
+          {
+            "name": "Nikima Yagudayev",
+            "link": "https://dansenshus.se/en/program/nikima-jagudajev-basically/"
+          }
+        ]
+      },
+      {
+        "role": "Composition and technical direction",
+        "names": [
+          {
+            "name": "Jordan Balaber",
+            "link": "https://www.instagram.com/jordan_balaber/"
+          },
+          {
+            "name": "Lester St. Louis",
+            "link": "https://www.instagram.com/lesterst.louis/"
+          }
+        ]
+      },
+      {
+        "role": "Dramaturgy",
+        "names": [
+          {
+            "name": "Louise Trueheart",
+            "link": "https://www.louisetrueheart.com/"
+          }
+        ]
+      },
+      {
+        "role": "Participants",
+        "names": [
+          {
+            "name": "Ama Kyei (dance)"
+          },
+          {
+            "name": "Samuel Baidoo (dance & lighting)",
+            "link": "https://www.instagram.com/samuel__baidoo/"
+          },
+          {
+            "name": "Matilda Cobanli (food & dance)"
+          },
+          {
+            "name": "Lara Dâmaso (dance & music)",
+            "link": "https://www.instagram.com/lalalaradamaso"
+          },
+          {
+            "name": "Ezra Fieremans (dance & music)",
+            "link": "https://www.instagram.com/ezrafieremans/"
+          },
+          {
+            "name": "Yevheniya Kravets (dance)",
+            "link": "https://wearefierce.org/event/artists-in-residence/"
+          },
+          {
+            "name": "Ashley Morgen (music & movement)"
+          },
+          {
+            "name": "Mona Namér (dance, music & textile)",
+            "link": "https://www.instagram.com/samuel__baidoo/"
+          },
+          {
+            "name": "Laura Stellacci (textile design & dance)",
+            "link": "https://laurastellacci.info/"
+          },
+          {
+            "name": "Amina Szecsödy (music & dance)",
+            "link": "https://aminaszecsody.com/"
+          },
+          {
+            "name": "Gry Tingskog (textile & dance)",
+            "link": "https://www.grytingskog.com/"
+          },
+          {
+            "name": "Ellen Söderhult (dance & music)",
+            "link": "https://ellensoderhult.com/"
+          },
+          {
+            "name": "Louise Trueheart (dance)",
+            "link": "https://www.louisetrueheart.com/"
+          },
+          {
+            "name": "Maria Muehombo (MIMI) (music & movement)",
+            "link": "https://eastsideprojects.org/artists/maria-muehombo-m-i-m-i/"
+          },
+          {
+            "name": "Lester St. Louis (music & movement)",
+            "link": "https://www.instagram.com/lesterst.louis/"
+          },    {
+            "name": "Louis (music & movement)"
+          }
+        ]
+      },
+      {
+        "role": "Video editing",
+        "names": [
+          {
+            "name": "Salomon Leonard Poutsma"
+          }
+        ]
+      },   
+      {
+        "role": "Music",
+        "names": [
+          {
+            "name": "Amina Szecsödy"
+          },
+          {
+            "name": "June Jenkins"
+          }
+        ]
+      },
+      {
+        "role": "Graphic design",
+        "names": [
+          {
+            "name": "Laurel Atwell",
+            "link": "https://cargocollective.com/laurelatwell"
+          },
+          {
+            "name": "Zöe Field",
+            "link": "https://www.zoefield.com/"
+          }
+        ]
+      },
+      {
+        "role": "Contributions Powder deck",
+        "names": [
+          { "name": "Ayomoy Arrono" },
+          { "name": "Laurel Atwell" },
+          { "name": "Sanne Dodier" },
+          { "name": "Nina Emge" },
+          { "name": "Olivia Erlanger" },
+          { "name": "Che Go Eun" },
+          { "name": "Zoë Field" },
+          { "name": "Polina Filipova" },
+          { "name": "Padyn Humble" },
+          { "name": "Melanie Matthieu" },
+          { "name": "Abigail McNamara" },
+          { "name": "Saye Oyama" },
+          { "name": "Salomon Leonard Poutsma" },
+          { "name": "Ra Tack" },
+          { "name": "nick von kleist (nvk)" },
+          { "name": "Maïra Villena" },
+          { "name": "Petra Webb" },
+          { "name": "Amalia Wiatr Lewis" }
+        ]
+      },
+      {
+        "role": "Photography",
+        "names": [
+          {
+            "name": "Melanie Matthieu"
+          },
+          {
+            "name": "Stine Sampers"
+          }
+        ]
+      },
+      {
+        "role": "Mix & master",
+        "names": [
+          {
+            "name": "Chris Pawlusek"
+          }
+        ]
+      },
+      {
+        "role": "Production",
+        "names": [
+          {
+            "name": "Hiros"
+          }
+        ]
+      },
+      {
+        "role": "Residency",
+        "names": [
+          {
+            "name": "Decoratelier"
+          },
+          {
+            "name": "kunstenfestivaldesarts2021"
+          },
+          {
+            "name": "workspacebrussels"
+          },
+          {
+            "name": "Frankfurt LAB"
+          },
+          {
+            "name": "Im_Flieger"
+          },
+          {
+            "name": "KAAP"
+          },
+          {
+            "name": "Dhaka Art Summit"
+          }
+        ]
+      },
+      {
+        "role": "Co-operation partners",
+        "names": [
+          {
+            "name": "Bergen Kunsthall"
+          },
+          {
+            "name": "WIELS"
+          },
+          {
+            "name": "Dhaka Art Summit"
+          },
+          {
+            "name": "Mumok"
+          },
+          {
+            "name": "Oktoberdans"
+          },
+          {
+            "name": "BIT Teatergarasjen"
+          },
+          {
+            "name": "Shedhalle Zürich"
+          },
+          {
+            "name": "KAAP"
+          },
+          {
+            "name": "de Brakke Grond"
+          }
+        ]
+      },
+      {
+        "role": "Supported by",
+        "names": [
+          {
+            "name": "workspacebrussels"
+          },
+          {
+            "name": "WIELS"
+          },
+          {
+            "name": "Bundesministerium Kunst"
+          },
+          {
+            "name": "Kultur"
+          },
+          {
+            "name": "öffentlicher Dienst und Sport"
+          },
+          {
+            "name": "Vlaamse Gemeenschap"
+          },
+          {
+            "name": "C-Takt"
+          },
+          {
+            "name": "Phileas - The Austrian Office for Contemporary Art"
+          },
+          {
+            "name": "Re-imagine Europe"
+          }
+          ,
+          {
+            "name": "Vlaamse Gemeenschapscommissie"
+          },
+          {
+            "name": "IASPIS"
+          },
+          {
+            "name": "Dansens Hus"
+          },
+          {
+            "name": "Austrian Embassy Stockholm"
+          }
+        ]
+      },
+      {
+        "role": "Exhibition team Accelerator",
+        "names": [
+          {
+            "name": "Richard Julin (curator and artistic director)"
+          },
+          {
+            "name": "Therese Kellner (curator)"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650550/Basically-Melanie_Matthieu-Nikima_Yagudayev-Ama-Kyei_kkvfj6.jpg",
+        "photographer": "Melanie Matthieu"
+      },
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650550/Basically_Nikima_Jagudajev-Melanie_Matthieu-Ama-Kyei_wimhwx.jpg",
+        "photographer": "Melanie Matthieu"
+      }
+    ]
+  },
+  {
+    "title": "När jag hoppar skakar marken",
+    "year": "(2024)",
+    "category": "dancer",
+    "description": "Jag tränar på att bli en superhjälte. Jag har märkt att det finns något här inne, i kroppen, som kan förvandla hela mig. Jag kan inte flyga, jag kan inte springa särskilt fort eller klättra på väggar… ännu. Men när det där - som är där inom mig - aktiveras, är det som att jag känner exakt allt hela tiden. När jag dansar blir det vågor på vattnet och när jag hoppar skakar marken. När jag hoppar skakar marken är en dansföreställning för barn i åldrarna 5-8 år. Inspirerad av science fiction utforskar tre dansare hur förmågan att känna empati och omsorg kan övas upp och utvecklas till det vi kallar superkrafter.",
+    "credits": [
+      {
+        "role": "Choreography",
+        "names": [
+          {
+            "name": "BamBam Frost (together with the dancers)",
+            "link": "https://www.instagram.com/bambamfrost/"
+          }
+        ]
+      },
+      {
+        "role": "Dancers",
+        "names": [
+          {
+            "name": "Ama Kyei"
+          }
+          ,
+          {
+            "name": "Ida Holmlund"
+          },
+          {
+            "name": "Alexandra Tveit"
+          }
+        ]
+      },
+      {
+        "role": "Scenography",
+        "names": [
+          {
+            "name": "Chrisander Brun"
+          }
+        ]
+      },
+      {
+        "role": "Light",
+        "names": [
+          {
+            "name": "Chrisander Brun"
+          }
+          ,
+          {
+            "name": "Christoffer Lloyd"
+          }
+        ]
+      },
+      {
+        "role": "Technician",
+        "names": [
+          {
+            "name": "Angela X"
+          }
+        ]
+      },
+      {
+        "role": "Producer",
+        "names": [
+          {
+            "name": "BamBam Frost",
+            "link": "https://www.instagram.com/bambamfrost/"
+          }
+          ,
+          {
+            "name": "Nordberg Movement"
+          }
+        ]
+      },
+      {
+        "role": "Co-producer",
+        "names": [
+          {
+            "name": "Dansens Hus"
+          }
+          ,
+          {
+            "name": "Norrlandsoperan"
+          }
+        ]
+      },
+      {
+        "role": "Supported by",
+        "names": [
+          {
+            "name": "Kulturrådet"
+          },
+          {
+            "name": "Stockholms Stad"
+          },
+          {
+            "name": "Region Stockholm"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650555/Na%CC%88r_jag_hoppar_skakar_marken__Bambam_Frost__Ma%CC%88rta_Thisner_mufz3a.png",
+        "photographer": "Märta Thisner"
+      }
+    ]
+  },
+  {
+    "title": "“Sun/sum” performance",
+    "year": "(2024)",
+    "category": "dancer",
+    "description": "“Sun/sum” is an iterative dance performance conceived as both research and rehearsal project i collaboration between the artist and the performers. It explores the roots and routes of various Afrodiasporic dance forms. Throughout the duration of the exhibition, the dancers gather and compose materials, periodically performing to expose their process and findings in a palimpsest of embodied archives. The title “Sun/sum” references the poem “Red Rising” by Kamau Brathwaite (1930-2020), wherein he uses the word “sunsum” from the Akan language of Ghana, meaning soul or the origin of spiritual life.",
+    "credits": [
+      {
+        "role": "Concept",
+        "names": [
+          {
+            "name": "Marc Johnson",
+            "link": "https://marcjohnson.fr/"
+          }
+        ]
+      },
+      {
+        "role": "Performers",
+        "names": [
+          {
+            "name": "Ama Kyei"
+          }
+          ,
+          {
+            "name": "Johanna Tengan"
+          },
+          {
+            "name": "Freddy Houndekindo",
+            "link": "https://www.freddyhoundekindo.com/"
+          }
+        ]
+      },
+      {
+        "role": "Documentation",
+        "names": [
+          {
+            "name": "Carlos Zaya",
+            "link": "https://www.carloszaya.com/"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650557/SunSum_MarcJohnso_Carlos_Zaya_z1berq.png",
+        "photographer": "Carlos Zaya",
+        "link": "https://www.carloszaya.com/"
+      },
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726657768/SunSum_Johnson-Marc-ama-kyei_bedxry.jpg",
+        "photographer": "Carlos Zaya",
+        "link": "https://www.carloszaya.com/"
+      },
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650562/Sunsum__Marc_Johnso_Carlos_Zaya_cbxrqu.png",
+        "photographer": "Carlos Zaya",
+        "link": "https://www.carloszaya.com/"
       }
     ]
   }
