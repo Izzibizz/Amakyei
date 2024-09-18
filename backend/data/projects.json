@@ -1674,111 +1674,7 @@
       }
     ]
   },
-  {
-    "title": "När jag hoppar skakar marken",
-    "year": "(2024)",
-    "category": "dancer",
-    "description": "(Premier October 2024, Dansens hus Stockholm) Jag tränar på att bli en superhjälte. Jag har märkt att det finns något här inne, i kroppen, som kan förvandla hela mig. Jag kan inte flyga, jag kan inte springa särskilt fort eller klättra på väggar… ännu. Men när det där - som är där inom mig - aktiveras, är det som att jag känner exakt allt hela tiden. När jag dansar blir det vågor på vattnet och när jag hoppar skakar marken. När jag hoppar skakar marken är en dansföreställning för barn i åldrarna 5-8 år. Inspirerad av science fiction utforskar tre dansare hur förmågan att känna empati och omsorg kan övas upp och utvecklas till det vi kallar superkrafter.",
-    "credits": [
-      {
-        "role": "Choreography",
-        "names": [
-          {
-            "name": "BamBam Frost (together with the dancers)",
-            "link": "https://www.instagram.com/bambamfrost/"
-          }
-        ]
-      },
-      {
-        "role": "Dancers",
-        "names": [
-          {
-            "name": "Ama Kyei"
-          }
-          ,
-          {
-            "name": "Ida Holmlund"
-          },
-          {
-            "name": "Alexandra Tveit"
-          }
-        ]
-      },
-      {
-        "role": "Scenography",
-        "names": [
-          {
-            "name": "Chrisander Brun"
-          }
-        ]
-      },
-      {
-        "role": "Light",
-        "names": [
-          {
-            "name": "Chrisander Brun"
-          }
-          ,
-          {
-            "name": "Christoffer Lloyd"
-          }
-        ]
-      },
-      {
-        "role": "Technician",
-        "names": [
-          {
-            "name": "Angela X"
-          }
-        ]
-      },
-      {
-        "role": "Producer",
-        "names": [
-          {
-            "name": "BamBam Frost",
-            "link": "https://www.instagram.com/bambamfrost/"
-          }
-          ,
-          {
-            "name": "Nordberg Movement"
-          }
-        ]
-      },
-      {
-        "role": "Co-producer",
-        "names": [
-          {
-            "name": "Dansens Hus"
-          }
-          ,
-          {
-            "name": "Norrlandsoperan"
-          }
-        ]
-      },
-      {
-        "role": "Supported by",
-        "names": [
-          {
-            "name": "Kulturrådet"
-          },
-          {
-            "name": "Stockholms Stad"
-          },
-          {
-            "name": "Region Stockholm"
-          }
-        ]
-      }
-    ],
-    "images": [
-      {
-        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726662249/Na%CC%88r_jag_hoppar_skakar_marken__Bambam_Frost__Ma%CC%88rta_Thisner_kcnatd.png",
-        "photographer": "Märta Thisner"
-      }
-    ]
-  },
+ 
   {
     "title": "Basically",
     "year": "(2024)",
@@ -2144,6 +2040,111 @@
         "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650562/Sunsum__Marc_Johnso_Carlos_Zaya_cbxrqu.png",
         "photographer": "Carlos Zaya",
         "link": "https://www.carloszaya.com/"
+      }
+    ]
+  },
+  {
+    "title": "När jag hoppar skakar marken",
+    "year": "(2024)",
+    "category": "dancer",
+    "description": "(Premier October 2024, Dansens hus Stockholm) Jag tränar på att bli en superhjälte. Jag har märkt att det finns något här inne, i kroppen, som kan förvandla hela mig. Jag kan inte flyga, jag kan inte springa särskilt fort eller klättra på väggar… ännu. Men när det där - som är där inom mig - aktiveras, är det som att jag känner exakt allt hela tiden. När jag dansar blir det vågor på vattnet och när jag hoppar skakar marken. När jag hoppar skakar marken är en dansföreställning för barn i åldrarna 5-8 år. Inspirerad av science fiction utforskar tre dansare hur förmågan att känna empati och omsorg kan övas upp och utvecklas till det vi kallar superkrafter.",
+    "credits": [
+      {
+        "role": "Choreography",
+        "names": [
+          {
+            "name": "BamBam Frost (together with the dancers)",
+            "link": "https://www.instagram.com/bambamfrost/"
+          }
+        ]
+      },
+      {
+        "role": "Dancers",
+        "names": [
+          {
+            "name": "Ama Kyei"
+          }
+          ,
+          {
+            "name": "Ida Holmlund"
+          },
+          {
+            "name": "Alexandra Tveit"
+          }
+        ]
+      },
+      {
+        "role": "Scenography",
+        "names": [
+          {
+            "name": "Chrisander Brun"
+          }
+        ]
+      },
+      {
+        "role": "Light",
+        "names": [
+          {
+            "name": "Chrisander Brun"
+          }
+          ,
+          {
+            "name": "Christoffer Lloyd"
+          }
+        ]
+      },
+      {
+        "role": "Technician",
+        "names": [
+          {
+            "name": "Angela X"
+          }
+        ]
+      },
+      {
+        "role": "Producer",
+        "names": [
+          {
+            "name": "BamBam Frost",
+            "link": "https://www.instagram.com/bambamfrost/"
+          }
+          ,
+          {
+            "name": "Nordberg Movement"
+          }
+        ]
+      },
+      {
+        "role": "Co-producer",
+        "names": [
+          {
+            "name": "Dansens Hus"
+          }
+          ,
+          {
+            "name": "Norrlandsoperan"
+          }
+        ]
+      },
+      {
+        "role": "Supported by",
+        "names": [
+          {
+            "name": "Kulturrådet"
+          },
+          {
+            "name": "Stockholms Stad"
+          },
+          {
+            "name": "Region Stockholm"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726662249/Na%CC%88r_jag_hoppar_skakar_marken__Bambam_Frost__Ma%CC%88rta_Thisner_kcnatd.png",
+        "photographer": "Märta Thisner"
       }
     ]
   }
