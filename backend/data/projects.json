@@ -1984,65 +1984,7 @@
       }
     ]
   },
-  {
-    "title": "“Sun/sum” performance",
-    "year": "(2024)",
-    "category": "dancer",
-    "description": "“Sun/sum” is an iterative dance performance conceived as both research and rehearsal project in collaboration between the artist and the performers. It explores the roots and routes of various Afrodiasporic dance forms. Throughout the duration of the exhibition, the dancers gather and compose materials, periodically performing to expose their process and findings in a palimpsest of embodied archives. The title “Sun/sum” references the poem “Red Rising” by Kamau Brathwaite (1930-2020), wherein he uses the word “sunsum” from the Akan language of Ghana, meaning soul or the origin of spiritual life.",
-    "credits": [
-      {
-        "role": "Concept",
-        "names": [
-          {
-            "name": "Marc Johnson",
-            "link": "https://marcjohnson.fr/"
-          }
-        ]
-      },
-      {
-        "role": "Performers",
-        "names": [
-          {
-            "name": "Ama Kyei"
-          }
-          ,
-          {
-            "name": "Johanna Tengan"
-          },
-          {
-            "name": "Freddy Houndekindo",
-            "link": "https://www.freddyhoundekindo.com/"
-          }
-        ]
-      },
-      {
-        "role": "Documentation",
-        "names": [
-          {
-            "name": "Carlos Zaya",
-            "link": "https://www.carloszaya.com/"
-          }
-        ]
-      }
-    ],
-    "images": [
-      {
-        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650557/SunSum_MarcJohnso_Carlos_Zaya_z1berq.png",
-        "photographer": "Carlos Zaya",
-        "link": "https://www.carloszaya.com/"
-      },
-      {
-        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726657768/SunSum_Johnson-Marc-ama-kyei_bedxry.jpg",
-        "photographer": "Carlos Zaya",
-        "link": "https://www.carloszaya.com/"
-      },
-      {
-        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650562/Sunsum__Marc_Johnso_Carlos_Zaya_cbxrqu.png",
-        "photographer": "Carlos Zaya",
-        "link": "https://www.carloszaya.com/"
-      }
-    ]
-  },
+ 
   {
     "title": "När jag hoppar skakar marken",
     "year": "(2024)",
@@ -2145,6 +2087,65 @@
       {
         "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726662249/Na%CC%88r_jag_hoppar_skakar_marken__Bambam_Frost__Ma%CC%88rta_Thisner_kcnatd.png",
         "photographer": "Märta Thisner"
+      }
+    ]
+  },
+  {
+    "title": "“Sun/sum” performance",
+    "year": "(2024)",
+    "category": "dancer",
+    "description": "“Sun/sum” is an iterative dance performance conceived as both research and rehearsal project in collaboration between the artist and the performers. It explores the roots and routes of various Afrodiasporic dance forms. Throughout the duration of the exhibition, the dancers gather and compose materials, periodically performing to expose their process and findings in a palimpsest of embodied archives. The title “Sun/sum” references the poem “Red Rising” by Kamau Brathwaite (1930-2020), wherein he uses the word “sunsum” from the Akan language of Ghana, meaning soul or the origin of spiritual life.",
+    "credits": [
+      {
+        "role": "Concept",
+        "names": [
+          {
+            "name": "Marc Johnson",
+            "link": "https://marcjohnson.fr/"
+          }
+        ]
+      },
+      {
+        "role": "Performers",
+        "names": [
+          {
+            "name": "Ama Kyei"
+          }
+          ,
+          {
+            "name": "Johanna Tengan"
+          },
+          {
+            "name": "Freddy Houndekindo",
+            "link": "https://www.freddyhoundekindo.com/"
+          }
+        ]
+      },
+      {
+        "role": "Documentation",
+        "names": [
+          {
+            "name": "Carlos Zaya",
+            "link": "https://www.carloszaya.com/"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650557/SunSum_MarcJohnso_Carlos_Zaya_z1berq.png",
+        "photographer": "Carlos Zaya",
+        "link": "https://www.carloszaya.com/"
+      },
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726657768/SunSum_Johnson-Marc-ama-kyei_bedxry.jpg",
+        "photographer": "Carlos Zaya",
+        "link": "https://www.carloszaya.com/"
+      },
+      {
+        "url": "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726650562/Sunsum__Marc_Johnso_Carlos_Zaya_cbxrqu.png",
+        "photographer": "Carlos Zaya",
+        "link": "https://www.carloszaya.com/"
       }
     ]
   }
