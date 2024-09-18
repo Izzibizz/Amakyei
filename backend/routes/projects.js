@@ -69,4 +69,50 @@ router.get("/:projectId", async (req, res) => {
   }
 });
 
+// Create a new project
+router.post("/newProject", async (req, res) => {
+  try {
+    const newProject = new Projects(req.body);
+    await newProject.save();
+    res.status(201).json({ message: "Project created successfully", project: newProject });
+  } catch (error) {
+    console.error("Error creating project:", error);
+    res.status(500).json({ message: "Error creating project" });
+  }
+});
+
+// Update an existing project
+router.patch("/:projectId", async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const updatedProject = await Projects.findByIdAndUpdate(projectId, req.body, { new: true });
+
+    if (updatedProject) {
+      res.status(200).json({ message: "Project updated successfully", project: updatedProject });
+    } else {
+      res.status(404).json({ message: "Project not found" });
+    }
+  } catch (error) {
+    console.error("Error updating project:", error);
+    res.status(500).json({ message: "Error updating project" });
+  }
+});
+
+// Delete a project
+router.delete("/:projectId", async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const deletedProject = await Projects.findByIdAndDelete(projectId);
+
+    if (deletedProject) {
+      res.status(200).json({ message: "Project deleted successfully" });
+    } else {
+      res.status(404).json({ message: "Project not found" });
+    }
+  } catch (error) {
+    console.error("Error deleting project:", error);
+    res.status(500).json({ message: "Error deleting project" });
+  }
+});
+
 export default router;
