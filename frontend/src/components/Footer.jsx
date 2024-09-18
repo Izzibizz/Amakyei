@@ -14,7 +14,7 @@ export const Footer = () => {
       <a href="mailto:ama.keshia@gmail.com" rel="noopener noreferrer"><FiMail alt="mail"/></a>
    </div>
    <div>
-    <p className="text-xs">© Ama Kyei 2024 | All Rights Reserved </p>
+    <p className="text-sm  font-body">© Ama Kyei 2024 | All Rights Reserved </p>
    </div>
     </footer>
   );
