@@ -50,7 +50,7 @@ export const ProjectsOverview = ({category}) => {
 
 ): (
 <>
-      <ul className={`grid grid-cols-2 gap-4 tablet:grid-cols-3  flex-wrap ${listIsVisible ? "laptop:grid laptop:animate-fadeIn" : "laptop:hidden"
+      <ul className={`grid grid-cols-2 gap-4 tablet:grid-cols-3 flex-wrap ${listIsVisible ? "laptop:grid laptop:animate-fadeIn" : "laptop:hidden"
         }`}>
         {filteredProjects.map((project, index) => {
           const projectEndpoint = project.title
@@ -72,7 +72,7 @@ export const ProjectsOverview = ({category}) => {
         })}
       </ul>
       {/* Laptop */}
-      <div className= {`hidden ${listIsVisible ? "laptop:hidden" : "laptop:block laptop:animate-fadeIn"
+      <div className= {`hidden ${listIsVisible ? "laptop:hidden" : "laptop:block laptop:animate-fadeIn "
         }`}>
         <Swiper
           spaceBetween={30}

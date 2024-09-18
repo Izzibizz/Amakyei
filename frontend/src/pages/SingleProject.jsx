@@ -314,15 +314,15 @@ export const SingleProject = () => {
           </NavLink>
 
           <div
-            className={`absolute bottom-10 tablet:bottom-20 right-10 tablet:right-20 laptop:bottom-2 laptop:text-main-dark z-10 flex flex-col laptop:w-1/3 items-end text-main-white justify-end transition-opacity duration-500 ${
+            className={`absolute bottom-10 tablet:bottom-20 right-10 tablet:right-20 laptop:bottom-2 laptop:text-main-dark z-10 flex flex-col laptop:w-1/3 items-end text-main-white justify-end transition-opacity duration-[1500ms] ${
               contentIsVisible ? "opacity-0" : "opacity-100"
             }
         `}
           >
-            <h2 className="text-lg font-heading text-end">
+            <h2 className="text-lg font-heading text-end drop-shadow-lg">
               {currentProject.title}
             </h2>
-            <h3 className="text-lg font-heading text-end">
+            <h3 className="text-lg font-heading text-end drop-shadow-lg">
               {currentProject.year}
             </h3>
             <div className="hidden laptop:flex">
@@ -335,7 +335,8 @@ export const SingleProject = () => {
               onClick={handleClickScroll}
             />
           </div>
-          <div className="w-screen h-screen laptop:w-[48%] laptop:max-w-[48%] absolute inset-0 top-0 left-0">
+          <div className={`w-screen h-screen laptop:w-[48%] laptop:max-w-[48%] absolute inset-0 top-0 left-0 transition-opacity duration-[1500ms] ${contentIsVisible ? "laptop:opacity-0" : "laptop:opacity-100"
+            } `}>
             {currentProject.images.length > 1 ? (
               <Swiper
                 slidesPerView={1}

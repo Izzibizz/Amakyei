@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        "background": "#FFFBF4", /* "#E5E3DA", */ 
+        "background": "#FFFCF9", /* "#E5E3DA", */ 
         "main-dark": "#693a17", 
         "main-white": "#FFFBF4",
         "peach": "#BEB8A0",
@@ -21,8 +21,8 @@ export default {
         
       },
       fontFamily: {
-        body: ["Raleway", "sans-serif"],
-        heading: ["Michroma", "sans-serif"],
+        body: ["Thasadith", "sans-serif"],
+        heading: ["Noto Serif JP", "serif"],
       },
       screens: {
         tablet: "600px", 
