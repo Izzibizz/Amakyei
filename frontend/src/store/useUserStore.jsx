@@ -28,7 +28,7 @@ export const useUserStore = create(
 
 
       loginUser: async (userName, password) => {
-        set({ loadingUser: true, loginError: false, loggedIn: false, loginError: false, });
+        set({ loadingUser: true, loginError: false, loggedIn: false });
         const URL_login = "https://amakyei.onrender.com/users/login";
         try {
           const response = await fetch(URL_login, {
