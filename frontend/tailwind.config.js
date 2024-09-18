@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        "background": "#FFFCF9", /* "#E5E3DA", */ 
+        "background": "#FFFBF4", /* "#E5E3DA", */ 
         "main-dark": "#693a17", 
         "main-white": "#FFFBF4",
         "peach": "#BEB8A0",
@@ -22,7 +22,7 @@ export default {
       },
       fontFamily: {
         body: ["Thasadith", "sans-serif"],
-        heading: ["Noto Serif JP", "serif"],
+        heading: ["Fahkwang", "sans-serif"],
       },
       screens: {
         tablet: "600px", 
