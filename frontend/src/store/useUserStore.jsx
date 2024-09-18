@@ -24,10 +24,11 @@ export const useUserStore = create(
       setLoggedOut: () => set({ loggedOut: true, loggedIn: false, userId: "", accessToken: "", loginMessage: "", showPopupMessage: true}), 
       setBackgroundColor: (input) => set({ backgroundColor: input }),
       setTextColor: (input) => set({ textColor: input }),
+      setLoginError: (input) => set({ loginError: input }),
 
 
       loginUser: async (userName, password) => {
-        set({ loadingUser: true, loginError: false, loggedIn: false });
+        set({ loadingUser: true, loginError: false, loggedIn: false, loginError: false, });
         const URL_login = "https://amakyei.onrender.com/users/login";
         try {
           const response = await fetch(URL_login, {
@@ -55,7 +56,7 @@ export const useUserStore = create(
           }
         } catch (error) {
           console.error("error in login:", error);
-          set({ error: error, loginError: true });
+          set({ error: error, loginError: true, showPopupMessage: true });
         } finally {
 
           set({ loadingUser: false });

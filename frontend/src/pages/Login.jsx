@@ -12,7 +12,7 @@ export const Login = () => {
     loginError,
     loadingUser,
     loginMessage,
-    showUserPopupMessage,
+    showPopupMessage,
   } = useUserStore();
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
@@ -36,10 +36,10 @@ export const Login = () => {
 
   return (
     <>
-      {showUserPopupMessage && <PopupMessage />}
+      {showPopupMessage && <PopupMessage />}
       <section className="w-full flex animate-fadeIn">
         <form
-          className="w-3/4 tablet:w-1/2 max-w-[400px] bg-main-white m-auto mt-20 p-8 rounded shadow-md"
+          className="w-3/4 tablet:w-1/2 max-w-[400px] bg-medium-white m-auto mt-20 p-8 rounded shadow-md "
           onSubmit={handleLogin}
         >
           <h2 className="text-2xl mb-6 font-semibold text-center font-heading text-main-dark">
@@ -63,7 +63,7 @@ export const Login = () => {
             />
           </div>
 
-          <div className="mb-6">
+          <div className="mb-6 font-body">
             <label
               htmlFor="password"
               className="block text-sm font-medium text-gray-700 mb-2"

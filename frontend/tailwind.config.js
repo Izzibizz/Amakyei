@@ -10,7 +10,8 @@ export default {
         "background": "#FFFBF4", /* "#E5E3DA", */ 
         "main-dark": "#693a17", 
         "main-white": "#FFFBF4",
-        "peach": "#E53E3E",
+        "medium-white": "#FDF4E5",
+        "peach": "#BC6755",
         "green": "#BEB8A0" 
         
 /*         "background": "#FFB393",

@@ -1,5 +1,4 @@
-import blue from "../assets/Ama.jpg";
-import green from "../assets/Ama-kyei-dancer.jpg";
+
 import { useLocation } from "react-router-dom";
 
 export const About = () => {
