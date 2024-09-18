@@ -16,6 +16,7 @@ import { Autoplay, Navigation, Pagination, A11y } from 'swiper/modules';
 export const ProjectsOverview = ({category}) => {
   const { projectsData, loadingProjects, setListIsVisible, listIsVisible } = useProjectsStore();
   const [filteredProjects, setFilteredProjects] = useState([]);
+  const [ dontDisplaySwiper, setDontDisplaySwiper ] = useState(false)
 
   const extractYear = (yearString) => {
     const match = yearString.match(/\d+/); // Extracts the numeric part
@@ -25,8 +26,14 @@ export const ProjectsOverview = ({category}) => {
   useEffect(() => {
     if (projectsData && category) {
       const filtered = projectsData.filter(project => project.category === category);
+      if (filtered.length <= 2) {
+        setDontDisplaySwiper(true)
+      }
+      if (filtered.length >= 2) {
       filtered.sort((a, b) => extractYear(b.year) - extractYear(a.year));
       console.log(filtered);
+      console.log(category)
+      }
       setFilteredProjects(filtered);
     }
   }, [projectsData, category]);
@@ -48,9 +55,9 @@ export const ProjectsOverview = ({category}) => {
   <Loading />
   </div>
 
-): (
+) : (
 <>
-      <ul className={`grid grid-cols-2 gap-4 tablet:grid-cols-3 flex-wrap ${listIsVisible ? "laptop:grid laptop:animate-fadeIn" : "laptop:hidden"
+      <ul className={`grid grid-cols-2 gap-4 tablet:grid-cols-3 flex-wrap ${listIsVisible | dontDisplaySwiper ? "laptop:grid laptop:animate-fadeIn" : "laptop:hidden"
         }`}>
         {filteredProjects.map((project, index) => {
           const projectEndpoint = project.title
@@ -72,6 +79,7 @@ export const ProjectsOverview = ({category}) => {
         })}
       </ul>
       {/* Laptop */}
+      {!dontDisplaySwiper && (
       <div className= {`hidden ${listIsVisible ? "laptop:hidden" : "laptop:block laptop:animate-fadeIn "
         }`}>
         <Swiper
@@ -116,6 +124,8 @@ export const ProjectsOverview = ({category}) => {
           })}
         </Swiper>
       </div>
+      )}
+      { !dontDisplaySwiper && (
       <button className="cursor-pointer flex items-center text-main-dark font-body rounded-2xl w-fit py-2 px-4 ml-auto hidden laptop:block" onClick={handleProjectsDisplayVersion}>
       {listIsVisible ? (
       <>
@@ -127,7 +137,9 @@ export const ProjectsOverview = ({category}) => {
     List all projects
     <SlArrowDown className="ml-2 inline-block" />
     </>
-  )} </button>
+  )} 
+  </button>
+      )}
     </>
   )}
   </>

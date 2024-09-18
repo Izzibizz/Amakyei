@@ -138,7 +138,7 @@ export const Pedagog = () => {
               <h4 className="font-heading mb-4">Projects</h4>
               <ul className="flex flex-col gap-4 font-body">
                 <li>
-                  <span className="font-bold text-xl">2024 - </span>
+                  <span className="font-bold text-lg">2024 - </span>
                   <span className="font-semibold">
                     Good Vibes East (Zodiak)
                   </span>
@@ -150,26 +150,26 @@ export const Pedagog = () => {
                   please go to the "Choreorapher" section.
                 </li>
                 <li>
-                <span className="font-bold text-xl">2024 - </span>
+                <span className="font-bold text-lg">2024 - </span>
                   <span className="font-semibold">
                     Workshops
                   </span><br/> in Helsinki (Jyväskylä at Soldidart Festival) and
                   Stockholm (Daglig träning, Åsa folkhögskola)
                 </li>
                 <li>
-                <span className="font-bold text-xl">2021-2023 - </span>
+                <span className="font-bold text-lg">2021-2023 - </span>
                   <span className="font-semibold">
                     Workshops in Benin and Ghana
                   </span>
                 </li>
                 <li>
-                <span className="font-bold text-xl">2020-2021 - </span>
+                <span className="font-bold text-lg">2020-2021 - </span>
                   <span className="font-semibold">
                     Dance teacher and dance responsible<br/>
                   </span> at Fryshuset Middle
                   school
                 </li>
-                <li>                 <span className="font-bold text-xl">2020-2021 -</span>
+                <li>                 <span className="font-bold text-lg">2020-2021 -</span>
                   <span className="font-semibold"> Linje 13</span>
 
                   <br />a project at Botkyrka Kulturskola to gather youth in
@@ -178,7 +178,7 @@ export const Pedagog = () => {
                   teater pedagog.
                 </li>
                 <li>
-                <span className="font-bold text-xl">Since 2015 - </span>
+                <span className="font-bold text-lg">Since 2015 - </span>
                   <span className="font-semibold">
                     {" "}
                     Workshops
@@ -189,7 +189,7 @@ export const Pedagog = () => {
                     (Stockholm).
                 </li>
                 <li>
-                <span className="font-bold text-xl">Since 2010 - </span>
+                <span className="font-bold text-lg">Since 2010 - </span>
                   <span className="font-semibold">
                     {" "}
                     Weekly dance classes at: 
