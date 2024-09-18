@@ -63,6 +63,8 @@ export const Pedagog = () => {
             <Swiper
               spaceBetween={30}
               loop
+              navigation
+              centeredSlides
               speed={1200}
               scrollbar={{ draggable: true }}
               updateOnWindowResize
@@ -74,7 +76,8 @@ export const Pedagog = () => {
               modules={[Navigation, Pagination, A11y, Autoplay]}
               breakpoints={{
                 320: {
-                  slidesPerView: 2,
+ 
+                  slidesPerView:1,
                 },
                 768: {
                   slidesPerView: 3,
@@ -149,9 +152,9 @@ export const Pedagog = () => {
                 <li>
                 <span className="font-bold text-xl">2024 - </span>
                   <span className="font-semibold">
-                    Workshops in Helsinki (Jyväskylä at Soldidart Festival) and
-                    Stockholm (Daglig träning, Åsa folkhögskola)
-                  </span>
+                    Workshops
+                  </span><br/> in Helsinki (Jyväskylä at Soldidart Festival) and
+                  Stockholm (Daglig träning, Åsa folkhögskola)
                 </li>
                 <li>
                 <span className="font-bold text-xl">2021-2023 - </span>
@@ -162,9 +165,9 @@ export const Pedagog = () => {
                 <li>
                 <span className="font-bold text-xl">2020-2021 - </span>
                   <span className="font-semibold">
-                    Dance teacher and dance responsible at Fryshuset Middle
-                    school
-                  </span>
+                    Dance teacher and dance responsible<br/>
+                  </span> at Fryshuset Middle
+                  school
                 </li>
                 <li>                 <span className="font-bold text-xl">2020-2021 -</span>
                   <span className="font-semibold"> Linje 13</span>
@@ -178,21 +181,21 @@ export const Pedagog = () => {
                 <span className="font-bold text-xl">Since 2015 - </span>
                   <span className="font-semibold">
                     {" "}
-                    Held workshops in Helsinki, Espoo, Vantaa, Oulu (Finland),
+                    Workshops
+                  </span><br/> in Helsinki, Espoo, Vantaa, Oulu (Finland),
                     Jönköping, Stockholm, Östersund, Uppsala, Nyköping (Sweden),
                     Tallin (Estonia), Freiburg (Germany), Tröndheim (Norway),
                     Skapande skola (Stockholm), Danscentrum daglig träning coach
                     (Stockholm).
-                  </span>
                 </li>
                 <li>
                 <span className="font-bold text-xl">Since 2010 - </span>
                   <span className="font-semibold">
                     {" "}
-                    Held weekly dance classes at: Helsinki: dance.fi, Helsingin
+                    Weekly dance classes at: 
+                  </span><br/> Helsinki: dance.fi, Helsingin
                     aikuisopisto and DCA. Stockholm: Danshuset, Kulturskolan,
                     Fryshuset högstadiet.
-                  </span>
                 </li>
               </ul>
             </div>
