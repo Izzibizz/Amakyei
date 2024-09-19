@@ -11,6 +11,7 @@ export default {
         "main-dark": "#693a17", 
         "main-white": "#FFFBF4",
         "medium-white": "#FDF4E5",
+        "beige": "#EBD2BC",
         "peach": "#BC6755",
         "green": "#BEB8A0" 
         

@@ -6,7 +6,8 @@ import { useProjectsStore } from "../store/useProjectsStore";
 export const Header = () => {
   const { loggedIn } = useUserStore();
   const { headerVisibilityChange, darkTextNeeded, laptopView } = useProjectsStore()
-
+  const dropdownRef = useRef()
+  const buttonRef = useRef()
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const endpoint = location.pathname.split('/')
@@ -24,6 +25,25 @@ export const Header = () => {
   useEffect(() => {
     closeMenu();
   }, [location]);
+
+   // Close the menu when clicking outside of it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current && !dropdownRef.current.contains(event.target) &&
+        buttonRef.current && !buttonRef.current.contains(event.target)
+      ) {
+        closeMenu();
+      }
+    };
+
+     // Bind the event listener
+     document.addEventListener("mousedown", handleClickOutside);
+     return () => {
+       // Clean up the event listener
+       document.removeEventListener("mousedown", handleClickOutside);
+     };
+   }, []);
 
   const isHomePage = location.pathname === "/";
   const isAboutPage = location.pathname === "/about";
@@ -45,6 +65,7 @@ export const Header = () => {
       </NavLink>
       {/* Mobile and tablet */}
       <button
+        ref={buttonRef}
         onClick={toggleMenu}
         aria-label="Toggle Menu"
         className="flex flex-col justify-center items-center laptop:hidden z-40 "
@@ -72,6 +93,7 @@ export const Header = () => {
       </button>
       {isOpen && (
         <div
+          ref={dropdownRef}
           className={`absolute top-24 right-0 w-fit text-xl bg-background rounded-bl-xl ${headerOpacity} ${textColor}`}
         >
           <ul className="flex flex-col items-end gap-6 p-8 pr-8 tablet:pb-20">

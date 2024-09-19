@@ -339,6 +339,7 @@ export const SingleProject = () => {
             } `}>
             {currentProject.images.length > 1 ? (
               <Swiper
+                key={currentProject.id} 
                 slidesPerView={1}
                 speed={1200}
                 loop

@@ -200,7 +200,7 @@ export const UploadProject = () => {
                   className="text-peach bg-main-white h-fit rounded-xl p-2 hidden laptop:flex"
                   onClick={() => clearAllFields()}
                 >
-                  <FaTrashAlt className="w-6 h-6" />
+                  <FaTrashAlt className="w-6 h-6 hover:scale-110 hover:text-red-700" />
                 </button>
                 </div>
     <div className="laptop:grid laptop:grid-cols-2 laptop:gap-8">
@@ -228,7 +228,7 @@ export const UploadProject = () => {
               <>
                 <h3
                   onClick={() => toggleEditMode("title")}
-                  className="cursor-pointer text-end w-fit max-w-80 break-words"
+                  className="cursor-pointer hover:underline text-end w-fit max-w-80 break-words"
                 >
                   {title || "Title"}
                 </h3>
@@ -252,7 +252,7 @@ export const UploadProject = () => {
                   placeholder="Year"
                 />
                 <MdDone
-                  className="w-6 h-6 cursor-pointer"
+                  className="w-6 h-6 cursor-pointer "
                   onClick={() => setEditingField(null)}
                 />
               </>
@@ -260,7 +260,7 @@ export const UploadProject = () => {
               <>
                 <h3
                   onClick={() => toggleEditMode("year")}
-                  className="cursor-pointer text-end w-fit max-w-80 break-words"
+                  className="cursor-pointer hover:underline text-end w-fit max-w-80 break-words"
                 >
                   {year || "Year"}
                 </h3>
@@ -271,7 +271,7 @@ export const UploadProject = () => {
               </>
             )}
           </div>
-          <select value={category} onChange={handleCategoryChange} required className="my-4 bg-main-white border border-peach rounded-md p-2">
+          <select value={category} onChange={handleCategoryChange} required className="my-4 bg-main-white text-base border-2 cursor-pointer focus:outline-none border-peach border-dotted rounded-md p-2">
   <option value="" disabled>Select category</option>
   {categoryEnum.map(cat => (
     <option key={cat} value={cat}>{cat}</option>
@@ -280,19 +280,19 @@ export const UploadProject = () => {
         </div>
   
         {/* Credits Section */}
-        <div className="max-h-[370px] overflow-scroll">
+        <div className="max-h-[370px] overflow-y-scroll no-scrollbar flex flex-col">
         {credits.map((credit, creditIndex) => (
-        <div key={creditIndex} className="mb-4">
-          <div className="flex items-center">
+        <div key={creditIndex} className="mb-4 font-body border-2 p-4 pt-6 border-dotted border-main-dark rounded-xl">
+          <div className="flex items-center gap-2">
             <input
               type="text"
               value={credit.role}
               onChange={(e) => handleCreditRoleChange(creditIndex, e.target.value)}
-              placeholder="Role"
-              className="border p-2 mr-2"
+              placeholder="Role (ex. Choreographer) "
+              className="border border-main-dark border-dotted rounded-xl p-2 mb-2 focus:outline-none"
             />
-            <button onClick={() => deleteRole(creditIndex)} className="bg-red-500 text-white p-2">
-              Delete Role
+            <button onClick={() => deleteRole(creditIndex)} >
+            <FaTrashAlt className="w-4 h-4 text-peach cursor-pointer hover:scale-110" />
             </button>
           </div>
           <div>
@@ -303,32 +303,35 @@ export const UploadProject = () => {
                   value={nameObj.name}
                   onChange={(e) => handleNameChange(creditIndex, nameIndex, e.target.value)}
                   placeholder="Name"
-                  className="border p-2 mr-2"
+                  className="border border-main-dark border-dotted rounded-xl p-2 mr-2 focus:outline-none"
                 />
                 <input
                   type="text"
                   value={nameObj.link}
                   onChange={(e) => handleLinkChange(creditIndex, nameIndex, e.target.value)}
-                  placeholder="Link"
-                  className="border p-2 mr-2"
+                  placeholder="website / social media"
+                  className="border border-main-dark border-dotted rounded-xl p-2 mr-2 focus:outline-none"
                 />
-                {/* Button to add another name/link pair for this specific role */}
-                <button onClick={() => addNameField(creditIndex)} className="bg-main-dark text-white p-2">
-                  Add Name
-                </button>
                 {/* Button to delete the name/link pair */}
-                <button onClick={() => deleteNameField(creditIndex, nameIndex)} className="bg-red-500 text-white p-2 ml-2">
-                  Delete Name
+                <button onClick={() => deleteNameField(creditIndex, nameIndex)} >
+                <FaTrashAlt className="w-4 h-4  mr-2 text-peach cursor-pointer hover:scale-110" />
                 </button>
               </div>
+              
             ))}
+               {/* Button to add another name/link pair for this specific role */}
+             <button onClick={() => addNameField(creditIndex)} className="flex text-main-dark gap-2 p-2" >
+                  Add Name <FiPlusCircle className="w-6 h-6 cursor-pointer hover:scale-110" />
+                </button>
           </div>
         </div>
       ))}
-      {/* Single button to add a new role */}
-      <button onClick={addRoleField} className="bg-blue-500 text-white p-2">
-        Add Role
+      {/* Add a new role */}
+      <div className="flex justify-end">
+      <button onClick={addRoleField} className="flex gap-2 rounded-xl bg-beige hover:bg-peach hover:text-main-white p-2 text-main-dark w-fit">
+        Add Role <FiPlusCircle className="w-6 h-6 cursor-pointer hover:scale-110" />
       </button>
+      </div>
       </div>
 
         {/* Description Section */}
@@ -354,11 +357,11 @@ export const UploadProject = () => {
             </>
           ) : (
             <>
-              <p className="font-body break-words p-4">{description || "Description"}</p>
+              <p className="font-body break-words p-4 ">{description || "Description"}</p>
             </>
           )}
         </div>
-        <div className="flex gap-2 justify-end mt-2 text-main-dark">
+        <div className="flex gap-2 justify-end mt-2 text-main-dark hover:underline">
           {editingField === "description" ? (
             <>
               <h3 className="cursor-pointer text-end font-body text-xl"
@@ -366,7 +369,7 @@ export const UploadProject = () => {
                 Description
               </h3>
               <MdDone
-                className="w-6 h-6 cursor-pointer"
+                className="w-6 h-6 cursor-pointer hover:scale-110"
                 onClick={() => toggleEditMode(null)}
               />
             </>
@@ -379,7 +382,7 @@ export const UploadProject = () => {
                 Description
               </h3>
               <FaPen
-                className="w-4 h-4 cursor-pointer"
+                className="w-4 h-4 cursor-pointer hover:scale-110"
                 onClick={() => toggleEditMode("description")}
               />
             </>
@@ -434,8 +437,8 @@ export const UploadProject = () => {
         className="flex gap-2 mt-2 text-main-dark justify-end "
         onClick={() => toggleEditMode("videoLink")}
       >
-        <h3 className="cursor-pointer text-end font-body text-xl">Add video link</h3>
-        <FiPlusCircle className="w-6 h-6" />
+        <h3 className="cursor-pointer text-end font-body text-xl hover:underline">Add video link</h3>
+        <FiPlusCircle className="w-6 h-6 hover:scale-110 cursor-pointer" />
         </div>
         </div>
       </div>
@@ -463,7 +466,7 @@ export const UploadProject = () => {
               className="w-full h-full object-cover"
             />
             <button
-              className="absolute top-0 right-0 text-red-700 p-2"
+              className="absolute hover:scale-110 top-0 right-0 text-red-700 p-2"
               onClick={() => removeImage(index)}
             >
               <FaTrashAlt className="w-6 h-6" />
@@ -494,8 +497,8 @@ export const UploadProject = () => {
         {...rootProps}
         className="flex gap-2 mt-2 text-main-dark w-full h-full justify-center items-center cursor-pointer"
       >
-        <h3 className="font-body text-xl">Add images</h3>
-        <FiPlusCircle className="w-6 h-6" />
+        <h3 className="font-body text-xl hover:underline">Add images</h3>
+        <FiPlusCircle className="w-6 h-6 hover:scale-110" />
         <input {...getInputProps()} />
       </div>
     )}
@@ -505,10 +508,10 @@ export const UploadProject = () => {
   {/* Add Images Button */}
   <div
     {...rootProps}
-    className="flex gap-2 mt-2 text-main-dark justify-end cursor-pointer"
+    className="flex gap-2 mt-2 text-main-dark justify-end cursor-pointer "
   >
-    <h3 className="text-end font-body text-xl">Add images</h3>
-    <FiPlusCircle className="w-6 h-6" />
+    <h3 className="text-end font-body text-xl hover:underline">Add images</h3>
+    <FiPlusCircle className="w-6 h-6 hover:scale-110" />
     <input {...getInputProps()} />
   </div>
 </div>
@@ -558,30 +561,31 @@ export const UploadProject = () => {
           )}
       </div>
       <div
-        className="flex gap-2 mt-2 text-main-dark justify-end "
+        className="flex gap-2 mt-2 text-main-dark justify-end  "
         onClick={() => toggleEditMode("videoLink")}
       >
-        <h3 className="cursor-pointer text-end font-body text-xl">Add video link</h3>
+        <h3 className="text-end font-body text-xl">Add video link</h3>
         <FiPlusCircle className="w-6 h-6" />
         </div>
+        {/* delete all */}
         <button
-                  className="text-peach bg-main-white h-fit rounded-xl p-2  mt-10 laptop:hidden"
+                  className="text-peach bg-main-white h-fit rounded-xl p-2 flex gap-2 mt-10 laptop:hidden"
                   onClick={() => clearAllFields()}
                 >
-                  <FaTrashAlt className="w-6 h-6" />
+                  <FaTrashAlt className="w-6 h-6" /> Clear all input
                 </button>
         </div>
   
       {/* Save Section */}
-      <div className="flex gap-2 justify-center w-fit p-2 px-4 m-auto rounded-2xl mt-20 bg-main-white text-main-dark laptop:col-span-2 laptop:order-2">
+      <div className="flex gap-2 justify-center items-center font-bold text-peach hover:scale-110 border-2 cursor-pointer hover:drop-shadow border-peach w-fit p-2 px-4 m-auto rounded-2xl mt-20 bg-main-white text-main-dark laptop:col-span-2 laptop:order-2">
         <h3
           onClick={() => saveNewProject()}
-          className="cursor-pointer text-end font-body text-xl"
+          className="text-end font-body text-xl"
         >
           Save
         </h3>
         <RiSave3Line
-          className="w-6 h-6 cursor-pointer text-peach"
+          className="w-6 h-6 text-peach"
           onClick={() => saveNewProject()}
         />
       </div>
