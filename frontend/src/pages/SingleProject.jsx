@@ -183,7 +183,7 @@ export const SingleProject = () => {
 
   useEffect(() => {
     if (loadingProjects || !projectsData.length) return;
-
+  
     const currentProjectIndex = projectsData.findIndex((project) => {
       const projectEndpoint = project.title
         .replaceAll("/", "")
@@ -191,69 +191,77 @@ export const SingleProject = () => {
         .toLowerCase();
       return projectEndpoint === id;
     });
-
+  
     if (currentProjectIndex === -1) return;
-
+  
     const currentProject = projectsData[currentProjectIndex];
-
+  
     // Filter projects by category
     const sameCategoryProjects = projectsData.filter(
       (project) => project.category === currentProject.category
     );
-
+  
     // Find the index of the current project within the filtered array
     const currentIndexInCategory = sameCategoryProjects.findIndex(
       (project) =>
         project.title.replaceAll("/", "").replace(/\s+/g, "-").toLowerCase() ===
         id
     );
-
+  
     // Calculate the next project's index within the filtered array, with proper wrapping
     const nextProjectIndexInCategory =
       (currentIndexInCategory + 1) % sameCategoryProjects.length;
     const nextProject = sameCategoryProjects[nextProjectIndexInCategory];
-
+  
     // Set the next project's "id" (or title converted to URL format)
     const nextProjectEndpoint = nextProject.title
       .replaceAll("/", "")
       .replace(/\s+/g, "-")
       .toLowerCase();
     setNextProjectId(nextProjectEndpoint);
-
+  
+    // Calculate the previous project's index
     const prevProjectIndexInCategory =
-    (currentIndexInCategory - 1 + sameCategoryProjects.length) % sameCategoryProjects.length;
-  const prevProject = sameCategoryProjects[prevProjectIndexInCategory];
-
-  // Set the next project's "id" (or title converted to URL format)
-  const prevProjectEndpoint = prevProject.title
-    .replaceAll("/", "")
-    .replace(/\s+/g, "-")
-    .toLowerCase();
-  setPreviousProjectId(prevProjectEndpoint);
-
+      (currentIndexInCategory - 1 + sameCategoryProjects.length) % sameCategoryProjects.length;
+    const prevProject = sameCategoryProjects[prevProjectIndexInCategory];
+  
+    // Set the previous project's "id" (or title converted to URL format)
+    const prevProjectEndpoint = prevProject.title
+      .replaceAll("/", "")
+      .replace(/\s+/g, "-")
+      .toLowerCase();
+    setPreviousProjectId(prevProjectEndpoint);
   }, [id, projectsData, loadingProjects]);
-
+  
   const handleNextProject = () => {
     if (nextProjectId) {
-      setHeaderVisibilityChange(false)
-      navigate(`/project/${nextProjectId}`);
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          window.scrollTo(0, 0);
-        });
-      });
+      setHeaderVisibilityChange(false);
+      // Update state before navigating
+      handleProjectChange(nextProjectId);
     }
   };
-
+  
   const handlePreviousProject = () => {
     if (previousProjectId) {
       setHeaderVisibilityChange(false);
-      navigate(`/project/${previousProjectId}`);
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          window.scrollTo(0, 0);
-        });
-      });
+      // Update state before navigating
+      handleProjectChange(previousProjectId);
+    }
+  };
+  
+  const handleProjectChange = (projectId) => {
+    // Find the new project based on the given projectId
+    const newProjectIndex = projectsData.findIndex(project => {
+      const projectEndpoint = project.title.replaceAll("/", "").replace(/\s+/g, "-").toLowerCase();
+      return projectEndpoint === projectId;
+    });
+  
+    if (newProjectIndex !== -1) {
+      // Optionally update any state or store here if needed
+      // Example: setCurrentProject(newProject);
+      
+      // Navigate to the new project
+      navigate(`/project/${projectId}`);
     }
   };
 
@@ -297,7 +305,11 @@ export const SingleProject = () => {
 
   const currentProject = projectsData[currentProjectIndex];
 
-  console.log(currentProject);
+  if (!currentProject || !currentProject.images || currentProject.images.length === 0 ) {
+    return <Loading />; // Or a NotFound component
+  }
+
+  console.log(currentProject._id);
 
   return (
     <section className="w-full animate-fadeIn">
@@ -344,7 +356,7 @@ export const SingleProject = () => {
             } `}>
             {currentProject.images.length > 1 ? (
               <Swiper
-                key={currentProject.id} 
+                key={currentProject._id} 
                 slidesPerView={1}
                 speed={1200}
                 loop
