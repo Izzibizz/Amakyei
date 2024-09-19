@@ -118,7 +118,7 @@ export const UploadProject = () => {
     setImages([])
     setUploadedImages(results)
 
-    if (uploadedImages.length > 0 ) {
+    if (uploadedImages[0].url ) {
       await uploadNewProject(
         title, 
         year,  
