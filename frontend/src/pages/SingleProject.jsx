@@ -237,6 +237,11 @@ export const SingleProject = () => {
     if (nextProjectId) {
       setHeaderVisibilityChange(false)
       navigate(`/project/${nextProjectId}`);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.scrollTo(0, 0);
+        });
+      });
     }
   };
 
