@@ -118,7 +118,7 @@ export const UploadProject = () => {
     setImages([])
     setUploadedImages(results)
 
-    if (results.length > 0) {
+    if (uploadedImages.length > 0 ) {
       await uploadNewProject(
         title, 
         year,  
@@ -336,7 +336,7 @@ console.log("video", videoLink)
               </>
             )}
           </div>
-          <select value={category} onChange={handleCategoryChange} required className="my-4 bg-main-white text-base border-2 cursor-pointer focus:outline-none border-peach border-dotted rounded-md p-2">
+          <select value={category} onChange={handleCategoryChange} required className="my-4 bg-main-white cursor-pointer focus:outline-none rounded-md p-2">
   <option value="" disabled>Select category</option>
   {categoryEnum.map(cat => (
     <option key={cat} value={cat}>{cat}</option>
