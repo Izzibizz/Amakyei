@@ -419,7 +419,7 @@ export const SingleProject = () => {
               <p className="font-body text-justify max-w-full col-span-2 tablet:col-span-1 laptop:hidden">
                 {currentProject.description}
               </p>
-              {currentProject.video && currentProject.video.length > 0 ? (
+              {currentProject.video && currentProject.video.length > 0 && currentProject.video[0].url ? (
                 <iframe
                   src={currentProject.video[0].url}
                   className="w-full h-full my-8 laptop:my-0 justify-self-start aspect-[3/2] rounded-xl "

@@ -24,12 +24,12 @@ import { Navigation, Pagination } from "swiper/modules";
 export const UploadProject = () => {
 
   const { loggedOut } = useUserStore();
-  const { uploadSuccessful } = useProjectsStore()
+  const { uploadSuccessful, uploadNewProject } = useProjectsStore()
   const navigate = useNavigate();
 
   /* Input for upload */
   const [ images, setImages ] = useState([]);
-  const [imageDetails, setImageDetails] = useState([]);
+  const [ imageDetails, setImageDetails ] = useState([]);
   const [ title, setTitle ] = useState("");
   const [ year, setYear ] = useState("");
   const [ category, setCategory ] = useState("")
@@ -37,10 +37,12 @@ export const UploadProject = () => {
     { role: "", names: [{ name: "", link: "" }] }
   ]);
   const [ description, setDescription ] = useState("");
-  const [videoLink, setVideoLink] = useState({ url: "", photographer: "", link: "" });
+  const [videoLink, setVideoLink] = useState([{ url: "", photographer: "", link: "" }])
   const [ editingField, setEditingField ] = useState(null);
 
   const categoryEnum = ["dancer", "choreographer", "pedagog"];
+
+  const [ uploadedImages, setUploadedImages ] = useState([])
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -77,6 +79,60 @@ export const UploadProject = () => {
     setImages((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
     setImageDetails((prevDetails) => prevDetails.filter((_, index) => index !== indexToRemove));
   };
+
+  const uploadImagesToCloudinary = async (images, details) => {
+    const results = [];
+    const uploadPreset = "AmaKyei";
+    const cloudName = 'dbf8xygxz'; 
+  
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i];
+      const detail = details[i];
+  
+      const formData = new FormData();
+      formData.append('file', image);
+      formData.append('upload_preset', uploadPreset);
+  
+      try {
+        const response = await axios.post(
+          `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+          formData
+        );
+  
+        // Create the structured object for each image
+        const imageData = {
+          url: response.data.secure_url, // URL from Cloudinary
+          photographer: detail.photographer || '', // Get photographer's name
+          link: detail.link || '', // Get associated link
+        };
+        results.push(imageData); 
+        console.log("success")
+  
+
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      }
+    }
+
+    setImageDetails([])
+    setImages([])
+    setUploadedImages(results)
+
+    if (results.length > 0) {
+      await uploadNewProject(
+        title, 
+        year,  
+        category, 
+        description, 
+        credits, 
+        uploadedImages, 
+        videoLink 
+      );
+    }
+
+    return results; 
+  };
+  
 
   const handlePhotographerChange = (index, value) => {
     setImageDetails((prevDetails) => {
@@ -165,7 +221,7 @@ export const UploadProject = () => {
       { role: "", names: [{ name: "", link: "" }] }
     ]);
     setDescription("");
-    setVideoLink({ url: "", photographer: "", link: "" });
+    setVideoLink([{ url: "", photographer: "", link: "" }]);
     setImages([]);
   };
 
@@ -190,6 +246,15 @@ export const UploadProject = () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
+console.log("images", images)
+console.log("cloudinary", uploadedImages)
+console.log("category", category)
+console.log("credits", credits)
+console.log("title", title)
+console.log("year", year)
+console.log("description", description)
+console.log("video", videoLink)
 
   return (
   <>
@@ -280,7 +345,7 @@ export const UploadProject = () => {
         </div>
   
         {/* Credits Section */}
-        <div className="max-h-[370px] overflow-y-scroll no-scrollbar flex flex-col">
+        <div className="laptop:max-h-[370px] laptop:overflow-y-scroll laptop:no-scrollbar flex flex-col">
         {credits.map((credit, creditIndex) => (
         <div key={creditIndex} className="mb-4 font-body border-2 p-4 pt-6 border-dotted border-main-dark rounded-xl">
           <div className="flex items-center gap-2">
@@ -297,7 +362,7 @@ export const UploadProject = () => {
           </div>
           <div>
             {credit.names.map((nameObj, nameIndex) => (
-              <div key={nameIndex} className="flex items-center mb-2">
+              <div key={nameIndex} className="flex flex-col tablet:flex-row tablet:items-center mb-2">
                 <input
                   type="text"
                   value={nameObj.name}
@@ -313,8 +378,8 @@ export const UploadProject = () => {
                   className="border border-main-dark border-dotted rounded-xl p-2 mr-2 focus:outline-none"
                 />
                 {/* Button to delete the name/link pair */}
-                <button onClick={() => deleteNameField(creditIndex, nameIndex)} >
-                <FaTrashAlt className="w-4 h-4  mr-2 text-peach cursor-pointer hover:scale-110" />
+                <button onClick={() => deleteNameField(creditIndex, nameIndex)} className="flex justify-end" >
+                <FaTrashAlt className="w-4 h-4 mt-2 mr-2 text-peach cursor-pointer hover:scale-110" />
                 </button>
               </div>
               
@@ -335,7 +400,7 @@ export const UploadProject = () => {
       </div>
 
         {/* Description Section */}
-        <div className="border-2 border-dotted border-main-dark min-h-[150px] h-fit w-full mt-8 text-main-dark"
+        <div className="border-2 border-dotted rounded-xl border-main-dark min-h-[150px] h-fit w-full mt-8 text-main-dark"
           onClick={() => {
             if (editingField !== "description") {
               toggleEditMode("description");
@@ -391,7 +456,7 @@ export const UploadProject = () => {
         </div>
         {/* Video Section Laptop */}
         <div className="hidden laptop:block">
-        <div className="border-2 border-dotted border-main-dark w-full mt-8"
+        <div className="border-2 border-dotted rounded-xl border-main-dark w-full mt-8"
                onClick={() => {
                 if (editingField !== "videoLink") {
                   toggleEditMode("videoLink");
@@ -402,16 +467,28 @@ export const UploadProject = () => {
               <input
                 type="text"
                 value={videoLink.url}
-                onChange={(e) => setVideoLink((prev) => ({ ...prev, url: e.target.value }))}
+                onChange={(e) => 
+                  setVideoLink((prev) => {
+                    const newVideoLink = [...prev];
+                    newVideoLink[0] = { ...newVideoLink[0], url: e.target.value };
+                    return newVideoLink;
+                  })
+                }
                 onBlur={() => setEditingField(null)}
                 onKeyDown={handleKeyPress}
                 className="w-full overflow-hidden text-ellipsis whitespace-nowrap p-4 focus:outline-none bg-main-white"
-                placeholder="https://example.com"
+                placeholder={videoLink[0].url || "https://example.com"}
               />
                 <input
                 type="text"
                 value={videoLink.photographer}
-                onChange={(e) => setVideoLink((prev) => ({ ...prev, photographer: e.target.value }))}
+                onChange={(e) => 
+                  setVideoLink((prev) => {
+                    const newVideoLink = [...prev];
+                    newVideoLink[0] = { ...newVideoLink[0], photographer: e.target.value };
+                    return newVideoLink;
+                  })
+                }
                 onBlur={() => setEditingField(null)}
                 onKeyDown={handleKeyPress}
                 className="w-full overflow-hidden text-ellipsis whitespace-nowrap p-4 focus:outline-none bg-main-white"
@@ -420,7 +497,13 @@ export const UploadProject = () => {
                  <input
                 type="text"
                 value={videoLink.link}
-                onChange={(e) => setVideoLink((prev) => ({ ...prev, link: e.target.value }))}
+                onChange={(e) => 
+                  setVideoLink((prev) => {
+                    const newVideoLink = [...prev];
+                    newVideoLink[0] = { ...newVideoLink[0], link: e.target.value };
+                    return newVideoLink;
+                  })
+                }
                 onBlur={() => setEditingField(null)}
                 onKeyDown={handleKeyPress}
                 className="w-full overflow-hidden text-ellipsis whitespace-nowrap p-4 focus:outline-none bg-main-white"
@@ -429,7 +512,9 @@ export const UploadProject = () => {
             </>
           ) : (
             <>
-              <p className="font-body p-4 overflow-hidden text-ellipsis">{videoLink.url || "https://example.com"}</p>
+              <p className="font-body p-4 overflow-hidden text-ellipsis">{videoLink[0].url || "https://example.com"}</p>
+              <p className="font-body p-4 overflow-hidden text-ellipsis">{videoLink[0].photographer || "Photographer (not required)"}</p>
+              <p className="font-body p-4 overflow-hidden text-ellipsis">{videoLink[0].link || "website (not required)"}</p>
             </>
           )}
       </div>
@@ -445,7 +530,7 @@ export const UploadProject = () => {
   
       {/* Image Section */}
 <div className="order-1">
-  <div className="border-2 border-dotted border-main-dark aspect-[2/3] w-full mt-4 flex items-center justify-center">
+  <div className="border-2 border-dotted rounded-xl border-main-dark aspect-[2/3] w-full mt-4 flex items-center justify-center">
     {images.length > 0 ? (
       <Swiper
         slidesPerView={1}
@@ -456,14 +541,14 @@ export const UploadProject = () => {
         updateOnWindowResize
         effect="fade"
         modules={[Navigation, Pagination]}
-        className="w-full h-full"
+        className="w-full h-full rounded-xl"
       >
         {images.map((file, index) => (
           <SwiperSlide key={index}>
             <img
               src={file.preview}
               alt="preview"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded-xl"
             />
             <button
               className="absolute hover:scale-110 top-0 right-0 text-red-700 p-2"
@@ -495,10 +580,11 @@ export const UploadProject = () => {
     ) : (
       <div
         {...rootProps}
-        className="flex gap-2 mt-2 text-main-dark w-full h-full justify-center items-center cursor-pointer"
-      >
+        className="flex flex-col gap-2 mt-2 text-main-dark w-full h-full justify-center items-center cursor-pointer"
+      ><div className="flex gap-2">
         <h3 className="font-body text-xl hover:underline">Add images</h3>
-        <FiPlusCircle className="w-6 h-6 hover:scale-110" />
+        <FiPlusCircle className="w-6 h-6 hover:scale-110" /></div>
+        <p className="font-body">Max width/height: <span className="font-bold">1500px</span> (for good results)</p>
         <input {...getInputProps()} />
       </div>
     )}
@@ -518,7 +604,7 @@ export const UploadProject = () => {
 
 {/* Video Section mobile/tablet */}
 <div className="laptop:hidden">
-      <div className="border-2 border-dotted border-main-dark w-full mt-8"
+      <div className="border-2 border-dotted rounded-xl border-main-dark w-full mt-8"
             onClick={() => {
               if (editingField !== "videoLink") {
                 toggleEditMode("videoLink");
@@ -529,7 +615,12 @@ export const UploadProject = () => {
               <input
                 type="text"
                 value={videoLink.url}
-                onChange={(e) => setVideoLink((prev) => ({ ...prev, url: e.target.value }))}
+                onChange={(e) => 
+                  setVideoLink((prev) => {
+                    const newVideoLink = [...prev];
+                    newVideoLink[0] = { ...newVideoLink[0], url: e.target.value };
+                    return newVideoLink;
+                  })}
                 onBlur={() => setEditingField(null)}
                 onKeyDown={handleKeyPress}
                 className="w-full overflow-hidden text-ellipsis whitespace-nowrap p-4 focus:outline-none bg-main-white"
@@ -538,7 +629,13 @@ export const UploadProject = () => {
                 <input
                 type="text"
                 value={videoLink.photographer}
-                onChange={(e) => setVideoLink((prev) => ({ ...prev, photographer: e.target.value }))}
+                onChange={(e) => 
+                  setVideoLink((prev) => {
+                    const newVideoLink = [...prev];
+                    newVideoLink[0] = { ...newVideoLink[0], photographer: e.target.value };
+                    return newVideoLink;
+                  })
+                }
                 onBlur={() => setEditingField(null)}
                 onKeyDown={handleKeyPress}
                 className="w-full overflow-hidden text-ellipsis whitespace-nowrap p-4 focus:outline-none bg-main-white"
@@ -547,7 +644,13 @@ export const UploadProject = () => {
                  <input
                 type="text"
                 value={videoLink.link}
-                onChange={(e) => setVideoLink((prev) => ({ ...prev, link: e.target.value }))}
+                onChange={(e) => 
+                  setVideoLink((prev) => {
+                    const newVideoLink = [...prev];
+                    newVideoLink[0] = { ...newVideoLink[0], link: e.target.value };
+                    return newVideoLink;
+                  })
+                }
                 onBlur={() => setEditingField(null)}
                 onKeyDown={handleKeyPress}
                 className="w-full overflow-hidden text-ellipsis whitespace-nowrap p-4 focus:outline-none bg-main-white"
@@ -575,19 +678,21 @@ export const UploadProject = () => {
                   <FaTrashAlt className="w-6 h-6" /> Clear all input
                 </button>
         </div>
+
+     
   
       {/* Save Section */}
-      <div className="flex gap-2 justify-center items-center font-bold text-peach hover:scale-110 border-2 cursor-pointer hover:drop-shadow border-peach w-fit p-2 px-4 m-auto rounded-2xl mt-20 bg-main-white text-main-dark laptop:col-span-2 laptop:order-2">
+      <div className="flex gap-2 justify-center items-center font-bold text-peach hover:scale-110 border-2 cursor-pointer hover:drop-shadow border-peach w-fit p-2 px-4 m-auto rounded-2xl mt-20 bg-main-white text-main-dark laptop:col-span-2 laptop:order-2"
+      onClick={() => uploadImagesToCloudinary(images, imageDetails)}>
         <h3
-          onClick={() => saveNewProject()}
           className="text-end font-body text-xl"
         >
           Save
         </h3>
         <RiSave3Line
           className="w-6 h-6 text-peach"
-          onClick={() => saveNewProject()}
         />
+        
       </div>
       </div>
     </section>
