@@ -1,12 +1,16 @@
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { useProjectsStore } from "../store/useProjectsStore";
+import { useUserStore } from "../store/useUserStore";
 import { Loading } from "../components/Loading";
+import { PopupMessage } from "../components/PopupMessage"
 import { ImageModal } from "../components/ImageModal"
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
 import { SlArrowDown } from "react-icons/sl";
+import { FaPen } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
 import { NotFound } from "./NotFound";
 
 // Import Swiper styles
@@ -19,6 +23,7 @@ import "swiper/css/effect-fade";
 import { Navigation, Pagination, Autoplay, A11y } from "swiper/modules";
 
 
+
 export const SingleProject = () => {
   const {
     projectsData,
@@ -27,17 +32,27 @@ export const SingleProject = () => {
     setDarkTextNeeded,
     darkTextNeeded,
     setLaptopView,
-    laptopView
+    laptopView,
+    deleteProjectWithId,
+    deleteValidationProcess,
+    setDeleteValidationProcess,
+    loadingDelete,
+    deleteConfirmed, 
+    deleteSuccessful,
+    setDeleteSuccessful
   } = useProjectsStore();
+
+  const { loggedIn } = useUserStore()
   const navigate = useNavigate();
   const { id } = useParams();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [imageSrc, setImageSrc] = useState("");
-  const [imagePhotographer, setImagePhotographer] = useState("");
-  const [imageHeight, setImageHeight] = useState(0);
-  const [contentIsVisible, setContentIsVisible] = useState(false);
-  const [nextProjectId, setNextProjectId] = useState("");
-  const [previousProjectId, setPreviousProjectId] = useState("");
+  const [ isModalOpen, setIsModalOpen ] = useState(false);
+  const [ imageSrc, setImageSrc]  = useState("");
+  const [ imagePhotographer, setImagePhotographer ] = useState("");
+  const [ imageHeight, setImageHeight ] = useState(0);
+  const [ contentIsVisible, setContentIsVisible ] = useState(false);
+  const [ nextProjectId, setNextProjectId ] = useState("");
+  const [ previousProjectId, setPreviousProjectId ] = useState("");
+
 
   const contentRef = useRef(null);
 
@@ -195,6 +210,7 @@ export const SingleProject = () => {
     if (currentProjectIndex === -1) return;
   
     const currentProject = projectsData[currentProjectIndex];
+
   
     // Filter projects by category
     const sameCategoryProjects = projectsData.filter(
@@ -265,6 +281,28 @@ export const SingleProject = () => {
     }
   };
 
+  const validateDelete = () => {
+    setDeleteValidationProcess(true)
+  }
+
+ useEffect(() => {
+  if (deleteConfirmed && loggedIn && currentProject && currentProject._id ) {
+    setDeleteValidationProcess(false)
+    deleteProjectWithId(currentProject._id)
+  }
+ }, [deleteConfirmed])
+
+/*  useEffect(()=> {
+  if ( deleteSuccessful ) {
+  setTimeout(() => {
+  setDeleteSuccessful(false);
+    navigate("/")
+  }, 4000);
+}
+}, [deleteSuccessful]) */
+   
+  
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
@@ -310,6 +348,7 @@ export const SingleProject = () => {
   }
 
   console.log(currentProject._id);
+  console.log(deleteSuccessful)
 
   return (
     <section className="w-full animate-fadeIn">
@@ -317,7 +356,7 @@ export const SingleProject = () => {
         <div className="w-1/3 laptop: w-2/12 m-auto mt-20">
           <Loading />
         </div>
-      ) : (
+      ) : deleteValidationProcess || loadingDelete || deleteConfirmed || deleteSuccessful ? ( <PopupMessage/> ) : (
         <>
           <NavLink
             to={`/${currentProject.category}`}
@@ -523,7 +562,11 @@ export const SingleProject = () => {
               <SlArrowRight className="cursor-pointer w-8 h-8  inline-block" />
             </button>
           </div>
-
+<div className="bg-main-white p-4 fixed bottom-10 left-10 w-fit h-fit rounded-xl flex gap-6">
+          <FaTrashAlt className="w-8 h-8 text-peach cursor-pointer hover:scale-110  "
+         onClick={() => validateDelete()} />
+          <FaPen className="w-8 h-8 text-peach cursor-pointer hover:scale-110" />
+</div>
           {isModalOpen && (
             <ImageModal
               src={imageSrc}

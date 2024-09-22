@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useUserStore } from "../store/useUserStore"; 
 import { useProjectsStore } from "../store/useProjectsStore"
 import { PopupMessage } from "../components/PopupMessage";
+import { Loading } from "../components/Loading"
 import { useNavigate } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -24,7 +25,8 @@ import { Navigation, Pagination } from "swiper/modules";
 export const UploadProject = () => {
 
   const { loggedOut } = useUserStore();
-  const { uploadSuccessful, uploadNewProject } = useProjectsStore()
+  const { uploadSuccessful, setUploadSuccessful, uploadNewProject } = useProjectsStore()
+
   const navigate = useNavigate();
 
   /* Input for upload */
@@ -39,10 +41,9 @@ export const UploadProject = () => {
   const [ description, setDescription ] = useState("");
   const [videoLink, setVideoLink] = useState([{ url: "", photographer: "", link: "" }])
   const [ editingField, setEditingField ] = useState(null);
+  const [ uploadInProcess, setUploadInProcess ] = useState(false)
 
   const categoryEnum = ["dancer", "choreographer", "pedagog"];
-
-  const [ uploadedImages, setUploadedImages ] = useState([])
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -78,59 +79,6 @@ export const UploadProject = () => {
   const removeImage = (indexToRemove) => {
     setImages((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
     setImageDetails((prevDetails) => prevDetails.filter((_, index) => index !== indexToRemove));
-  };
-
-  const uploadImagesToCloudinary = async (images, details) => {
-    const results = [];
-    const uploadPreset = "AmaKyei";
-    const cloudName = 'dbf8xygxz'; 
-  
-    for (let i = 0; i < images.length; i++) {
-      const image = images[i];
-      const detail = details[i];
-  
-      const formData = new FormData();
-      formData.append('file', image);
-      formData.append('upload_preset', uploadPreset);
-  
-      try {
-        const response = await axios.post(
-          `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-          formData
-        );
-  
-        // Create the structured object for each image
-        const imageData = {
-          url: response.data.secure_url, // URL from Cloudinary
-          photographer: detail.photographer || '', // Get photographer's name
-          link: detail.link || '', // Get associated link
-        };
-        results.push(imageData); 
-        console.log("success")
-  
-
-      } catch (error) {
-        console.error('Error uploading image:', error);
-      }
-    }
-
-    setImageDetails([])
-    setImages([])
-    setUploadedImages(results)
-
-    if (uploadedImages[0].url ) {
-      await uploadNewProject(
-        title, 
-        year,  
-        category, 
-        description, 
-        credits, 
-        uploadedImages, 
-        videoLink 
-      );
-    }
-
-    return results; 
   };
   
 
@@ -223,7 +171,108 @@ export const UploadProject = () => {
     setDescription("");
     setVideoLink([{ url: "", photographer: "", link: "" }]);
     setImages([]);
+    setImageDetails([])
+    setEditingField(null)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const missingFields = [];
+  
+    // Check for missing title, year, category, and description
+    if (!title.trim()) missingFields.push("Title missing");
+    if (!year.trim()) missingFields.push("Year missing");
+    if (!category.trim()) missingFields.push("Category missing");
+    if (!description.trim()) missingFields.push("Description missing");
+    if (images.length === 0) missingFields.push("Image/images missing");
+  
+    credits.forEach((credit, creditIndex) => {
+      // Check if the role is filled in (required)
+      if (!credit.role.trim()) missingFields.push(`Role ${creditIndex + 1}`);
+    
+      // For each role, check that at least one name is provided
+      const hasAtLeastOneName = credit.names.some(nameObj => nameObj.name.trim());
+      if (!hasAtLeastOneName) {
+        missingFields.push(`At least one name in Role ${creditIndex + 1}`);
+      }
+    
+      // If you want to check all names, not just one:
+      credit.names.forEach((nameObj, nameIndex) => {
+        // Ensure each name is not empty (required)
+        if (!nameObj.name.trim()) {
+          missingFields.push(`Name ${nameIndex + 1} in Role ${creditIndex + 1}`);
+        }
+        // The link is optional, so no check for that
+      });
+    });
+  
+    if (missingFields.length > 0) {
+      alert(`Please fill in everything that is required: ${missingFields.join(", ")}`);
+      return;
+    }
+  
+    // If all required fields are valid, trigger the submission logic
+    uploadImagesToCloudinary(images, imageDetails);
   };
+
+  const uploadImagesToCloudinary = async (images, imageDetails) => {
+    setUploadInProcess(true)
+    const uploadedImages = [];
+    const uploadPreset = "AmaKyei";
+    const cloudName = 'dbf8xygxz'; 
+  
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i];
+      const detail = imageDetails[i];
+  
+      const formData = new FormData();
+      formData.append('file', image);
+      formData.append('upload_preset', uploadPreset);
+  
+      try {
+        const response = await axios.post(
+          `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+          formData
+        );
+  
+        // Create the structured object for each image
+        const imageData = {
+          url: response.data.secure_url, // URL from Cloudinary
+          photographer: detail.photographer || '', // Get photographer's name
+          link: detail.link || '', // Get associated link
+        };
+        uploadedImages.push(imageData); 
+        console.log("success")
+  
+
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        setUploadInProcess(false)
+      }
+    }
+
+    if (uploadedImages.length > 0 && uploadedImages[0].url) {
+      await uploadNewProject(
+        title, 
+        year,  
+        category, 
+        description, 
+        credits, 
+        uploadedImages, 
+        videoLink 
+      );
+      clearAllFields()
+      setUploadInProcess(false)
+    }
+
+    return uploadedImages; 
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setUploadSuccessful(false)
+    }, 2000);
+  }, [uploadSuccessful])
 
   useEffect(() => {
     if (loggedOut) {
@@ -248,22 +297,25 @@ export const UploadProject = () => {
   }, []);
 
 console.log("images", images)
-console.log("cloudinary", uploadedImages)
 console.log("category", category)
 console.log("credits", credits)
 console.log("title", title)
 console.log("year", year)
 console.log("description", description)
 console.log("video", videoLink)
+console.log(uploadSuccessful)
+
 
   return (
   <>
    {uploadSuccessful && <PopupMessage />}
-    <section className="w-full h-full tablet:w-2/3 tablet:m-auto animate-fadeIn">
+    <section className="w-full h-full tablet:w-10/12 laptop:w-9/12 tablet:m-auto animate-fadeIn">
+    <form onSubmit={handleSubmit}>
        <div className="flex justify-between "><h2 className="text-2xl mb-16 font-heading text-main-dark laptop:mb-8">New project</h2>
        <button
                   className="text-peach bg-main-white h-fit rounded-xl p-2 hidden laptop:flex"
                   onClick={() => clearAllFields()}
+                  type="button"
                 >
                   <FaTrashAlt className="w-6 h-6 hover:scale-110 hover:text-red-700" />
                 </button>
@@ -283,6 +335,7 @@ console.log("video", videoLink)
                   onKeyDown={handleKeyPress}
                   className="w-60 focus:outline-none text-end overflow-hidden text-ellipsis whitespace-nowrap pr-2 bg-main-white"
                   placeholder="Title"
+                  required
                 />
                 <MdDone
                   className="w-6 h-6 cursor-pointer"
@@ -315,6 +368,7 @@ console.log("video", videoLink)
                   onKeyDown={handleKeyPress}
                   className="w-60 focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap text-end pr-2 bg-main-white"
                   placeholder="Year"
+                  required
                 />
                 <MdDone
                   className="w-6 h-6 cursor-pointer "
@@ -336,7 +390,7 @@ console.log("video", videoLink)
               </>
             )}
           </div>
-          <select value={category} onChange={handleCategoryChange} required className="my-4 bg-main-white cursor-pointer focus:outline-none rounded-md p-2">
+          <select value={category} onChange={handleCategoryChange} required className="my-4 bg-main-white text-end cursor-pointer focus:outline-none rounded-md p-2">
   <option value="" disabled>Select category</option>
   {categoryEnum.map(cat => (
     <option key={cat} value={cat}>{cat}</option>
@@ -356,7 +410,7 @@ console.log("video", videoLink)
               placeholder="Role (ex. Choreographer) "
               className="border border-main-dark border-dotted rounded-xl p-2 mb-2 focus:outline-none"
             />
-            <button onClick={() => deleteRole(creditIndex)} >
+            <button onClick={() => deleteRole(creditIndex)} type="button" >
             <FaTrashAlt className="w-4 h-4 text-peach cursor-pointer hover:scale-110" />
             </button>
           </div>
@@ -378,14 +432,14 @@ console.log("video", videoLink)
                   className="border border-main-dark border-dotted rounded-xl p-2 mr-2 focus:outline-none"
                 />
                 {/* Button to delete the name/link pair */}
-                <button onClick={() => deleteNameField(creditIndex, nameIndex)} className="flex justify-end" >
+                <button onClick={() => deleteNameField(creditIndex, nameIndex)} type="button" className="flex justify-end" >
                 <FaTrashAlt className="w-4 h-4 mt-2 mr-2 text-peach cursor-pointer hover:scale-110" />
                 </button>
               </div>
               
             ))}
                {/* Button to add another name/link pair for this specific role */}
-             <button onClick={() => addNameField(creditIndex)} className="flex text-main-dark gap-2 p-2" >
+             <button onClick={() => addNameField(creditIndex)} type="button" className="flex text-main-dark gap-2 p-2" >
                   Add Name <FiPlusCircle className="w-6 h-6 cursor-pointer hover:scale-110" />
                 </button>
           </div>
@@ -393,7 +447,7 @@ console.log("video", videoLink)
       ))}
       {/* Add a new role */}
       <div className="flex justify-end">
-      <button onClick={addRoleField} className="flex gap-2 rounded-xl bg-beige hover:bg-peach hover:text-main-white p-2 text-main-dark w-fit">
+      <button onClick={addRoleField} type="button" className="flex gap-2 rounded-xl bg-beige hover:bg-peach hover:text-main-white p-2 text-main-dark w-fit">
         Add Role <FiPlusCircle className="w-6 h-6 cursor-pointer hover:scale-110" />
       </button>
       </div>
@@ -415,7 +469,7 @@ console.log("video", videoLink)
                 onChange={handleDescriptionChange}
                 onBlur={() => setEditingField(null)}
                 onKeyDown={handleKeyPress}
-                className="w-full h-[150px] p-4 resize-none focus:outline-none bg-main-white"
+                className="w-full h-[150px] p-4 rounded-xl resize-none focus:outline-none bg-main-white"
                 placeholder="Description"
                 style={{ verticalAlign: "top", overflowY: "auto" }}
               />
@@ -476,7 +530,7 @@ console.log("video", videoLink)
                 }
                 onBlur={() => setEditingField(null)}
                 onKeyDown={handleKeyPress}
-                className="w-full overflow-hidden text-ellipsis whitespace-nowrap p-4 focus:outline-none bg-main-white"
+                className="w-full overflow-hidden text-ellipsis  rounded-xl whitespace-nowrap p-4 focus:outline-none bg-main-white"
                 placeholder={videoLink[0].url || "https://example.com"}
               />
                 <input
@@ -491,7 +545,7 @@ console.log("video", videoLink)
                 }
                 onBlur={() => setEditingField(null)}
                 onKeyDown={handleKeyPress}
-                className="w-full overflow-hidden text-ellipsis whitespace-nowrap p-4 focus:outline-none bg-main-white"
+                className="w-full overflow-hidden text-ellipsis  rounded-xl whitespace-nowrap p-4 focus:outline-none bg-main-white"
                 placeholder="Photographer name"
               />
                  <input
@@ -506,7 +560,7 @@ console.log("video", videoLink)
                 }
                 onBlur={() => setEditingField(null)}
                 onKeyDown={handleKeyPress}
-                className="w-full overflow-hidden text-ellipsis whitespace-nowrap p-4 focus:outline-none bg-main-white"
+                className="w-full overflow-hidden text-ellipsis  rounded-xl whitespace-nowrap p-4 focus:outline-none bg-main-white"
                 placeholder="Photographer website / social media"
               />
             </>
@@ -550,7 +604,7 @@ console.log("video", videoLink)
               alt="preview"
               className="w-full h-full object-cover rounded-xl"
             />
-            <button
+            <button type="button"
               className="absolute hover:scale-110 top-0 right-0 text-red-700 p-2"
               onClick={() => removeImage(index)}
             >
@@ -674,6 +728,7 @@ console.log("video", videoLink)
         <button
                   className="text-peach bg-main-white h-fit rounded-xl p-2 flex gap-2 mt-10 laptop:hidden"
                   onClick={() => clearAllFields()}
+                  type="button"
                 >
                   <FaTrashAlt className="w-6 h-6" /> Clear all input
                 </button>
@@ -682,19 +737,24 @@ console.log("video", videoLink)
      
   
       {/* Save Section */}
-      <div className="flex gap-2 justify-center items-center font-bold text-peach hover:scale-110 border-2 cursor-pointer hover:drop-shadow border-peach w-fit p-2 px-4 m-auto rounded-2xl mt-20 bg-main-white text-main-dark laptop:col-span-2 laptop:order-2"
-      onClick={() => uploadImagesToCloudinary(images, imageDetails)}>
+      <button className="flex gap-2 justify-center items-center font-bold text-peach hover:scale-110 border-2 cursor-pointer hover:drop-shadow border-peach w-fit p-2 px-4 m-auto rounded-2xl mt-20 bg-main-white text-main-dark laptop:col-span-2 laptop:order-2"
+      type="submit"
+      disabled={uploadInProcess}>
         <h3
           className="text-end font-body text-xl"
         >
           Save
         </h3>
+        {uploadInProcess ? ( <Loading upload={true}/> ) : ( <>
         <RiSave3Line
-          className="w-6 h-6 text-peach"
-        />
+        className="w-6 h-6 text-peach"
+        /></>
+        )}
+       
         
+      </button>
       </div>
-      </div>
+      </form>
     </section>
     </>
   )

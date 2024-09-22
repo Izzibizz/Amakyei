@@ -1,38 +1,83 @@
-import { useUserStore } from "../store/useUserStore"
-import { useProjectsStore } from "../store/useProjectsStore"
-import { useEffect } from "react" 
+import { useUserStore } from "../store/useUserStore";
+import { useProjectsStore } from "../store/useProjectsStore";
+import { useEffect } from "react";
 import Lottie from "lottie-react";
-import greenAnimation from "../assets/Animation-green-done.json"
-import redAnimation from "../assets/fail-animation.json"
-
+import greenAnimation from "../assets/Animation-green-done.json";
+import redAnimation from "../assets/fail-animation.json";
+import loadingAnimation from "../assets/Circle-loading-Animation.json"
 
 export const PopupMessage = () => {
-    
-    const { loggedIn, loggedOut, setShowPopupMessage, showPopupMessage, loginError, setLoginError } = useUserStore()
-    const { uploadSuccessful } = useProjectsStore()
+  const {
+    loggedIn,
+    loggedOut,
+    setShowPopupMessage,
+    showPopupMessage,
+    loginError,
+    setLoginError,
+  } = useUserStore();
+  const {
+    uploadSuccessful,
+    setUploadSuccessful,
+    uploadError,
+    setUploadError,
+    deleteValidationProcess,
+    setDeleteValidationProcess,
+    setDeleteConfirmed,
+    loadingDelete,
+    deleteSuccessful,
+    deleteError,
+    setDeleteError,
+  } = useProjectsStore();
 
-const getMessage = () => {
-    if (loginError) return "Incorrect user or password, please try again"
+
+  const getMessage = () => {
+    if (deleteValidationProcess)
+      return "Are you sure you want to delete this project?";
+    if (loadingDelete) return "Deleting.."
+    if (deleteSuccessful) return "Your project has been deleted";
+    if (deleteError) return "Try again, could not delete";
+    if (loginError) return "Incorrect user or password, please try again";
+    if (uploadSuccessful) return "Your project has been uploaded";
+    if (uploadError) return "Could not save, please try again";
     if (loggedIn) return `Welcome Ama!`;
     if (loggedOut) return "You have been logged out";
-    if (uploadSuccessful) return "Your project has been uploaded"
-   
+
     return "";
   };
 
-const getAnimation = () => {
-    if (loginError) return redAnimation
-    return greenAnimation
-}
+  const confirmDelete = () => {
+    setDeleteConfirmed(true)
+    setDeleteValidationProcess(false)
+  }
 
-  
+  const abortDelete = () => {
+    setDeleteConfirmed(false)
+    setDeleteValidationProcess(false)
+  }
+
+  const getAnimation = () => {
+    if (loginError || uploadError || deleteError) return redAnimation;
+    if (loadingDelete) return loadingAnimation;
+    return greenAnimation;
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     setTimeout(() => {
-      setShowPopupMessage(false)
-      setLoginError(false)
+      setUploadSuccessful(false);
+      setDeleteError(false);
+      setShowPopupMessage(false);
+      setLoginError(false);
+      setUploadError(false);
     }, 2000);
-  
-  }, [showPopupMessage])
+  }, [uploadSuccessful, loginError, uploadError, loggedIn, loggedOut, deleteError] );
+
+
+  console.log(showPopupMessage, uploadSuccessful)
+  console.log(deleteSuccessful);
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-overlay backdrop-blur-sm  flex items-center justify-center z-50">
@@ -40,14 +85,18 @@ const getAnimation = () => {
         <div className="font-heading text-text-light">
           <h2 className="text-sm tablet:text-base mb-4">{getMessage()}</h2>
         </div>
-      <Lottie
-          animationData={getAnimation()}
-          loop={false}
-          autoPlay
-          style={{ width: 100, height: 100 }}
-        />
+        {deleteValidationProcess ? (
+           <div className="flex gap-8"><button type="button" className="bg-peach hover:bg-main-dark p-2 px-4 rounded-xl text-main-white" onClick={()=> confirmDelete()}>Yes</button>
+          <button type="button" className="bg-peach hover:bg-main-dark p-2 px-4 rounded-xl text-main-white" onClick={()=> abortDelete()}>No</button></div>
+        ) : (
+          <Lottie
+            animationData={getAnimation()}
+            loop={false}
+            autoPlay
+            style={{ width: 100, height: 100 }}
+          />
+        )}
       </div>
     </div>
   );
-}
-
+};

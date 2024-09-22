@@ -5,18 +5,30 @@ export const useProjectsStore = create((set, get) => ({
   error: null,
   loadingProjects: false,
   loadingUpload: false,
+  loadingDelete: false,
   uploadError: false,
   uploadSuccessful: false,
+  deleteError: false,
+  deleteValidationProcess: false,
+  deleteconfirmed: false,
+  deleteSuccessful: false,
   headerVisibilityChange: false,
   darkTextNeeded: false,
   listIsVisible: false,
   laptopView: false,
 
-  setUploadSuccessful: () => set({ uploadSuccessFul: true }),
+  setUploadSuccessful: (input) => set({ uploadSuccessful: input }),
+  setUploadError: (input) => set({uploadError: input }),
+  setDeleteValidationProcess: (input) => set({ deleteValidationProcess: input }),
+  setDeleteConfirmed: (input) => set({ deleteConfirmed: input }),
+  setLoadingDelete: (input) => set({ loadingDelete: input }),
+  setDeleteSuccessful: (input) => set({ deleteSuccessful: input }),
+  setDeleteError: (input) => set({ deleteError: input }),
   setHeaderVisibilityChange: (input) => set({ headerVisibilityChange: input }),
-  setDarkTextNeeded: (input) => set({ darkTextNeeded: input}),
+  setDarkTextNeeded: (input) => set({ darkTextNeeded: input }),
   setListIsVisible: (input) => set({ listIsVisible: input }),
   setLaptopView: (input) => set({ laptopView: input }), 
+
 
   fetchProjects: async () => {
     set({ loadingProjects: true, error: null }); // Set loading and clear error
@@ -46,7 +58,7 @@ export const useProjectsStore = create((set, get) => ({
     }
   },
 
-  uploadNewProject: async (title, year, category, description, credits, images, video ) => {
+  uploadNewProject: async (title, year, category, description, credits, uploadedImages, videoLink ) => {
     set({ loadingUpload: true, error: null, uploadError: false, uploadSuccessful: false });
     const URL = "https://amakyei.onrender.com/projects/newProject";
     try {
@@ -58,8 +70,8 @@ export const useProjectsStore = create((set, get) => ({
           category: category,
           description: description,
           credits: credits,
-          images: images,
-          video: video
+          images: uploadedImages,
+          video: videoLink
         }),
         headers: { "Content-Type": "application/json" },
       });
@@ -82,6 +94,37 @@ export const useProjectsStore = create((set, get) => ({
     } finally {
 
       set({ loadingUpload: false });
+    }
+  },
+  deleteProjectWithId: async ( projectId ) => {
+    set({ error: null, loadingDelete: true, deleteError: false });
+    const URL = `https://amakyei.onrender.com/projects/${projectId}`;
+    try {
+      const response = await fetch(URL, {
+        method: "DELETE",
+      headers: { "Content-Type": "application/json" }
+      });
+      if (!response.ok) {
+        throw new Error("could not fetch");
+      }
+      const data = await response.json();
+    console.log("Project successfully deleted:", data);
+
+    const { fetchProjects } = get();
+    await fetchProjects();
+
+    set({ 
+      loadingDelete: false,
+      deleteSuccessful: true,
+      deleteError: false,
+      deleteConfirmed: false, 
+    });
+    } catch (error) {
+      console.error("error deleting project:", error);
+      set({ error: error, deleteError: true, deleteConfirmed: false });
+    } finally {
+
+      set({ loadingDelete: false });
     }
   },
 }));

@@ -32,7 +32,8 @@ export const Login = () => {
     console.log("loginUser:", loginUser);
   };
 
-  console.log(loginError, "loading:", loadingUser, loggedIn, loginMessage);
+  console.log(loginError, "loading:", loadingUser, loggedIn, loginMessage )
+  console.log(showPopupMessage);
 
   return (
     <>
