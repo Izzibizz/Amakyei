@@ -25,7 +25,7 @@ import { Navigation, Pagination } from "swiper/modules";
 export const UploadProject = () => {
 
   const { loggedOut } = useUserStore();
-  const { uploadSuccessful, setUploadSuccessful, uploadNewProject } = useProjectsStore()
+  const { uploadSuccessful, setUploadSuccessful, uploadNewProject, loadingUpload } = useProjectsStore()
 
   const navigate = useNavigate();
 
@@ -303,7 +303,9 @@ console.log("title", title)
 console.log("year", year)
 console.log("description", description)
 console.log("video", videoLink)
-console.log(uploadSuccessful)
+console.log("success", uploadSuccessful)
+console.log("process", uploadInProcess)
+console.log("loading", loadingUpload)
 
 
   return (
@@ -454,7 +456,7 @@ console.log(uploadSuccessful)
       </div>
 
         {/* Description Section */}
-        <div className="border-2 border-dotted rounded-xl border-main-dark min-h-[150px] h-fit w-full mt-8 text-main-dark"
+        <div className="border-2 border-dotted rounded-xl border-main-dark min-h-[150px] h-fit w-full mt-8 text-main-dark font-body"
           onClick={() => {
             if (editingField !== "description") {
               toggleEditMode("description");
@@ -639,6 +641,7 @@ console.log(uploadSuccessful)
         <h3 className="font-body text-xl hover:underline">Add images</h3>
         <FiPlusCircle className="w-6 h-6 hover:scale-110" /></div>
         <p className="font-body">Max width/height: <span className="font-bold">1500px</span> (for good results)</p>
+        <p className="font-body text-center mt-10">Format for naming: <br/> <span className="font-bold">projectname-choreographer-photographer-you</span><br/> (ex. Blomdanser-jonathan-morell-Ama-kyei )</p>
         <input {...getInputProps()} />
       </div>
     )}

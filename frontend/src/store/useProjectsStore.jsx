@@ -127,4 +127,25 @@ export const useProjectsStore = create((set, get) => ({
       set({ loadingDelete: false });
     }
   },
+   saveProjectEdits: async (projectId, input) => {
+    try {
+      const response = await fetch(`https://amakyei.onrender.com/projects/${projectId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(input),
+      });
+  
+      if (response.ok) {
+        // Handle success
+        console.log("Project updated successfully!");
+      } else {
+        // Handle error
+        console.error("Error updating project");
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
+  }
 }));

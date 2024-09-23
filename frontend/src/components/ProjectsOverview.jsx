@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useProjectsStore } from '../store/useProjectsStore';
 import { Loading } from "./Loading"
+import { PopupMessage } from "../components/PopupMessage"
 import { SlArrowDown } from "react-icons/sl";
 import { SlArrowUp } from "react-icons/sl";
 import 'swiper/css';
@@ -14,7 +15,7 @@ import 'swiper/css/effect-fade';
 import { Autoplay, Navigation, Pagination, A11y } from 'swiper/modules';
 
 export const ProjectsOverview = ({category}) => {
-  const { projectsData, loadingProjects, setListIsVisible, listIsVisible } = useProjectsStore();
+  const { projectsData, loadingProjects, setListIsVisible, listIsVisible, deleteSuccessful, setDeleteSuccessful } = useProjectsStore();
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [ dontDisplaySwiper, setDontDisplaySwiper ] = useState(false)
 
@@ -43,7 +44,11 @@ export const ProjectsOverview = ({category}) => {
     window.scrollTo(0, 0);
   }
 
- 
+ useEffect(() => {
+  setTimeout(() => {
+    setDeleteSuccessful(false);
+    }, 2000);
+ }, [deleteSuccessful])
 
 
 
@@ -55,7 +60,7 @@ export const ProjectsOverview = ({category}) => {
   <Loading />
   </div>
 
-) : (
+) : deleteSuccessful ? <PopupMessage/> : (
 <>
       <ul className={`grid grid-cols-2 gap-4 tablet:grid-cols-3 flex-wrap ${listIsVisible | dontDisplaySwiper ? "laptop:grid laptop:animate-fadeIn" : "laptop:hidden"
         }`}>

@@ -58,7 +58,7 @@ export const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 w-full h-24 px-6 laptop:px-20 laptop:py-10 laptop:pt-14 flex justify-between font-heading items-center z-10 bg-background transition-opacity duration-300 ease-in-out  ${headerOpacity} ${textColor} `}
+      className={`fixed top-0 w-full max-w-screen h-24 px-6 laptop:px-20 laptop:py-10 laptop:pt-14 flex justify-between font-heading items-center z-50 bg-background transition-opacity duration-300 ease-in-out  ${headerOpacity} ${textColor} `}
     >
       <NavLink to="/" aria-label="Link to Home" className="flex gap-4">
         <h1 className={` text-3xl laptop:text-4xl`}>Ama Kyei</h1>
