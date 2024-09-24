@@ -1,5 +1,7 @@
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
+import axios from 'axios';
+import { useDropzone } from "react-dropzone";
 import { useProjectsStore } from "../store/useProjectsStore";
 import { useUserStore } from "../store/useUserStore";
 import { Loading } from "../components/Loading";
@@ -10,6 +12,7 @@ import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
 import { FiPlusCircle } from "react-icons/fi";
 import { SlArrowDown } from "react-icons/sl";
+import { RxCrossCircled } from "react-icons/rx";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { RiSave3Line } from "react-icons/ri";
 import { FaPen } from "react-icons/fa";
@@ -70,8 +73,11 @@ export const SingleProject = () => {
     credits: [],
     images: [],
     video: [],
-});
-const categoryEnum = [ "dancer", "choreographer", "pedagog" ]
+    });
+    const categoryEnum = [ "dancer", "choreographer", "pedagog" ]
+    const [ cloudinaryUploadInProcess, setCloudinaryUploadInProcess] = useState(false)
+    const [ imageInput , setImageInput ] = useState([])
+    const [ imageDetailsInput, setImageDetailsInput ] = useState([]);
 
 
   const contentRef = useRef(null);
@@ -301,10 +307,7 @@ const categoryEnum = [ "dancer", "choreographer", "pedagog" ]
     });
   
     if (newProjectIndex !== -1) {
-      // Optionally update any state or store here if needed
-      // Example: setCurrentProject(newProject);
-      
-      // Navigate to the new project
+      setIsEditing(false)
       navigate(`/project/${projectId}`);
     }
   };
@@ -373,14 +376,122 @@ const removeCreditField = (creditIndex) => {
   setInput({ ...input, credits: updatedCredits });
 };
 
-const handleImageChange = (index, field, value) => {
-  const updatedImages = [...input.images];
-  updatedImages[index][field] = value;
-  setInput((prevState) => ({
-    ...prevState,
+
+//image related funcitons
+const { getRootProps, getInputProps } = useDropzone({
+  accept: {
+    "image/*": [],
+  },
+  onDrop: (acceptedFiles) => {
+    setImageInput((prevFiles) => [
+      ...prevFiles,
+      ...acceptedFiles.map((file) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        })
+      ),
+    ]);
+    setEditingField(null);
+    // Initialize details for new images
+    setImageDetailsInput((prevDetails) => [
+      ...prevDetails,
+      ...Array(acceptedFiles.length).fill({ photographer: '', link: '' }),
+    ]);
+  },
+});
+
+const handleImageDetailChange = (index, field, value) => {
+  setImageDetailsInput((prevDetails) =>
+    prevDetails.map((detail, i) =>
+      i === index ? { ...detail, [field]: value } : detail
+    )
+  );
+};
+
+const rootProps = getRootProps({
+  onClick: () => setEditingField(null), // Exit edit mode when Dropzone is clicked
+});
+
+const uploadImagesToCloudinary = async (imageInput, imageDetailsInput) => {
+  setCloudinaryUploadInProcess(true)
+  const uploadedImages = [];
+  const uploadPreset = "AmaKyei";
+  const cloudName = 'dbf8xygxz'; 
+
+  for (let i = 0; i < imageInput.length; i++) {
+    const image = imageInput[i];
+    const detail = imageDetailsInput[i];
+
+    const formData = new FormData();
+    formData.append('file', image);
+    formData.append('upload_preset', uploadPreset);
+
+    try {
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        formData
+      );
+
+      // Create the structured object for each image
+      const imageData = {
+        url: response.data.secure_url, // URL from Cloudinary
+        photographer: detail.photographer || '', // Get photographer's name
+        link: detail.link || '', // Get associated link
+      };
+      uploadedImages.push(imageData); 
+      console.log("success")
+
+
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      setCloudinaryUploadInProcess(false)
+    }
+  }
+
+  if (uploadedImages.length > 0 && uploadedImages[0].url) {
+    setInput((prevInput) => ({
+      ...prevInput,
+      images: [...prevInput.images, ...uploadedImages],
+    }));
+  }
+  setCloudinaryUploadInProcess(false);
+};
+
+const removeImage = (indexToRemove) => {
+  // Filter out the image at the given index
+  const updatedImages = input.images.filter((_, index) => index !== indexToRemove);
+
+  // Update the input state with the new images array
+  setInput((prevInput) => ({
+    ...prevInput,
     images: updatedImages,
   }));
 };
+
+/* const handlePhotographerChange = (index, value) => {
+  setImageDetails((prevDetails) => {
+    const newDetails = [...prevDetails];
+    newDetails[index] = {
+      ...newDetails[index],
+      photographer: value,
+    };
+    return newDetails;
+  });
+};
+
+const handlePhotograperLinkChange = (index, value) => {
+  setImageDetails((prevDetails) => {
+    const newDetails = [...prevDetails];
+    newDetails[index] = {
+      ...newDetails[index],
+      link: value,
+    };
+    return newDetails;
+  });
+};
+ */
+
+
 const handleVideoInputChange = (e, field) => {
   const { value } = e.target;
   setInput((prevState) => ({
@@ -393,6 +504,21 @@ const handleVideoInputChange = (e, field) => {
     ],
   }));
 };
+
+const exitEdit = () => {
+  setIsEditing(false)
+  setEditingField(null)
+  setInput({
+    title: currentProject.title || "",
+    year: currentProject.year || "",
+    category: currentProject.category || "",
+    description: currentProject.description || "",
+    description2: currentProject.description2 || "",
+    credits: currentProject.credits || [],
+    images: currentProject.images || [],
+    video: currentProject.video || [],
+  });
+}
 
 const handleFormSubmit = async (e) => {
   e.preventDefault();
@@ -415,6 +541,7 @@ const handleKeyPress = (e) => {
 
  useEffect(()=> {
   if ( deleteSuccessful ) {
+    setIsEditing(false)
    navigate(`/${category}`)
 }
 }, [deleteSuccessful])
@@ -465,11 +592,10 @@ const handleKeyPress = (e) => {
     return <Loading />; // Or a NotFound component
   }
 
-  console.log(currentProject._id);
-  console.log(deleteSuccessful)
-  console.log(input.credits)
-  console.log("input", input)
-  console.log("video", input.video)
+  console.log(imageInput);
+  console.log(imageDetailsInput)
+  console.log("input", input.images.length)
+
 
   return (
     <section className="w-full animate-fadeIn">
@@ -529,7 +655,7 @@ const handleKeyPress = (e) => {
             {isEditing && <button type="button" onClick={() => setEditingField("year")}><FaPen className="w-4 h-4" /></button>}
             </div>
             {/* Description laptop */}
-            <div className="hidden laptop:flex w-full ">
+            <div className="hidden laptop:flex justify-end w-full ">
             {editingField === "description" ? (<textarea 
             name="description"
             value={input.description}
@@ -537,12 +663,12 @@ const handleKeyPress = (e) => {
             onBlur={() => setEditingField(null)}
             onKeyDown={handleKeyPress}
             placeholder={input.description} 
-            className="font-body w-full focus:outline-none overflow-hidden w-full h-fit text-ellipsis pr-2 bg-main-white border border-2 border-dotted rounded-xl resize-vertical"
+            className="font-body focus:outline-none overflow-hidden w-full h-fit text-ellipsis pr-2 bg-main-white border border-2 border-dotted rounded-xl resize-vertical"
             rows={10} 
             wrap="soft"
             style={{ overflowY: 'auto', height: 'auto' }}
           />) : (
-            <p className="font-body text-justify max-w-full mt-4">
+            <p className="font-body text-justify w-fit max-w-full mt-4">
               {input.description}
             </p>)}
           </div>{isEditing && <button type="button" onClick={() => setEditingField("description")}><FaPen className="w-4 h-4 hidden laptop:flex" /></button>}
@@ -603,7 +729,7 @@ const handleKeyPress = (e) => {
                 className="w-full h-full min-h-screen max-w-screen desktop:aspect-[4/2] object-cover cursor-pointer "
               />
             )}
-            {isEditing && <div className="bg-main-white absolute z-20 bottom-[80%] tablet:bottom-10 right-10 p-4 rounded-xl text-main-dark flex gap-4 font-body">Change image <FaPen className="w-4 h-4 " /></div>}
+           
           </div>
           <div
             ref={contentRef}
@@ -646,12 +772,13 @@ const handleKeyPress = (e) => {
 
             {/* Change category */}
             {isEditing &&  editingField === "category" ? (
+            <div className="flex gap-2">
             <select
             name="category"
             value={input.category}
             onChange={handleInputChange}
             placeholder={input.category} 
-            className="font-heading focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap text-end mt-4 pr-2 bg-main-white border border-2 border-dotted rounded-xl"
+            className="font-heading focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap mt-4 pl-2 bg-main-white border border-2 border-dotted rounded-xl"
           >
             {categoryEnum.map((category) => (
               <option key={category} value={category}>
@@ -659,9 +786,11 @@ const handleKeyPress = (e) => {
               </option>
             ))}
           </select>
+           <button type="button" onClick={() => setEditingField(null)} className="flex gap-2 font-body items-center fony-body text-main-dark p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white mt-4"><FaRegCheckCircle className="w-4 h-4" />Done</button>
+           </div>
           
             ) : isEditing && (
-            <button type="button" onClick={() => setEditingField("category")} className="flex font-body gap-2 mt-4">Change category<FaPen className="w-4 h-4" /></button>)}
+            <button type="button" onClick={() => setEditingField("category")} className="flex gap-2 font-body items-center fony-body text-main-dark p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white mt-4"><FaPen className="w-4 h-4" />Change category</button>)}
             </div>
 
            {/*  Description section phone */}
@@ -697,14 +826,15 @@ const handleKeyPress = (e) => {
                </>
               )}
                {isEditing && editingField === "video" && (
-                <div className="flex flex-col gap-2 border-2 border-beige border-dotted rounded-xl laptop:w-2/3 laptop:max-w-2/3">
+                <div className="flex gap-4">
+                <div className="flex flex-col gap-2 border-2 border-beige border-dotted rounded-xl laptop:w-2/3 laptop:max-w-2/3 mb-4 p-4">
                 <input
                 type="text"
                 name="url"
                 placeholder={input.video[0].url || "Video link"}
                 value={input.video[0].url}
                 onChange={(e) => handleVideoInputChange(e, "url")}
-                className="font-heading focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap pr-2 bg-main-white border border-2 border-dotted rounded-xl"
+                className="font-body focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap p-2 bg-main-white border border-2 border-dotted rounded-xl "
                 />
                 <input
                 type="text"
@@ -712,7 +842,7 @@ const handleKeyPress = (e) => {
                 placeholder={input.video[0].photographer || "Photographer"}
                 value={input.video[0].photographer}
                 onChange={(e) => handleVideoInputChange(e, "photographer")}
-                className="font-heading focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap pr-2 bg-main-white border border-2 border-dotted rounded-xl"
+                className="font-body focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap p-2 bg-main-white border border-2 border-dotted rounded-xl"
                 />
                 <input
                 type="text"
@@ -720,29 +850,32 @@ const handleKeyPress = (e) => {
                 placeholder={input.video[0].link || "Website / Socialmedia"}
                 value={input.video[0].link}
                 onChange={(e) => handleVideoInputChange(e, "link")}
-                className="font-heading focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap pr-2 bg-main-white border border-2 border-dotted rounded-xl"
+                className="font-body focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap p-2 bg-main-white border border-2 border-dotted rounded-xl"
                 />
                 </div>
+                <button type="button" className="flex text-sm text-red-700"><FaTrashAlt className="w-4 h-4 cursor-pointer hover:scale-110  "/></button>
+                </div>
                )}
-              {currentProject.video && currentProject.video.length > 0 && currentProject.video[0].url ? (
+              {currentProject.video && currentProject.video.length > 0 && currentProject.video[0].url && (
                 <>
                 {isEditing && (editingField === "video" ? (
                   <div className="flex gap-2 items-center text-center mb-8 font-body text-main-dark">
-                  <button type="button" onClick={() => setEditingField("null")} className="flex gap-2 font-body items-center p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white"><FaRegCheckCircle className="w-4 h-4 hover:scale-110" /> Change video</button>important! link format for "embed"</div>
+                  <button type="button" onClick={() => setEditingField("null")} className="flex gap-2 font-body items-center p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white"><FaRegCheckCircle className="w-4 h-4 hover:scale-110" /> Done</button>important! link format for embed</div>
                 ) : (
                   <button type="button" onClick={() => setEditingField("video")} className="flex gap-2 font-body items-center fony-body text-main-dark p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white mb-8"><FaPen className="w-4 h-4  hover:scale-110" /> Change video</button>
                 ))}
                 <iframe
                   src={currentProject.video[0].url}
-                  className="w-full h-full my-8 laptop:my-0 justify-self-start aspect-[3/2] rounded-xl "
+                  className="w-full h-auto my-8 laptop:my-0 justify-self-start aspect-[3/2] rounded-xl"
                   title="Project Video"
                   allowFullScreen
                 />
                 </>
                 
-              ) : currentProject.images.length > 1 ? (
+              )}
+               { currentProject.images.length >= 2 && currentProject.video.length === 0 || currentProject.video[0]?.url.length === 0  || ( currentProject.images.length >= 2 && currentProject.video.length > 0 && isEditing ) ? (
                 <div className="relative">
-                  <ul className="flex w-full gap-6 mb-8">
+                  <ul className="flex flex-wrap gap-6 mb-8">
                     {currentProject.images.map((file, index, array) => {
                       // Check if the current photographer name is the same as the previous one
                       const showPhotographerName =
@@ -752,12 +885,12 @@ const handleKeyPress = (e) => {
                       return (
                         <li
                           key={index}
-                          className="flex flex-col w-full max-w-xs"
+                          className="flex flex-col max-w-[80px] laptop:max-w-[150px]"
                         >
                           <img
                             src={file.url}
                             alt={file.photographer}
-                            className="w-full aspect-[3/4] object-cover cursor-pointer rounded-xl"
+                            className="aspect-[3/4] object-cover cursor-pointer rounded-xl"
                             onClick={() =>
                               handleImageClick(file.url, file.photographer)
                             }
@@ -767,12 +900,21 @@ const handleKeyPress = (e) => {
                               Photographer: {file.photographer}
                             </p>
                           )}
+                          { currentProject.images.length > 1 && currentProject.video.length > 0 && isEditing && (
+                            <button
+                            type="button"
+                             onClick={() => removeImage(index)}
+                             className="text-red-700 absolute mt-4 ml-4"
+                           >
+                             <FaTrashAlt className="w-4 h-4 cursor-pointer hover:scale-110  "/>
+                           </button>
+                          )}
                         </li>
                       );
                     })}
                   </ul>
                 </div>
-              ) : (
+              ) : ( currentProject.images.length === 1 && currentProject.video.length === 0 || currentProject.video[0]?.url.length === 0   || ( currentProject.images.length === 1 && currentProject.video[0]?.url.length > 0 &&  isEditing )) && (
                 <div className="my-8 laptop:my-0 relative">
                   <img
                     src={currentProject.images[0].url}
@@ -783,16 +925,75 @@ const handleKeyPress = (e) => {
                         currentProject.images[0].photographer
                       )
                     }
-                    className="aspect-[3/4] laptop:w-2/3 laptop:max-w-2/3 object-cover cursor-pointer rounded-xl "
+                    className="aspect-[3/4] object-cover cursor-pointer rounded-xl "
                   />
                   <p className="font-body text-main-dark mt-4 italic">
                     Photographer: {currentProject.images[0].photographer}
                   </p>
-                </div>
-                
+                   </div>
               )}
+                               {isEditing &&  (
+    <div className="mt-4">
+      {/* Add Image button */}
+      <button
+        {...getRootProps()}
+        type="button"
+        className="flex gap-2 text-main-dark font-body p-4 hover:drop-shadow rounded-xl bg-medium-white w-fit"
+      >
+        Add image <FiPlusCircle className="w-6 h-6 hover:scale-110" />
+        <input {...getInputProps()} />
+      </button>
+
+      {/* Image previews with input for photographer and link */}
+      {imageInput.length > 0 && (
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 border p-4 rounded-lg ">
+          {imageInput.map((file, index) => (
+            <div key={index} className="relative">
+              <img
+                src={file.preview}
+                alt="Preview"
+                className="w-full h-auto object-cover rounded-md"
+              />
+              <div className="mt-2">
+                <input
+                  type="text"
+                  placeholder="Photographer"
+                  value={imageDetailsInput[index].photographer}
+                  onChange={(e) =>
+                    handleImageDetailChange(index, "photographer", e.target.value)
+                  }
+                  className="p-2 border w-full mb-2"
+                />
+                <input
+                  type="text"
+                  placeholder="Link"
+                  value={imageDetailsInput[index].link}
+                  onChange={(e) =>
+                    handleImageDetailChange(index, "link", e.target.value)
+                  }
+                  className="p-2 border w-full"
+                />
+              </div>
               
             </div>
+          ))}
+                {/* Upload Images button */}
+      <button
+        type="button"
+        onClick={() => uploadImagesToCloudinary(imageInput, imageDetailsInput)}
+        className="mt-4 p-2 bg-peach text-white rounded"
+        disabled={cloudinaryUploadInProcess}
+      >
+        {cloudinaryUploadInProcess ? "Uploading..." : "Confirm Images"}
+      </button>
+        </div>
+      )}
+
+
+    </div>
+  )}
+            </div>
+
          {/* Credits Section */}
 <div className="relative p-8 pt-10 bg-main-white border border-main-dark rounded-xl font-body col-span-2 tablet:col-span-1 laptop:w-fit laptop:min-w-[400px] laptop:m-auto">
   
@@ -931,12 +1132,19 @@ const handleKeyPress = (e) => {
           {loggedIn && 
 <div className="bg-main-white  drop-shadow  p-4 fixed bottom-16 tablet:right-[75%] laptop:right-16 laptop:bottom-[80%] z-20 w-fit h-fit rounded-xl flex gap-6 items-center justify-center">
         
-         {isEditing ? (   <button type="submit" className=" text-peach cursor-pointer"
+         {isEditing ? (   <>
+         <button type="submit" className=" text-peach cursor-pointer flex items-center gap-2"
                   ><FaRegCheckCircle
-                  className="w-6 h-6 hover:scale-110"
-                /></button>) : (
-          <FaPen className="w-6 h-6 text-peach cursor-pointer hover:scale-110" onClick={() => setIsEditing(true)} /> )}
-        <FaTrashAlt className="w-6 h-6 text-red-700 cursor-pointer hover:scale-110  "
+                  className="w-4 h-4 hover:scale-110"
+                /> save </button>
+                <button type="button" className=" text-peach cursor-pointer flex items-center gap-2"
+                 onClick={() => exitEdit()}
+                  ><RxCrossCircled
+                  className="w-4 h-4 hover:scale-110"
+                /> exit </button>
+                </>) : (
+          <FaPen className="w-4 h-4 text-peach cursor-pointer hover:scale-110" onClick={() => setIsEditing(true)} /> )}
+        <FaTrashAlt className="w-4 h-4 text-red-700 cursor-pointer hover:scale-110  "
          onClick={() => validateDelete()} />
 </div> }
           {isModalOpen && (

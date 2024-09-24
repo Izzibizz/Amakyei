@@ -23,7 +23,7 @@ export const ImageModal = ({ src, onClose, photographer }) => {
           <img
             src={src}
             alt={photographer}
-            className="object-contain cursor-pointer  max-w-[90vw] max-h-[80vh]"
+            className="object-contain cursor-pointer rounded-xl max-w-[90vw] max-h-[80vh]"
             onClick={onClose}
           />
           {photographer && (
