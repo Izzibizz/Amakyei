@@ -12,6 +12,9 @@ export const useProjectsStore = create((set, get) => ({
   deleteValidationProcess: false,
   deleteconfirmed: false,
   deleteSuccessful: false,
+  editSuccessful: false,
+  editError: false,
+  loadingEdit: false,
   headerVisibilityChange: false,
   darkTextNeeded: false,
   listIsVisible: false,
@@ -24,6 +27,8 @@ export const useProjectsStore = create((set, get) => ({
   setLoadingDelete: (input) => set({ loadingDelete: input }),
   setDeleteSuccessful: (input) => set({ deleteSuccessful: input }),
   setDeleteError: (input) => set({ deleteError: input }),
+  setEditSuccessful: (input) => set({ editSuccessful: input}),
+  setEditError: (input) => set({ editError: input}),
   setHeaderVisibilityChange: (input) => set({ headerVisibilityChange: input }),
   setDarkTextNeeded: (input) => set({ darkTextNeeded: input }),
   setListIsVisible: (input) => set({ listIsVisible: input }),
@@ -128,6 +133,7 @@ export const useProjectsStore = create((set, get) => ({
     }
   },
    saveProjectEdits: async (projectId, input) => {
+    set({ error: null, editSuccessful: false, loadingEdit: true, editError: false });
     try {
       const response = await fetch(`https://amakyei.onrender.com/projects/${projectId}`, {
         method: "PATCH",
@@ -140,9 +146,14 @@ export const useProjectsStore = create((set, get) => ({
       if (response.ok) {
         // Handle success
         console.log("Project updated successfully!");
+        set({ editSuccessful: true, loadingEdit: false })
+        const { fetchProjects } = get();
+        await fetchProjects();    
+
       } else {
         // Handle error
         console.error("Error updating project");
+        set({ error: error, editError: true, loadingEdit: false });
       }
     } catch (error) {
       console.error("Network error:", error);

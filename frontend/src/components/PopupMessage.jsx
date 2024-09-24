@@ -27,6 +27,10 @@ export const PopupMessage = () => {
     deleteSuccessful,
     deleteError,
     setDeleteError,
+    editSuccessful,
+    editError,
+    setEditSuccessful,
+    setEditError,
   } = useProjectsStore();
 
 
@@ -36,6 +40,8 @@ export const PopupMessage = () => {
     if (loadingDelete) return "Deleting.."
     if (deleteSuccessful) return "Your project has been deleted";
     if (deleteError) return "Try again, could not delete";
+    if (editSuccessful) return "Your project was successfully updated"
+    if (editError) return "Something went wrong, please try again";
     if (loginError) return "Incorrect user or password, please try again";
     if (uploadSuccessful) return "Your project has been uploaded";
     if (uploadError) return "Could not save, please try again";
@@ -56,7 +62,7 @@ export const PopupMessage = () => {
   }
 
   const getAnimation = () => {
-    if (loginError || uploadError || deleteError) return redAnimation;
+    if (loginError || uploadError || deleteError, editError) return redAnimation;
     if (loadingDelete) return loadingAnimation;
     return greenAnimation;
   };
@@ -68,12 +74,14 @@ export const PopupMessage = () => {
   useEffect(() => {
     setTimeout(() => {
       setUploadSuccessful(false);
+      setEditSuccessful(false)
+      setEditError(false)
       setDeleteError(false);
       setShowPopupMessage(false);
       setLoginError(false);
       setUploadError(false);
     }, 2000);
-  }, [uploadSuccessful, loginError, uploadError, loggedIn, loggedOut, deleteError] );
+  }, [uploadSuccessful, loginError, uploadError, loggedIn, loggedOut, deleteError, editError, editSuccessful] );
 
 
   console.log(showPopupMessage, uploadSuccessful)

@@ -27,7 +27,7 @@ export const ProjectsOverview = ({category}) => {
   useEffect(() => {
     if (projectsData && category) {
       const filtered = projectsData.filter(project => project.category === category);
-      if (filtered.length <= 2) {
+      if (filtered.length < 4) {
         setDontDisplaySwiper(true)
       }
       if (filtered.length >= 2) {

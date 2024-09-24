@@ -42,7 +42,9 @@ export const SingleProject = () => {
     loadingDelete,
     deleteConfirmed, 
     deleteSuccessful,
-    setDeleteSuccessful
+    setDeleteSuccessful,
+    saveProjectEdits,
+    editSuccessful
   } = useProjectsStore();
 
   const { loggedIn } = useUserStore()
@@ -357,6 +359,20 @@ const addCreditField = () => {
   }));
 };
 
+// Remove a name (credits)
+const removeNameField = (creditIndex, nameIndex) => {
+  const updatedCredits = [...input.credits];
+  updatedCredits[creditIndex].names.splice(nameIndex, 1);
+  setInput({ ...input, credits: updatedCredits });
+};
+
+// Remove a role (credits)
+const removeCreditField = (creditIndex) => {
+  const updatedCredits = [...input.credits];
+  updatedCredits.splice(creditIndex, 1);
+  setInput({ ...input, credits: updatedCredits });
+};
+
 const handleImageChange = (index, field, value) => {
   const updatedImages = [...input.images];
   updatedImages[index][field] = value;
@@ -364,6 +380,24 @@ const handleImageChange = (index, field, value) => {
     ...prevState,
     images: updatedImages,
   }));
+};
+const handleVideoInputChange = (e, field) => {
+  const { value } = e.target;
+  setInput((prevState) => ({
+    ...prevState,
+    video: [
+      {
+        ...prevState.video[0], // Use existing object in the array (if exists)
+        [field]: value, // Update the specific field (url, photographer, or link)
+      },
+    ],
+  }));
+};
+
+const handleFormSubmit = async (e) => {
+  e.preventDefault();
+  setIsEditing(false)
+  await saveProjectEdits(currentProject._id, input);
 };
 
 const handleKeyPress = (e) => {
@@ -434,6 +468,8 @@ const handleKeyPress = (e) => {
   console.log(currentProject._id);
   console.log(deleteSuccessful)
   console.log(input.credits)
+  console.log("input", input)
+  console.log("video", input.video)
 
   return (
     <section className="w-full animate-fadeIn">
@@ -441,7 +477,7 @@ const handleKeyPress = (e) => {
         <div className="w-1/3 laptop: w-2/12 m-auto mt-20">
           <Loading />
         </div>
-      ) : deleteValidationProcess || loadingDelete || deleteConfirmed || deleteSuccessful ? ( <PopupMessage/> ) : currentProject && (
+      ) : deleteValidationProcess || loadingDelete || deleteConfirmed || deleteSuccessful || editSuccessful ? ( <PopupMessage/> ) : currentProject && (
         <>
           <NavLink
             to={`/${category}`}
@@ -453,7 +489,7 @@ const handleKeyPress = (e) => {
           >
             <SlArrowLeft className="cursor-pointer w-8 h-8   absolute z-20 top-32 hover:scale-125" />{" "}
           </NavLink>
-
+          <form onSubmit={handleFormSubmit}>
           <div
             className={`absolute bottom-10 tablet:bottom-20 right-10 tablet:right-20 laptop:bottom-2 laptop:text-main-dark z-10 flex flex-col laptop:w-1/3 items-end text-main-white justify-end transition-opacity duration-[1500ms] ${
               contentIsVisible ? "opacity-0" : "opacity-100"
@@ -474,7 +510,7 @@ const handleKeyPress = (e) => {
             <h2 className="text-lg font-heading text-end drop-shadow-lg">
               {input.title}
             </h2> )}
-            {isEditing && <button onClick={() => setEditingField("title")}><FaPen className="w-4 h-4" /></button>}
+            {isEditing && <button type="button" onClick={() => setEditingField("title")}><FaPen className="w-4 h-4" /></button>}
             </div>
             <div className="flex gap-2">
             {editingField === "year" ? (<input 
@@ -490,10 +526,10 @@ const handleKeyPress = (e) => {
             <h3 className="text-lg font-heading text-end drop-shadow-lg">
               {input.year}
             </h3> )}
-            {isEditing && <button onClick={() => setEditingField("year")}><FaPen className="w-4 h-4" /></button>}
+            {isEditing && <button type="button" onClick={() => setEditingField("year")}><FaPen className="w-4 h-4" /></button>}
             </div>
             {/* Description laptop */}
-            <div className="hidden laptop:flex w-full">
+            <div className="hidden laptop:flex w-full ">
             {editingField === "description" ? (<textarea 
             name="description"
             value={input.description}
@@ -509,7 +545,7 @@ const handleKeyPress = (e) => {
             <p className="font-body text-justify max-w-full mt-4">
               {input.description}
             </p>)}
-          </div>{isEditing && <button onClick={() => setEditingField("description")}><FaPen className="w-4 h-4 hidden laptop:flex" /></button>}
+          </div>{isEditing && <button type="button" onClick={() => setEditingField("description")}><FaPen className="w-4 h-4 hidden laptop:flex" /></button>}
 
             <SlArrowDown
               className="cursor-pointer animate-fadeInOut my-4 mr-2 hover:scale-150 hover:animate-none"
@@ -591,7 +627,7 @@ const handleKeyPress = (e) => {
            /> ) : (
             <h2 className="text-lg font-heading">
               {input.title}
-            </h2> )}{isEditing && <button onClick={() => setEditingField("title")}><FaPen className="w-4 h-4" /></button>}</div>
+            </h2> )}{isEditing && <button type="button" onClick={() => setEditingField("title")}><FaPen className="w-4 h-4" /></button>}</div>
 
             {/* Year */} 
             <div className="flex gap-2"> {editingField === "year" ? (<input 
@@ -606,7 +642,7 @@ const handleKeyPress = (e) => {
             />) : (
             <h3 className="text-lg font-heading">
               {input.year}
-            </h3> )} {isEditing && <button onClick={() => setEditingField("year")}><FaPen className="w-4 h-4" /></button>}</div>
+            </h3> )} {isEditing && <button type="button" onClick={() => setEditingField("year")}><FaPen className="w-4 h-4" /></button>}</div>
 
             {/* Change category */}
             {isEditing &&  editingField === "category" ? (
@@ -625,7 +661,7 @@ const handleKeyPress = (e) => {
           </select>
           
             ) : isEditing && (
-            <button onClick={() => setEditingField("category")} className="flex font-body gap-2 mt-4">Change category<FaPen className="w-4 h-4" /></button>)}
+            <button type="button" onClick={() => setEditingField("category")} className="flex font-body gap-2 mt-4">Change category<FaPen className="w-4 h-4" /></button>)}
             </div>
 
            {/*  Description section phone */}
@@ -646,26 +682,66 @@ const handleKeyPress = (e) => {
             <p className="font-body text-justify max-w-full mt-4">
               {input.description}
             </p>)}
-          {isEditing && <button onClick={() => setEditingField("description")} onKeyDown={handleKeyPress}><FaPen className="w-4 h-4 laptop:hidden" /></button>}
+          {isEditing && <button type="button" onClick={() => setEditingField("description")} onKeyDown={handleKeyPress}><FaPen className="w-4 h-4 laptop:hidden" /></button>}
               </div>
 
               {/* Video / images */}
               {(!currentProject.video || currentProject.video.length === 0 || !currentProject.video[0].url) && (
-                isEditing && <div className="flex gap-2 font-body text-main-dark p-2 rounded-xl"><FiPlusCircle className="w-4 h-4 cursor-pointer hover:scale-110" /> Add video</div>)}
+                <>
+                 {isEditing && (editingField === "video" ? (
+                  <div className="flex gap-2 items-center text-center mb-8 font-body text-main-dark">
+                  <button type="button" onClick={() => setEditingField("null")} className="flex gap-2 font-body items-center p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white"><FaRegCheckCircle className="w-4 h-4 hover:scale-110" /> Add video</button>important! link format for "embed"</div>
+                ) : (
+                  <button type="button" onClick={() => setEditingField("video")} className="flex gap-2 font-body items-center fony-body text-main-dark p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white mb-8"><FiPlusCircle className="w-4 h-4  hover:scale-110" /> Add video</button>
+                ))}
+               </>
+              )}
+               {isEditing && editingField === "video" && (
+                <div className="flex flex-col gap-2 border-2 border-beige border-dotted rounded-xl laptop:w-2/3 laptop:max-w-2/3">
+                <input
+                type="text"
+                name="url"
+                placeholder={input.video[0].url || "Video link"}
+                value={input.video[0].url}
+                onChange={(e) => handleVideoInputChange(e, "url")}
+                className="font-heading focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap pr-2 bg-main-white border border-2 border-dotted rounded-xl"
+                />
+                <input
+                type="text"
+                name="photographer"
+                placeholder={input.video[0].photographer || "Photographer"}
+                value={input.video[0].photographer}
+                onChange={(e) => handleVideoInputChange(e, "photographer")}
+                className="font-heading focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap pr-2 bg-main-white border border-2 border-dotted rounded-xl"
+                />
+                <input
+                type="text"
+                name="link"
+                placeholder={input.video[0].link || "Website / Socialmedia"}
+                value={input.video[0].link}
+                onChange={(e) => handleVideoInputChange(e, "link")}
+                className="font-heading focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap pr-2 bg-main-white border border-2 border-dotted rounded-xl"
+                />
+                </div>
+               )}
               {currentProject.video && currentProject.video.length > 0 && currentProject.video[0].url ? (
                 <>
+                {isEditing && (editingField === "video" ? (
+                  <div className="flex gap-2 items-center text-center mb-8 font-body text-main-dark">
+                  <button type="button" onClick={() => setEditingField("null")} className="flex gap-2 font-body items-center p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white"><FaRegCheckCircle className="w-4 h-4 hover:scale-110" /> Change video</button>important! link format for "embed"</div>
+                ) : (
+                  <button type="button" onClick={() => setEditingField("video")} className="flex gap-2 font-body items-center fony-body text-main-dark p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white mb-8"><FaPen className="w-4 h-4  hover:scale-110" /> Change video</button>
+                ))}
                 <iframe
                   src={currentProject.video[0].url}
                   className="w-full h-full my-8 laptop:my-0 justify-self-start aspect-[3/2] rounded-xl "
                   title="Project Video"
                   allowFullScreen
                 />
-                {isEditing && <div className="bg-main-white p-2 rounded-xl"><FaPen className="w-4 h-4" /></div>}
                 </>
                 
               ) : currentProject.images.length > 1 ? (
                 <div className="relative">
-                {isEditing && <div className="absolute bg-main-white p-2 rounded-xl bottom-10 right-0 z-20"><FaPen className="w-4 h-4" /></div>}
                   <ul className="flex w-full gap-6 mb-8">
                     {currentProject.images.map((file, index, array) => {
                       // Check if the current photographer name is the same as the previous one
@@ -698,7 +774,6 @@ const handleKeyPress = (e) => {
                 </div>
               ) : (
                 <div className="my-8 laptop:my-0 relative">
-                   {isEditing && <div className="absolute bg-main-white p-2 rounded-xl bottom-16 laptop:bottom-10 laptop:right-0 right-4 z-20"><FaPen className="w-4 h-4" /></div>}
                   <img
                     src={currentProject.images[0].url}
                     alt={currentProject.images[0].photographer}
@@ -718,22 +793,31 @@ const handleKeyPress = (e) => {
               )}
               
             </div>
-          {/* Credits Section */}
-<div className="relative p-4 bg-main-white border border-green rounded-xl font-body col-span-2 tablet:col-span-1 laptop:w-3/4 laptop:m-auto ">
+         {/* Credits Section */}
+<div className="relative p-8 pt-10 bg-main-white border border-main-dark rounded-xl font-body col-span-2 tablet:col-span-1 laptop:w-fit laptop:min-w-[400px] laptop:m-auto">
   
   {/* Credits - Dynamic form fields */}
   {input.credits.map((credit, creditIndex) => (
-    <div key={creditIndex} className="mb-6 ">
+    <div key={creditIndex} className="mb-6">
       {/* Role Input */}
       {isEditing ? (
-        <div className="flex flex-col mb-4 ">
-          <label className="font-heading text-bold text-base mb-1">Role:</label>
+        <div className="flex gap-2 flex-col laptop:flex-row laptop:items-center mb-4">
+          <label className="font-heading text-bold font-bold text-lg text-base mb-1">Role:</label>
           <input
             type="text"
             value={credit.role}
             onChange={(e) => handleCreditChange(creditIndex, 'role', e.target.value)}
             className="p-2 bg-main-white border border-dotted rounded-md"
           />
+           {/* Remove Role Button */}
+           <button
+           type="button"
+            onClick={() => removeCreditField(creditIndex)}
+            className="text-red-700 text-sm font-body mt-2 items-center flex gap-2"
+          >
+            <FaTrashAlt className="w-4 h-4 cursor-pointer hover:scale-110  "/>
+            Remove Role
+          </button>
         </div>
       ) : (
         <h3 className="font-heading text-bold text-base mr-2 underline break-words text-clip max-w-full">
@@ -741,33 +825,11 @@ const handleKeyPress = (e) => {
         </h3>
       )}
 
-      {/* Names and Links Input */}
-      {credit.names.map((nameObj, nameIndex) => (
-        <div key={nameIndex} className="flex mb-4">
-          {isEditing ? (
-            <>
-              <label className="font-heading text-bold text-sm mb-1">Name:</label>
-              <input
-                type="text"
-                value={nameObj.name}
-                onChange={(e) =>
-                  handleCreditChange(creditIndex, `names.${nameIndex}.name`, e.target.value)
-                }
-                className="p-2 bg-main-white border border-dotted rounded-md"
-              />
-
-              <label className="font-heading text-bold text-sm mt-2 mb-1">Link:</label>
-              <input
-                type="text"
-                value={nameObj.link}
-                onChange={(e) =>
-                  handleCreditChange(creditIndex, `names.${nameIndex}.link`, e.target.value)
-                }
-                className="p-2 bg-main-white border border-dotted rounded-md"
-              />
-            </>
-          ) : (
-            <span className="mr-2 flex">
+      {/* Names and Links Display (View Mode) */}
+      {!isEditing && (
+        <div className="flex flex-wrap">
+          {credit.names.map((nameObj, nameIndex) => (
+            <span key={nameIndex} className="mr-2">
               {nameObj.link ? (
                 <a
                   href={nameObj.link}
@@ -780,19 +842,58 @@ const handleKeyPress = (e) => {
               ) : (
                 nameObj.name
               )}
+              {/* Add a comma unless it's the last name */}
+              {nameIndex < credit.names.length - 1 && ", "}
             </span>
-          )}
+          ))}
         </div>
-      ))}
+      )}
 
-      {/* Add a button to add more names (optional, if you want to allow more entries) */}
+      {/* Names and Links Input (Edit Mode) */}
       {isEditing && (
-        <button
-          onClick={() => addNameField(creditIndex)}
-          className="text-main-dark underline font-body mb-4"
-        >
-          + Add another name
-        </button>
+        <div className="flex flex-wrap gap-4 ">
+          {credit.names.map((nameObj, nameIndex) => (
+            <div key={nameIndex} className="flex flex-col laptop:flex-row laptop:items-center gap-2 mb-2">
+              <label className="font-heading text-bold text-sm mb-1 ">Name:</label>
+              <input
+                type="text"
+                value={nameObj.name}
+                onChange={(e) =>
+                  handleCreditChange(creditIndex, `names.${nameIndex}.name`, e.target.value)
+                }
+                className="p-2 bg-main-white border border-dotted rounded-md"
+              />
+
+              <label className="font-heading text-bold text-sm mb-1">Link:</label>
+              <input
+                type="text"
+                value={nameObj.link}
+                onChange={(e) =>
+                  handleCreditChange(creditIndex, `names.${nameIndex}.link`, e.target.value)
+                }
+                className="p-2 bg-main-white border border-dotted rounded-md"
+              />
+              {/* Remove Name Button */}
+              <button
+              type="button"
+                onClick={() => removeNameField(creditIndex, nameIndex)}
+                className="text-red-700 items-center font-body text-sm mt-2 flex gap-2"
+              >
+                 <FaTrashAlt className="w-4 h-4 cursor-pointer hover:scale-110  "/>
+                Remove person
+              </button>
+            </div>
+          ))}
+
+          {/* Add another name button */}
+          <button
+          type="button"
+            onClick={() => addNameField(creditIndex)}
+            className="text-main-dark underline font-body mb-8"
+          >
+            + Add another person
+          </button>
+        </div>
       )}
     </div>
   ))}
@@ -800,16 +901,18 @@ const handleKeyPress = (e) => {
   {/* Add a button to add more credits (roles and names) */}
   {isEditing && (
     <button
+    type="button"
       onClick={addCreditField}
-      className="text-main-dark underline font-body mt-4"
+      className="text-main-dark font-body mt-4 p-4 hover:drop-shadow rounded-xl bg-medium-white"
     >
-      + Add another credit
+      + Add another role
     </button>
   )}
 </div>
           </div>
           <div className="w-full flex justify-between mt-20">
             <button
+            type="button"
               className="font-body text-main-dark hover:scale-110"
               onClick={handlePreviousProject}
             >
@@ -817,6 +920,7 @@ const handleKeyPress = (e) => {
               Previous
             </button>
             <button
+            type="button"
               onClick={handleNextProject}
               className="text-main-dark font-body  hover:scale-110"
             >
@@ -825,19 +929,15 @@ const handleKeyPress = (e) => {
             </button>
           </div>
           {loggedIn && 
-<div className="bg-main-white p-4 fixed bottom-16 tablet:right-[80%] laptop:right-16 laptop:bottom-[80%] z-20 w-fit h-fit rounded-xl flex gap-6">
-          <FaTrashAlt className="w-8 h-8 text-peach cursor-pointer hover:scale-110  "
+<div className="bg-main-white  drop-shadow  p-4 fixed bottom-16 tablet:right-[75%] laptop:right-16 laptop:bottom-[80%] z-20 w-fit h-fit rounded-xl flex gap-6 items-center justify-center">
+        
+         {isEditing ? (   <button type="submit" className=" text-peach cursor-pointer"
+                  ><FaRegCheckCircle
+                  className="w-6 h-6 hover:scale-110"
+                /></button>) : (
+          <FaPen className="w-6 h-6 text-peach cursor-pointer hover:scale-110" onClick={() => setIsEditing(true)} /> )}
+        <FaTrashAlt className="w-6 h-6 text-red-700 cursor-pointer hover:scale-110  "
          onClick={() => validateDelete()} />
-         {isEditing ? (   <FaRegCheckCircle
-                  className="w-8 h-8 text-peach cursor-pointer"
-                  onClick={() => setIsEditing(false)}
-                />) : (
-          <FaPen className="w-8 h-8 text-peach cursor-pointer hover:scale-110" onClick={() => setIsEditing(true)} /> )}
-          {isEditing && (
-        <button type="submit"><RiSave3Line
-        className="w-8 h-8 text-peach"
-        /></button>
-      )}
 </div> }
           {isModalOpen && (
             <ImageModal
@@ -846,6 +946,7 @@ const handleKeyPress = (e) => {
               onClose={handleCloseModal}
             />
           )}
+          </form>
         </>
       )}
         
