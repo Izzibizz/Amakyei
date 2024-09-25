@@ -3,6 +3,7 @@ import express from "express";
 
 import { authenticateUser } from "../middlewares/authenticateUser";
 import { User } from "../models/userSchema";
+require('dotenv').config();
 
 const router = express.Router();
 
@@ -12,7 +13,8 @@ router.post("/register", async (req, res) => {
   try {
     const {
       userName,
-      password
+      password,
+      registrationKey 
     } = req.body;
     console.log(
       userName,
@@ -30,6 +32,9 @@ router.post("/register", async (req, res) => {
       return res
         .status(400)
         .json({ message: "Password must be at least 8 characters long." });
+    }
+    if (!registrationKey || registrationKey !== process.env.REGISTRATION_KEY) {
+      return res.status(403).json({ message: "Invalid registration key." });
     }
 
     //Create a new user
