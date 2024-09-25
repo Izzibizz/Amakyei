@@ -27,7 +27,9 @@ router.post("/register", async (req, res) => {
     }
 
     if (registrationKey !== process.env.REGISTRATION_KEY) {
-      return res.status(403).json({ message: "Invalid registration key." });
+      console.log()
+      return res.status(403).json({ message: `Invalid registration key. ${process.env.REGISTRATION_KEY}` });
+     
     }
 
     if (!userName) {
