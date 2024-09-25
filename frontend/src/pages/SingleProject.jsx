@@ -939,7 +939,7 @@ const handleKeyPress = (e) => {
                               Photographer: {file.photographer}
                             </p>
                           )}
-                          { input.images.length > 1 && input.video.length > 0 && isEditing && (
+                          { input.images.length > 1 && isEditing && (
                             <>
                             {index > 0 && (
                               <button
@@ -963,9 +963,9 @@ const handleKeyPress = (e) => {
                             <button
                             type="button"
                              onClick={() => removeImage(index)}
-                             className="text-red-700 absolute"
+                             className="text-red-700 absolute top-2 left-2"
                            >
-                             <FaTrashAlt className="absolute top-2 left-2 w-4 h-4 cursor-pointer hover:scale-110  "/>
+                             <FaTrashAlt className=" w-4 h-4 cursor-pointer hover:scale-110  "/>
                            </button>
                            </>
                           )}

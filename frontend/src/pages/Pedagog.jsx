@@ -89,7 +89,7 @@ export const Pedagog = () => {
                   <img
                     src={image}
                     alt="pedagogy project"
-                    className="aspect-square object-cover rounded-xl"
+                    className="aspect-square object-cover rounded-xl cursor-pointer"
                     onClick={() =>
                       handleImageClick(image, "")
                     }
