@@ -18,9 +18,9 @@ export const App = () => {
     <>
     <ScrollToTop />
     <div
-    className="bg-background w-screen min-h-screen flex flex-col">
+    className="bg-background max-w-screen min-h-screen flex flex-col">
       <Header />
-      <main className="my-32 px-7 tablet:px-16 laptop:px-32 laptop:py-8 flex-grow">
+      <main className="my-32 w-10/12 tablet:w-9/12 laptop:w-9/12 m-auto laptop:py-8 flex-grow">
         <MainRoutes />
       </main>
       <Footer />

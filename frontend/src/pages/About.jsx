@@ -1,10 +1,12 @@
 
 import { useLocation } from "react-router-dom";
+import { useState } from "react"
 
 export const About = () => {
   const location = useLocation();
   const page = location.pathname;
   console.log(page);
+  const [ showMore, setShowMore ] = useState(false)
 
   return (
     <section className="text-main-dark w-full flex flex-col laptop:w-10/12 laptop:m-auto animate-fadeIn">
@@ -132,7 +134,7 @@ export const About = () => {
         </div>
       </div>
 {/* Laptop */}
-<div className="hidden laptop:grid grid-cols-3 grid-rows-2 gap-20">
+<div className="hidden laptop:grid grid-cols-4 gap-x-20 ">
   {/* Video spanning all three columns in the top row */}
   <div className="col-span-2 row-span-1 flex justify-center">
     <video
@@ -160,12 +162,13 @@ export const About = () => {
       <span className="font-semibold">youth</span> got to grow up being in
       their superpowers.
     </p>
+    
   </div>
 
   {/* Longer text in the second row, second column */}
 
   {/* White background with education info spanning all three columns in the bottom row */}
-  <div className="col-start-2 col-end-3 h-fit bg-main-white p-6 rounded-xl border border-green">
+  <div className="col-start-4 col-end-5 row-start-1 row-end-3 h-fit bg-main-white p-6 rounded-xl border border-green self-end">
     <h4 className="font-heading mb-4">Education</h4>
     <ul className="flex flex-col gap-4 font-body">
       <li>
@@ -183,10 +186,9 @@ export const About = () => {
         <br />
         Ecoles des Sables, Senegal (2019)
       </li>
+      <button type="button" className="border w-fit p-2 rounded-xl m-auto" onClick={()=> setShowMore(!showMore)}>{showMore ? "Show less" : "Show more"}</button>
     </ul>
-  </div>
-  <div className="flex flex-col gap-4">
-    <p className="text-justify font-body pt-4">
+    {showMore && <p className="text-justify font-body pt-4">
       Besides these official studies, I've studied contemporary and modern
       West-African dances in Ghana and Benin. My doula education I did in
       Cape Coast, Ghana at A Life of Peace School (2022). I've been teaching
@@ -194,6 +196,7 @@ export const About = () => {
       both be and to create environments free from worry, where self-expression
       is the goal and joy is guaranteed.
     </p>
+    }
   </div>
 </div>
     </section>

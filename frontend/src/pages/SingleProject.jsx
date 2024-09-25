@@ -10,7 +10,10 @@ import { ImageModal } from "../components/ImageModal"
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
+import { IoMdArrowDroprightCircle } from "react-icons/io";
+import { IoMdArrowDropleftCircle } from "react-icons/io";
 import { FiPlusCircle } from "react-icons/fi";
+import { CiSaveDown2 } from "react-icons/ci";
 import { SlArrowDown } from "react-icons/sl";
 import { RxCrossCircled } from "react-icons/rx";
 import { FaRegCheckCircle } from "react-icons/fa";
@@ -76,8 +79,10 @@ export const SingleProject = () => {
     });
     const categoryEnum = [ "dancer", "choreographer", "pedagog" ]
     const [ cloudinaryUploadInProcess, setCloudinaryUploadInProcess] = useState(false)
+    const [ cloudinaryUploadSuccessful, setCloudinaryUploadSuccessful ] = useState(false)
     const [ imageInput , setImageInput ] = useState([])
     const [ imageDetailsInput, setImageDetailsInput ] = useState([]);
+    
 
 
   const contentRef = useRef(null);
@@ -408,6 +413,17 @@ const handleImageDetailChange = (index, field, value) => {
   );
 };
 
+// Function to remove an image and its details by index
+const removePreviewImage = (indexToRemove) => {
+  // Filter out the image at the given index
+  const updatedImages = imageInput.filter((_, index) => index !== indexToRemove);
+  const updatedDetails = imageDetailsInput.filter((_, index) => index !== indexToRemove);
+
+  // Update the input state with the new images and details arrays
+  setImageInput(updatedImages);
+  setImageDetailsInput(updatedDetails);
+};
+
 const rootProps = getRootProps({
   onClick: () => setEditingField(null), // Exit edit mode when Dropzone is clicked
 });
@@ -454,7 +470,9 @@ const uploadImagesToCloudinary = async (imageInput, imageDetailsInput) => {
       images: [...prevInput.images, ...uploadedImages],
     }));
   }
-  setCloudinaryUploadInProcess(false);
+  setCloudinaryUploadInProcess(false)
+  setCloudinaryUploadSuccessful(true)
+  setImageInput([]);
 };
 
 const removeImage = (indexToRemove) => {
@@ -466,6 +484,34 @@ const removeImage = (indexToRemove) => {
     ...prevInput,
     images: updatedImages,
   }));
+};
+
+const moveImageRight = (indexToMove) => {
+  setInput((prevInput) => {
+    const images = [...prevInput.images]; // Make a shallow copy of the array
+    if (indexToMove < images.length - 1) { // Check if the image is not already at the last position
+      // Swap the current image with the one next to it
+      [images[indexToMove], images[indexToMove + 1]] = [images[indexToMove + 1], images[indexToMove]];
+    }
+    return {
+      ...prevInput,
+      images, // Update the images array
+    };
+  });
+};
+
+const moveImageLeft = (indexToMove) => {
+  setInput((prevInput) => {
+    const images = [...prevInput.images];
+    if (indexToMove > 0) { // Check if the image is not already at the first position
+      // Swap the current image with the one before it
+      [images[indexToMove], images[indexToMove - 1]] = [images[indexToMove - 1], images[indexToMove]];
+    }
+    return {
+      ...prevInput,
+      images,
+    };
+  });
 };
 
 /* const handlePhotographerChange = (index, value) => {
@@ -592,7 +638,7 @@ const handleKeyPress = (e) => {
     return <Loading />; // Or a NotFound component
   }
 
-  console.log(imageInput);
+  console.log(input.images);
   console.log(imageDetailsInput)
   console.log("input", input.images.length)
 
@@ -794,9 +840,9 @@ const handleKeyPress = (e) => {
             </div>
 
            {/*  Description section phone */}
-            <div className="row-span-2 flex flex-col gap-8 laptop:gap-0">
+            <div className="row-span-2 flex flex-col gap-4 laptop:gap-8 laptop:gap-0">
               <div className="font-body text-justify max-w-full col-span-2 tablet:col-span-1 laptop:hidden flex gap-2">
-              {editingField === "description" ? (<textarea 
+            {editingField === "description" ? (<textarea 
             name="description"
             value={input.description}
             onChange={handleInputChange}
@@ -815,16 +861,7 @@ const handleKeyPress = (e) => {
               </div>
 
               {/* Video / images */}
-              {(!currentProject.video || currentProject.video.length === 0 || !currentProject.video[0].url) && (
-                <>
-                 {isEditing && (editingField === "video" ? (
-                  <div className="flex gap-2 items-center text-center mb-8 font-body text-main-dark">
-                  <button type="button" onClick={() => setEditingField("null")} className="flex gap-2 font-body items-center p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white"><FaRegCheckCircle className="w-4 h-4 hover:scale-110" /> Add video</button>important! link format for "embed"</div>
-                ) : (
-                  <button type="button" onClick={() => setEditingField("video")} className="flex gap-2 font-body items-center fony-body text-main-dark p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white mb-8"><FiPlusCircle className="w-4 h-4  hover:scale-110" /> Add video</button>
-                ))}
-               </>
-              )}
+
                {isEditing && editingField === "video" && (
                 <div className="flex gap-4">
                 <div className="flex flex-col gap-2 border-2 border-beige border-dotted rounded-xl laptop:w-2/3 laptop:max-w-2/3 mb-4 p-4">
@@ -853,30 +890,32 @@ const handleKeyPress = (e) => {
                 className="font-body focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap p-2 bg-main-white border border-2 border-dotted rounded-xl"
                 />
                 </div>
-                <button type="button" className="flex text-sm text-red-700"><FaTrashAlt className="w-4 h-4 cursor-pointer hover:scale-110  "/></button>
+                  <button type="button" className="flex text-sm text-red-700" onClick={() => setInput((prevInput) => ({
+                  ...prevInput, 
+                  video: [{ url: "", photographer:"",  link: ""}]
+                  }))}><FaTrashAlt className="w-4 h-4 cursor-pointer hover:scale-110  "/></button>
                 </div>
                )}
               {currentProject.video && currentProject.video.length > 0 && currentProject.video[0].url && (
                 <>
-                {isEditing && (editingField === "video" ? (
-                  <div className="flex gap-2 items-center text-center mb-8 font-body text-main-dark">
-                  <button type="button" onClick={() => setEditingField("null")} className="flex gap-2 font-body items-center p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white"><FaRegCheckCircle className="w-4 h-4 hover:scale-110" /> Done</button>important! link format for embed</div>
-                ) : (
-                  <button type="button" onClick={() => setEditingField("video")} className="flex gap-2 font-body items-center fony-body text-main-dark p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white mb-8"><FaPen className="w-4 h-4  hover:scale-110" /> Change video</button>
-                ))}
                 <iframe
                   src={currentProject.video[0].url}
                   className="w-full h-auto my-8 laptop:my-0 justify-self-start aspect-[3/2] rounded-xl"
                   title="Project Video"
                   allowFullScreen
                 />
+                {isEditing && (editingField === "video" ? (
+                  <div className="flex gap-2 items-center text-center mb-8 font-body text-main-dark">
+                  <button type="button" onClick={() => setEditingField("null")} className="flex gap-2 font-body items-center p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white"><FaRegCheckCircle className="w-4 h-4 hover:scale-110" /> Done</button>important! link format for embed</div>
+                ) : (
+                  <button type="button" onClick={() => setEditingField("video")} className="flex gap-2 font-body items-center fony-body text-main-dark p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white mb-8"><FaPen className="w-4 h-4  hover:scale-110" /> Change video</button>
+                ))}
                 </>
                 
               )}
-               { currentProject.images.length >= 2 && currentProject.video.length === 0 || currentProject.video[0]?.url.length === 0  || ( currentProject.images.length >= 2 && currentProject.video.length > 0 && isEditing ) ? (
-                <div className="relative">
-                  <ul className="flex flex-wrap gap-6 mb-8">
-                    {currentProject.images.map((file, index, array) => {
+               { input.images.length >= 2 && input.video.length === 0 || input.video[0]?.url.length === 0  || ( input.images.length >= 2 && input.video.length > 0 && isEditing ) ? (
+                  <ul className="flex flex-wrap mb-2 gap-4">
+                    {input.images.map((file, index, array) => {
                       // Check if the current photographer name is the same as the previous one
                       const showPhotographerName =
                         index === 0 ||
@@ -885,7 +924,7 @@ const handleKeyPress = (e) => {
                       return (
                         <li
                           key={index}
-                          className="flex flex-col max-w-[80px] laptop:max-w-[150px]"
+                          className="flex flex-col max-w-[100px] laptop:max-w-[150px] relative"
                         >
                           <img
                             src={file.url}
@@ -895,65 +934,102 @@ const handleKeyPress = (e) => {
                               handleImageClick(file.url, file.photographer)
                             }
                           />
-                          {showPhotographerName && (
+                          {showPhotographerName && !isEditing && (
                             <p className="font-body text-main-dark mt-4">
                               Photographer: {file.photographer}
                             </p>
                           )}
-                          { currentProject.images.length > 1 && currentProject.video.length > 0 && isEditing && (
+                          { input.images.length > 1 && input.video.length > 0 && isEditing && (
+                            <>
+                            {index > 0 && (
+                              <button
+                                type="button"
+                                onClick={() => moveImageLeft(index)} // Move image to the left
+                                className="text-main-white  absolute bottom-2 left-2"
+                              >
+                                <IoMdArrowDropleftCircle className="w-6 h-6 hover:scale-110" />
+                              </button>
+                            )}
+                            {index < currentProject.images.length - 1 && (
+                              <button
+                                type="button"
+                                onClick={() => moveImageRight(index)} // Move image to the right
+                                className="text-main-white absolute bottom-2 right-2 right-0 "
+                              >
+                                <IoMdArrowDroprightCircle className="w-6 h-6 hover:scale-110" />
+                              </button>
+                            )}
+    
                             <button
                             type="button"
                              onClick={() => removeImage(index)}
-                             className="text-red-700 absolute mt-4 ml-4"
+                             className="text-red-700 absolute"
                            >
-                             <FaTrashAlt className="w-4 h-4 cursor-pointer hover:scale-110  "/>
+                             <FaTrashAlt className="absolute top-2 left-2 w-4 h-4 cursor-pointer hover:scale-110  "/>
                            </button>
+                           </>
                           )}
                         </li>
                       );
                     })}
                   </ul>
-                </div>
-              ) : ( currentProject.images.length === 1 && currentProject.video.length === 0 || currentProject.video[0]?.url.length === 0   || ( currentProject.images.length === 1 && currentProject.video[0]?.url.length > 0 &&  isEditing )) && (
-                <div className="my-8 laptop:my-0 relative">
+              ) : ( input.images.length === 1 && input.video.length === 0 || input.video[0]?.url.length === 0   || ( input.images.length === 1 && input.video[0]?.url.length > 0 &&  isEditing )) && (
+                <div className="my-2 laptop:my-0 relative">
                   <img
-                    src={currentProject.images[0].url}
-                    alt={currentProject.images[0].photographer}
+                    src={input.images[0].url}
+                    alt={input.images[0].photographer}
                     onClick={() =>
                       handleImageClick(
-                        currentProject.images[0].url,
-                        currentProject.images[0].photographer
+                        input.images[0].url,
+                        input.images[0].photographer
                       )
                     }
                     className="aspect-[3/4] object-cover cursor-pointer rounded-xl "
                   />
                   <p className="font-body text-main-dark mt-4 italic">
-                    Photographer: {currentProject.images[0].photographer}
+                    Photographer: {input.images[0].photographer}
                   </p>
                    </div>
               )}
+                          
                                {isEditing &&  (
-    <div className="mt-4">
+    <div>
       {/* Add Image button */}
       <button
         {...getRootProps()}
         type="button"
-        className="flex gap-2 text-main-dark font-body p-4 hover:drop-shadow rounded-xl bg-medium-white w-fit"
+        className="flex gap-2 mb-4 text-main-dark font-body p-4 hover:drop-shadow rounded-xl bg-medium-white w-fit"
       >
-        Add image <FiPlusCircle className="w-6 h-6 hover:scale-110" />
+       <FiPlusCircle className="w-4 h-4 hover:scale-110" /> Add image 
         <input {...getInputProps()} />
       </button>
 
       {/* Image previews with input for photographer and link */}
       {imageInput.length > 0 && (
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 border p-4 rounded-lg ">
+        <div className="border-2 border-main-dark border-dotted p-4 rounded-xl">
+        <h4 className="font-heading">Adding images:</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 border p-4 rounded-lg ">
+          
           {imageInput.map((file, index) => (
             <div key={index} className="relative">
               <img
                 src={file.preview}
                 alt="Preview"
-                className="w-full h-auto object-cover rounded-md"
+                onClick={() =>
+                  handleImageClick(
+                    file.preview,
+                    index
+                  )
+                }
+                className="w-full h-auto object-cover rounded-md cursor-pointer"
               />
+                         <button
+                            type="button"
+                             onClick={() => removePreviewImage(index)}
+                             className="text-red-700 absolute top-2 left-2"
+                           >
+                             <FaTrashAlt className=" w-4 h-4 cursor-pointer hover:scale-110  "/>
+                           </button>
               <div className="mt-2">
                 <input
                   type="text"
@@ -974,24 +1050,40 @@ const handleKeyPress = (e) => {
                   className="p-2 border w-full"
                 />
               </div>
-              
             </div>
           ))}
-                {/* Upload Images button */}
-      <button
+        </div>
+        <p className="font-body p-2">For optimal results, set width (horizontal img) or height (vertical img) to 1500px</p>
+        <p className="font-body p-2 text-xl">Confirm to add and dont forget to save</p>
+        <button
         type="button"
         onClick={() => uploadImagesToCloudinary(imageInput, imageDetailsInput)}
-        className="mt-4 p-2 bg-peach text-white rounded"
+        className="mt-4 p-6 bg-medium-white text-peach hover:drop-shadow rounded-xl flex h-fit w-fit items-center"
         disabled={cloudinaryUploadInProcess}
       >
-        {cloudinaryUploadInProcess ? "Uploading..." : "Confirm Images"}
+        {cloudinaryUploadInProcess ? ("Uploading...") : cloudinaryUploadSuccessful ? ("Success! You can now save") :  ( <>
+      Confirm Images
+      <CiSaveDown2 className="inline ml-2 w-6 h-6" />
+    </>
+  )}
       </button>
         </div>
       )}
+              
 
 
     </div>
   )}
+    {(!currentProject.video || currentProject.video.length === 0 || !currentProject.video[0].url) && (
+                <>
+                 {isEditing && (editingField === "video" ? (
+                  <div className="flex gap-2 items-center text-center mb-8 font-body text-main-dark">
+                  <button type="button" onClick={() => setEditingField("null")} className="flex gap-2 font-body items-center p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white"><FaRegCheckCircle className="w-4 h-4 hover:scale-110" /> Add video</button>important! link format for "embed"</div>
+                ) : (
+                  <button type="button" onClick={() => setEditingField("video")} className="flex gap-2 font-body items-center fony-body text-main-dark p-2 rounded-xl cursor-pointer hover:drop-shadow w-fit p-4 bg-medium-white mb-8"><FiPlusCircle className="w-4 h-4  hover:scale-110" /> Add video</button>
+                ))}
+               </>
+              )}
             </div>
 
          {/* Credits Section */}
