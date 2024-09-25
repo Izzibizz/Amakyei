@@ -12,23 +12,13 @@ router.post("/register", async (req, res) => {
   try {
     const {
       userName,
-      password,
-      registrationKey 
+      password
     } = req.body;
     console.log(
       userName,
       password
     );
 
-    if (!registrationKey) {
-      return res.status(400).json({ message: "Registration key is required." });
-    }
-
-    if (registrationKey !== process.env.REGISTRATION_KEY) {
-      console.log()
-      return res.status(403).json({ message: `Invalid registration key. ${process.env.REGISTRATION_KEY}` });
-     
-    }
 
     if (!userName) {
       return res.status(400).json({ message: "username is required." });
