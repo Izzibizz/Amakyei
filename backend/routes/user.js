@@ -22,6 +22,14 @@ router.post("/register", async (req, res) => {
       password
     );
 
+    if (!registrationKey) {
+      return res.status(400).json({ message: "Registration key is required." });
+    }
+
+    if (registrationKey !== process.env.REGISTRATION_KEY) {
+      return res.status(403).json({ message: "Invalid registration key." });
+    }
+
     if (!userName) {
       return res.status(400).json({ message: "username is required." });
     }
@@ -34,9 +42,8 @@ router.post("/register", async (req, res) => {
         .status(400)
         .json({ message: "Password must be at least 8 characters long." });
     }
-    if (!registrationKey || registrationKey !== process.env.REGISTRATION_KEY) {
-      return res.status(403).json({ message: "Invalid registration key." });
-    }
+  
+  
 
     //Create a new user
     const user = new User({
