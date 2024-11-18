@@ -6,6 +6,7 @@ import { Loading } from "./Loading"
 import { PopupMessage } from "../components/PopupMessage"
 import { SlArrowDown } from "react-icons/sl";
 import { SlArrowUp } from "react-icons/sl";
+
 import 'swiper/css';
 import 'swiper/css/controller';
 import 'swiper/css/navigation';
@@ -27,14 +28,23 @@ export const ProjectsOverview = ({category}) => {
   useEffect(() => {
     if (projectsData && category) {
       const filtered = projectsData.filter(project => project.category === category);
+  
+      // Conditionally hide swiper if fewer than 4 items
       if (filtered.length < 4) {
-        setDontDisplaySwiper(true)
+        setDontDisplaySwiper(true);
       }
+  
+      // Perform sorting only if there are at least 2 items
       if (filtered.length >= 2) {
-      filtered.sort((a, b) => extractYear(b.year) - extractYear(a.year));
-      console.log(filtered);
-      console.log(category)
+        filtered.sort((a, b) => {
+          const yearDiff = extractYear(b.year) - extractYear(a.year);
+          if (yearDiff !== 0) return yearDiff;
+  
+          // Secondary sort: Newer projects first based on _id
+          return b._id.toString().localeCompare(a._id.toString());
+        });
       }
+  
       setFilteredProjects(filtered);
     }
   }, [projectsData, category]);
