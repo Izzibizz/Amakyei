@@ -14,7 +14,7 @@ const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/amakyei";
 mongoose.connect(mongoUrl);
 mongoose.Promise = Promise;
 
-if (process.env.RESET_DB) {
+/* if (process.env.RESET_DB) {
   const seedDatabase = async () => {
     await Projects.deleteMany()
 
@@ -23,7 +23,7 @@ if (process.env.RESET_DB) {
     })
   }
   seedDatabase()
-}
+} */
 
 const app = express();
 const port = process.env.PORT || 8080;
