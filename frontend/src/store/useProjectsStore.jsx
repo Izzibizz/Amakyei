@@ -19,6 +19,7 @@ export const useProjectsStore = create((set, get) => ({
   darkTextNeeded: false,
   listIsVisible: false,
   laptopView: false,
+  filteredProjects: [], 
 
   setUploadSuccessful: (input) => set({ uploadSuccessful: input }),
   setUploadError: (input) => set({uploadError: input }),
@@ -33,6 +34,7 @@ export const useProjectsStore = create((set, get) => ({
   setDarkTextNeeded: (input) => set({ darkTextNeeded: input }),
   setListIsVisible: (input) => set({ listIsVisible: input }),
   setLaptopView: (input) => set({ laptopView: input }), 
+  setFilteredProjects: (input) => set({ filteredProjects: input}),
 
 
   fetchProjects: async () => {

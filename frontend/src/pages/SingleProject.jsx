@@ -36,6 +36,7 @@ import { Navigation, Pagination, Autoplay, A11y } from "swiper/modules";
 export const SingleProject = () => {
   const {
     projectsData,
+    filteredProjects,
     loadingProjects,
     setHeaderVisibilityChange,
     setDarkTextNeeded,
@@ -224,98 +225,89 @@ export const SingleProject = () => {
     return brightness < 230;
   };
 
-  useEffect(() => {
-    if (loadingProjects || !projectsData.length) return;
-  
-    const currentProjectIndex = projectsData.findIndex((project) => {
-      const projectEndpoint = project.title
-        .replaceAll("/", "")
-        .replace(/\s+/g, "-")
-        .toLowerCase();
-      return projectEndpoint === id;
-    });
-  
-    if (currentProjectIndex === -1) return;
-  
-    const currentProject = projectsData[currentProjectIndex];
-    setCategory(currentProject.category)
-    setInput({
-        title: currentProject.title || "",
-        year: currentProject.year || "",
-        category: currentProject.category || "",
-        description: currentProject.description || "",
-        description2: currentProject.description2 || "",
-        credits: currentProject.credits || [],
-        images: currentProject.images || [],
-        video: currentProject.video || [],
-      });
+  // useEffect to manage current, next, and previous project logic
+useEffect(() => {
+  if (loadingProjects || !filteredProjects.length) return;
 
-  
-    // Filter projects by category
-    const sameCategoryProjects = projectsData.filter(
-      (project) => project.category === currentProject.category
-    );
-  
-    // Find the index of the current project within the filtered array
-    const currentIndexInCategory = sameCategoryProjects.findIndex(
-      (project) =>
-        project.title.replaceAll("/", "").replace(/\s+/g, "-").toLowerCase() ===
-        id
-    );
-  
-    // Calculate the next project's index within the filtered array, with proper wrapping
-    const nextProjectIndexInCategory =
-      (currentIndexInCategory + 1) % sameCategoryProjects.length;
-    const nextProject = sameCategoryProjects[nextProjectIndexInCategory];
-  
-    // Set the next project's "id" (or title converted to URL format)
-    const nextProjectEndpoint = nextProject.title
+  // Find current project in filteredProjects
+  const currentProjectIndex = filteredProjects.findIndex((project) => {
+    const projectEndpoint = project.title
       .replaceAll("/", "")
       .replace(/\s+/g, "-")
       .toLowerCase();
-    setNextProjectId(nextProjectEndpoint);
-  
-    // Calculate the previous project's index
-    const prevProjectIndexInCategory =
-      (currentIndexInCategory - 1 + sameCategoryProjects.length) % sameCategoryProjects.length;
-    const prevProject = sameCategoryProjects[prevProjectIndexInCategory];
-  
-    // Set the previous project's "id" (or title converted to URL format)
-    const prevProjectEndpoint = prevProject.title
+    return projectEndpoint === id;
+  });
+
+  if (currentProjectIndex === -1) return;
+
+  const currentProject = filteredProjects[currentProjectIndex];
+  setCategory(currentProject.category);
+
+  // Update input fields with the current project
+  setInput({
+    title: currentProject.title || "",
+    year: currentProject.year || "",
+    category: currentProject.category || "",
+    description: currentProject.description || "",
+    description2: currentProject.description2 || "",
+    credits: currentProject.credits || [],
+    images: currentProject.images || [],
+    video: currentProject.video || [],
+  });
+
+  // Calculate next and previous projects within filteredProjects
+  const nextProjectIndex =
+    (currentProjectIndex + 1) % filteredProjects.length;
+  const prevProjectIndex =
+    (currentProjectIndex - 1 + filteredProjects.length) % filteredProjects.length;
+
+  const nextProject = filteredProjects[nextProjectIndex];
+  const prevProject = filteredProjects[prevProjectIndex];
+
+  // Generate endpoints for next/previous projects
+  const nextProjectEndpoint = nextProject.title
+    .replaceAll("/", "")
+    .replace(/\s+/g, "-")
+    .toLowerCase();
+  const prevProjectEndpoint = prevProject.title
+    .replaceAll("/", "")
+    .replace(/\s+/g, "-")
+    .toLowerCase();
+
+  setNextProjectId(nextProjectEndpoint);
+  setPreviousProjectId(prevProjectEndpoint);
+}, [id, filteredProjects, loadingProjects]);
+
+// Navigation handlers remain unchanged
+const handleNextProject = () => {
+  if (nextProjectId) {
+    setHeaderVisibilityChange(false);
+    handleProjectChange(nextProjectId);
+  }
+};
+
+const handlePreviousProject = () => {
+  if (previousProjectId) {
+    setHeaderVisibilityChange(false);
+    handleProjectChange(previousProjectId);
+  }
+};
+
+const handleProjectChange = (projectId) => {
+  // Find the new project based on the given projectId
+  const newProjectIndex = filteredProjects.findIndex((project) => {
+    const projectEndpoint = project.title
       .replaceAll("/", "")
       .replace(/\s+/g, "-")
       .toLowerCase();
-    setPreviousProjectId(prevProjectEndpoint);
-  }, [id, projectsData, loadingProjects]);
-  
-  const handleNextProject = () => {
-    if (nextProjectId) {
-      setHeaderVisibilityChange(false);
-      // Update state before navigating
-      handleProjectChange(nextProjectId);
-    }
-  };
-  
-  const handlePreviousProject = () => {
-    if (previousProjectId) {
-      setHeaderVisibilityChange(false);
-      // Update state before navigating
-      handleProjectChange(previousProjectId);
-    }
-  };
-  
-  const handleProjectChange = (projectId) => {
-    // Find the new project based on the given projectId
-    const newProjectIndex = projectsData.findIndex(project => {
-      const projectEndpoint = project.title.replaceAll("/", "").replace(/\s+/g, "-").toLowerCase();
-      return projectEndpoint === projectId;
-    });
-  
-    if (newProjectIndex !== -1) {
-      setIsEditing(false)
-      navigate(`/project/${projectId}`);
-    }
-  };
+    return projectEndpoint === projectId;
+  });
+
+  if (newProjectIndex !== -1) {
+    setIsEditing(false);
+    navigate(`/project/${projectId}`);
+  }
+};
 
   const validateDelete = () => {
     setDeleteValidationProcess(true)

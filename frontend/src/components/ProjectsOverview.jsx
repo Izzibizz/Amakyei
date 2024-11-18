@@ -16,8 +16,7 @@ import 'swiper/css/effect-fade';
 import { Autoplay, Navigation, Pagination, A11y } from 'swiper/modules';
 
 export const ProjectsOverview = ({category}) => {
-  const { projectsData, loadingProjects, setListIsVisible, listIsVisible, deleteSuccessful, setDeleteSuccessful } = useProjectsStore();
-  const [filteredProjects, setFilteredProjects] = useState([]);
+  const { projectsData, loadingProjects, setListIsVisible, listIsVisible, deleteSuccessful, setDeleteSuccessful, filteredProjects, setFilteredProjects } = useProjectsStore();
   const [ dontDisplaySwiper, setDontDisplaySwiper ] = useState(false)
 
   const extractYear = (yearString) => {
