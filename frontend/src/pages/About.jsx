@@ -14,7 +14,7 @@ export const About = () => {
       {/* Mobile */}
       <div className="flex flex-col gap-12 tablet:hidden">
         <video
-          src="https://res.cloudinary.com/dbf8xygxz/video/upload/v1726561289/about_Ama-kyei-wanda.mp4"
+          src="https://res.cloudinary.com/duegke8je/video/upload/v1745322213/about_Ama_Kyei_ux2wgv.mp4"
           type="video/mp4"
           alt="about video"
           className="w-full rounded-xl animate-fadeInVideo"

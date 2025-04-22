@@ -219,7 +219,7 @@ export const UploadProject = () => {
     setUploadInProcess(true)
     const uploadedImages = [];
     const uploadPreset = "AmaKyei";
-    const cloudName = 'dbf8xygxz'; 
+    const cloudName = 'duegke8je'; 
   
     for (let i = 0; i < images.length; i++) {
       const image = images[i];

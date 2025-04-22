@@ -307,7 +307,7 @@ const handleProjectChange = (projectId) => {
     setIsEditing(false);
     navigate(`/project/${projectId}`);
   }
-};
+}; 
 
   const validateDelete = () => {
     setDeleteValidationProcess(true)

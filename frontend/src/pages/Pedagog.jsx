@@ -21,14 +21,14 @@ export const Pedagog = () => {
   const [imagePhotographer, setImagePhotographer] = useState("");
 
   const imageArray = [
-    "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726572053/Ama_teaching_in_James_Town_wyd8fx.png",
-    "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726572053/Ama_at_TAMAEE_cqibqw.jpg",
-    "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726572053/Ama_teaching_in_Kontula_ep95gk.jpg",
-    "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726572053/Ama_teaching_in_Kontula__foto_Wanda_Holopainen__2_vk3mea.jpg",
-    "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726572053/Ama_Gifty_Eddie_house_Workshop_dzplaa.jpg",
-    "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726572053/AMa_teaching_in_Kontula__foto__Wanda_holopainen_rtwpqp.jpg",
-    "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726572053/Ama_teaching_in_Kontula_foto__Naomi_Holopainen_lle3hn.jpg",
-    "https://res.cloudinary.com/dbf8xygxz/image/upload/v1726572054/AmateachingatSolidartfestival_foto_KatariinaNikkila%CC%881_fq1lwc.jpg",
+    "https://res.cloudinary.com/duegke8je/image/upload/v1745321802/Ama_teaching_in_James_Town_ibmmpf.png",
+    "https://res.cloudinary.com/duegke8je/image/upload/v1745321802/Ama_at_TAMAEE_n26eji.jpg",
+    "https://res.cloudinary.com/duegke8je/image/upload/v1745321802/Ama_teaching_in_Kontula_yw1e38.jpg",
+    "https://res.cloudinary.com/duegke8je/image/upload/v1745321802/Ama_teaching_in_Kontula__foto_Wanda_Holopainen__2_ma03xm.jpg",
+    "https://res.cloudinary.com/duegke8je/image/upload/v1745321803/Ama_Gifty_Eddie_house_Workshop_k6lw0s.jpg",
+    "https://res.cloudinary.com/duegke8je/image/upload/v1745321802/AMa_teaching_in_Kontula__foto__Wanda_holopainen_hwycwf.jpg",
+    "https://res.cloudinary.com/duegke8je/image/upload/v1745321802/Ama_teaching_in_Kontula_foto__Naomi_Holopainen_zcpfal.jpg",
+    "https://res.cloudinary.com/duegke8je/image/upload/v1745321804/AmateachingatSolidartfestival_foto_KatariinaNikkila%CC%881_fwnxhm.jpg",
   ];
 
   const handleImageClick = (src, photographer) => {
