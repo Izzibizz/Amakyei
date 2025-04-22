@@ -424,7 +424,7 @@ const uploadImagesToCloudinary = async (imageInput, imageDetailsInput) => {
   setCloudinaryUploadInProcess(true)
   const uploadedImages = [];
   const uploadPreset = "AmaKyei";
-  const cloudName = 'dbf8xygxz'; 
+  const cloudName = 'duegke8je'; 
 
   for (let i = 0; i < imageInput.length; i++) {
     const image = imageInput[i];
