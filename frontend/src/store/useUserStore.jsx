@@ -15,17 +15,19 @@ export const useUserStore = create(
       signedUp: false,
       signupMessage: "",
       loginMessage: "",
-/*       backgroundColor: "#5d805f",
-      textColor: "#FFFF", */
-
 
       setLoggedIn: () => set({ loggedIn: true, loggedOut: false }),
       setShowPopupMessage: (input) => set({ showPopupMessage: input }),
-      setLoggedOut: () => set({ loggedOut: true, loggedIn: false, userId: "", accessToken: "", loginMessage: "", showPopupMessage: true}), 
-      setBackgroundColor: (input) => set({ backgroundColor: input }),
-      setTextColor: (input) => set({ textColor: input }),
+      setLoggedOut: () =>
+        set({
+          loggedOut: true,
+          loggedIn: false,
+          userId: "",
+          accessToken: "",
+          loginMessage: "",
+          showPopupMessage: true,
+        }),
       setLoginError: (input) => set({ loginError: input }),
-
 
       loginUser: async (userName, password) => {
         set({ loadingUser: true, loginError: false, loggedIn: false });
@@ -51,22 +53,19 @@ export const useUserStore = create(
               loginMessage: data.message,
               loggedIn: true,
               loggedOut: false,
-              showPopupMessage: true
-            })
+              showPopupMessage: true,
+            });
           }
         } catch (error) {
           console.error("error in login:", error);
           set({ error: error, loginError: true, showPopupMessage: true });
         } finally {
-
           set({ loadingUser: false });
         }
       },
-
     }),
     {
-        name: "User-storage",
-      }
-    )
-  );
-  
+      name: "User-storage",
+    }
+  )
+);

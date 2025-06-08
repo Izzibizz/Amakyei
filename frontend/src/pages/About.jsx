@@ -71,7 +71,7 @@ export const About = () => {
       {/* tablet */}
       <div className="hidden tablet:flex tablet:flex-col gap-16 laptop:hidden">
         <video
-          src="https://res.cloudinary.com/dbf8xygxz/video/upload/v1726561289/about_Ama-kyei-wanda.mp4"
+          src="https://res.cloudinary.com/duegke8je/video/upload/v1745322213/about_Ama_Kyei_ux2wgv.mp4"
           type="video/mp4"
           alt="about video"
           className="w-full rounded-xl animate-fadeInVideo"
@@ -139,7 +139,7 @@ export const About = () => {
         {/* Video spanning all three columns in the top row */}
         <div className="col-span-2 row-span-1 flex justify-center">
           <video
-            src="https://res.cloudinary.com/dbf8xygxz/video/upload/v1726561289/about_Ama-kyei-wanda.mp4"
+            src="https://res.cloudinary.com/duegke8je/video/upload/v1745322213/about_Ama_Kyei_ux2wgv.mp4"
             type="video/mp4"
             alt="about video"
             className="w-full rounded-xl animate-fadeInVideo"
@@ -157,13 +157,14 @@ export const About = () => {
             doula.
           </p>
           <p className="font-body text-justify">
-          Im a Finnish- Ghanaian dancer, dance teacher, choreographer and doula.
-          I love groove, flow, a sense of freedom and belonging. In my dance
-          universe (and life) I'm constantly drawn for these elements. Besides
-          my passion for dance I love nature, children, colors and community. My
-          heart burns for creating for and with children and youth. Id love to
-          see a world where <span className="font-semibold">children</span> and
-          youth get to grow up being in their super&shy;powers.
+            Im a Finnish- Ghanaian dancer, dance teacher, choreographer and
+            doula. I love groove, flow, a sense of freedom and belonging. In my
+            dance universe (and life) I'm constantly drawn for these elements.
+            Besides my passion for dance I love nature, children, colors and
+            community. My heart burns for creating for and with children and
+            youth. Id love to see a world where{" "}
+            <span className="font-semibold">children</span> and youth get to
+            grow up being in their super&shy;powers.
           </p>
         </div>
 

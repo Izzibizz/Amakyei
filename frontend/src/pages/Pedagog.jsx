@@ -1,5 +1,5 @@
 import { ProjectsOverview } from "../components/ProjectsOverview";
-import { ImageModal } from "../components/ImageModal"
+import { ImageModal } from "../components/ImageModal";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useProjectsStore } from "../store/useProjectsStore";
@@ -76,8 +76,7 @@ export const Pedagog = () => {
               modules={[Navigation, Pagination, A11y, Autoplay]}
               breakpoints={{
                 320: {
- 
-                  slidesPerView:1,
+                  slidesPerView: 1,
                 },
                 768: {
                   slidesPerView: 3,
@@ -90,9 +89,7 @@ export const Pedagog = () => {
                     src={image}
                     alt="pedagogy project"
                     className="aspect-square object-cover rounded-xl cursor-pointer"
-                    onClick={() =>
-                      handleImageClick(image, "")
-                    }
+                    onClick={() => handleImageClick(image, "")}
                   />
                 </SwiperSlide>
               ))}
@@ -101,19 +98,19 @@ export const Pedagog = () => {
           <div className="flex flex-col tablet:gap-12 laptop:flex-row laptop:w-3/4 laptop:mx-auto laptop:gap-10">
             <div className="flex flex-col tablet:flex-row laptop:flex-col w-full tablet:mt-8 gap-12">
               <div className="flex flex-col tablet:w-8/12 laptop:w-11/12 gap-4">
-              <h3 className="font-heading text-xl laptop:mt-8">
-                Finding moments of freedom
-              </h3>
-              <p className="font-body text-justify  ">
-                In my dance teaching i wish to create spaces where we can
-                together sharpen our tools for finding moments of freedom,
-                togetherness and self expression. I believe that the easiest way
-                there is with a soft and warm environment, both inner and outer
-                environment. Therefore a big part of my work is to soften the
-                inner critique, to allow the body to move as we would if we had
-                never learned that there was a less correct way to express
-                oneself, as we would if we were free.
-              </p>
+                <h3 className="font-heading text-xl laptop:mt-8">
+                  Finding moments of freedom
+                </h3>
+                <p className="font-body text-justify  ">
+                  In my dance teaching i wish to create spaces where we can
+                  together sharpen our tools for finding moments of freedom,
+                  togetherness and self expression. I believe that the easiest
+                  way there is with a soft and warm environment, both inner and
+                  outer environment. Therefore a big part of my work is to
+                  soften the inner critique, to allow the body to move as we
+                  would if we had never learned that there was a less correct
+                  way to express oneself, as we would if we were free.
+                </p>
               </div>
               <div className="h-fit w-fit laptop:w-11/12 bg-main-white p-6 rounded-xl border border-green laptop:mt-8">
                 <h4 className="font-heading mb-4">Pedagogy Education</h4>
@@ -150,52 +147,51 @@ export const Pedagog = () => {
                   please go to the "Choreorapher" section.
                 </li>
                 <li>
-                <span className="font-bold text-lg">2024 - </span>
-                  <span className="font-semibold">
-                    Workshops
-                  </span><br/> in Helsinki (Jyväskylä at Soldidart Festival) and
+                  <span className="font-bold text-lg">2024 - </span>
+                  <span className="font-semibold">Workshops</span>
+                  <br /> in Helsinki (Jyväskylä at Soldidart Festival) and
                   Stockholm (Daglig träning, Åsa folkhögskola)
                 </li>
                 <li>
-                <span className="font-bold text-lg">2021-2023 - </span>
+                  <span className="font-bold text-lg">2021-2023 - </span>
                   <span className="font-semibold">
                     Workshops in Benin and Ghana
                   </span>
                 </li>
                 <li>
-                <span className="font-bold text-lg">2020-2021 - </span>
+                  <span className="font-bold text-lg">2020-2021 - </span>
                   <span className="font-semibold">
-                    Dance teacher and dance responsible<br/>
-                  </span> at Fryshuset Middle
-                  school
+                    Dance teacher and dance responsible
+                    <br />
+                  </span>{" "}
+                  at Fryshuset Middle school
                 </li>
-                <li>                 <span className="font-bold text-lg">2020-2021 -</span>
+                <li>
+                  {" "}
+                  <span className="font-bold text-lg">2020-2021 -</span>
                   <span className="font-semibold"> Linje 13</span>
-
                   <br />a project at Botkyrka Kulturskola to gather youth in
                   Hallunda and Norsborg to culture activities and to create a
                   performance in-collaboration with music, animation and a
                   teater pedagog.
                 </li>
                 <li>
-                <span className="font-bold text-lg">Since 2015 - </span>
-                  <span className="font-semibold">
-                    {" "}
-                    Workshops
-                  </span><br/> in Helsinki, Espoo, Vantaa, Oulu (Finland),
-                    Jönköping, Stockholm, Östersund, Uppsala, Nyköping (Sweden),
-                    Tallin (Estonia), Freiburg (Germany), Tröndheim (Norway),
-                    Skapande skola (Stockholm), Danscentrum daglig träning coach
-                    (Stockholm).
+                  <span className="font-bold text-lg">Since 2015 - </span>
+                  <span className="font-semibold"> Workshops</span>
+                  <br /> in Helsinki, Espoo, Vantaa, Oulu (Finland), Jönköping,
+                  Stockholm, Östersund, Uppsala, Nyköping (Sweden), Tallin
+                  (Estonia), Freiburg (Germany), Tröndheim (Norway), Skapande
+                  skola (Stockholm), Danscentrum daglig träning coach
+                  (Stockholm).
                 </li>
                 <li>
-                <span className="font-bold text-lg">Since 2010 - </span>
+                  <span className="font-bold text-lg">Since 2010 - </span>
                   <span className="font-semibold">
                     {" "}
-                    Weekly dance classes at: 
-                  </span><br/> Helsinki: dance.fi, Helsingin
-                    aikuisopisto and DCA. Stockholm: Danshuset, Kulturskolan,
-                    Fryshuset högstadiet.
+                    Weekly dance classes at:
+                  </span>
+                  <br /> Helsinki: dance.fi, Helsingin aikuisopisto and DCA.
+                  Stockholm: Danshuset, Kulturskolan, Fryshuset högstadiet.
                 </li>
               </ul>
             </div>
