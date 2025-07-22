@@ -5,13 +5,13 @@ import { useProjectsStore } from "../store/useProjectsStore";
 
 export const Header = () => {
   const { loggedIn } = useUserStore();
-  const { headerVisibilityChange, darkTextNeeded, laptopView } = useProjectsStore()
-  const dropdownRef = useRef()
-  const buttonRef = useRef()
+  const { headerVisibilityChange, darkTextNeeded, laptopView } =
+    useProjectsStore();
+  const dropdownRef = useRef();
+  const buttonRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const endpoint = location.pathname.split('/')
-  
+  const endpoint = location.pathname.split("/");
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -26,35 +26,48 @@ export const Header = () => {
     closeMenu();
   }, [location]);
 
-   // Close the menu when clicking outside of it
+  // Close the menu when clicking outside of it
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        dropdownRef.current && !dropdownRef.current.contains(event.target) &&
-        buttonRef.current && !buttonRef.current.contains(event.target)
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target)
       ) {
         closeMenu();
       }
     };
 
-     // Bind the event listener
-     document.addEventListener("mousedown", handleClickOutside);
-     return () => {
-       // Clean up the event listener
-       document.removeEventListener("mousedown", handleClickOutside);
-     };
-   }, []);
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Clean up the event listener
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const isHomePage = location.pathname === "/";
   const isAboutPage = location.pathname === "/about";
-  const isSingleProject = endpoint[1] === "project"
-  const headerOpacity = isHomePage || isSingleProject && !headerVisibilityChange ? "bg-opacity-0" : "bg-opacity-95";
-  const textColor = isHomePage || isSingleProject && !headerVisibilityChange && !darkTextNeeded ? "text-main-white" : "text-main-dark";
-  const menuColor = isHomePage || isSingleProject  && !headerVisibilityChange  && !darkTextNeeded ?  "bg-main-white" : "bg-main-dark";
+  const isSingleProject = endpoint[1] === "project";
+  const headerOpacity =
+    isHomePage || (isSingleProject && !headerVisibilityChange)
+      ? "bg-opacity-0"
+      : "bg-opacity-95";
+  const textColor =
+    isHomePage ||
+    (isSingleProject && !headerVisibilityChange && !darkTextNeeded)
+      ? "text-main-white"
+      : "text-main-dark";
+  const menuColor =
+    isHomePage ||
+    (isSingleProject && !headerVisibilityChange && !darkTextNeeded)
+      ? "bg-main-white"
+      : "bg-main-dark";
   const adminText = "text-peach";
   const laptopTextColor = laptopView ? "text-main-dark" : "";
 
-  console.log(laptopView)
+  console.log(laptopView);
 
   return (
     <header
@@ -98,26 +111,32 @@ export const Header = () => {
         >
           <ul className="flex flex-col items-end gap-6 p-8 pr-8 tablet:pb-20">
             <NavLink
-              to="/dancer"
-              aria-label="Link to Dancer"
-              onClick={toggleMenu}
-              className={({ isActive }) => ` ${isActive ? "underline" : "hover:scale-110"}`}
-            >
-              <li>Dancer</li>
-            </NavLink>
-            <NavLink
               to="/choreographer"
               aria-label="Link to Choreographer"
               onClick={toggleMenu}
-              className={({ isActive }) => ` ${isActive ? "underline" : "hover:scale-110"}`}
+              className={({ isActive }) =>
+                ` ${isActive ? "underline" : "hover:scale-110"}`
+              }
             >
               <li>Choreographer</li>
+            </NavLink>
+            <NavLink
+              to="/dancer"
+              aria-label="Link to Dancer"
+              onClick={toggleMenu}
+              className={({ isActive }) =>
+                ` ${isActive ? "underline" : "hover:scale-110"}`
+              }
+            >
+              <li>Dancer</li>
             </NavLink>
             <NavLink
               to="/pedagog"
               aria-label="Link to Pedagog"
               onClick={toggleMenu}
-              className={({ isActive }) => ` ${isActive ? "underline" : "hover:scale-110"}`}
+              className={({ isActive }) =>
+                ` ${isActive ? "underline" : "hover:scale-110"}`
+              }
             >
               <li>Pedagog</li>
             </NavLink>
@@ -125,7 +144,9 @@ export const Header = () => {
               to="/about"
               aria-label="Link to About"
               onClick={toggleMenu}
-              className={({ isActive }) => ` ${isActive ? "underline" : "hover:scale-110"}`}
+              className={({ isActive }) =>
+                ` ${isActive ? "underline" : "hover:scale-110"}`
+              }
             >
               <li>About</li>
             </NavLink>
@@ -133,41 +154,85 @@ export const Header = () => {
               to="/contact"
               aria-label="Link to Contact"
               onClick={toggleMenu}
-              className={({ isActive }) => ` ${isActive ? "underline" : "hover:scale-110"}`}
+              className={({ isActive }) =>
+                ` ${isActive ? "underline" : "hover:scale-110"}`
+              }
             >
               <li>Contact</li>
             </NavLink>
-            {loggedIn && (<NavLink
-              to="/admin"
-              aria-label="Link to Admin"
-              onClick={toggleMenu}
-              className={({ isActive }) => ` ${isActive ? "underline" : "hover:scale-110"}`}
-            >
-              <li className={`${adminText}`}>Admin</li>
-            </NavLink>)}
+            {loggedIn && (
+              <NavLink
+                to="/admin"
+                aria-label="Link to Admin"
+                onClick={toggleMenu}
+                className={({ isActive }) =>
+                  ` ${isActive ? "underline" : "hover:scale-110"}`
+                }
+              >
+                <li className={`${adminText}`}>Admin</li>
+              </NavLink>
+            )}
           </ul>
         </div>
       )}
       {/* Laptop */}
       <ul className={`hidden laptop:flex gap-16  ${laptopTextColor}`}>
-        <NavLink to="/dancer" aria-label="Link to dancer"  className={({ isActive }) => ` ${isActive ? "underline" : "hover:scale-110"}`}>
+        <NavLink
+          to="/choreographer"
+          aria-label="Link to choreographer"
+          className={({ isActive }) =>
+            ` ${isActive ? "underline" : "hover:scale-110"}`
+          }
+        >
+          <li>Choreographer</li>
+        </NavLink>
+        <NavLink
+          to="/dancer"
+          aria-label="Link to dancer"
+          className={({ isActive }) =>
+            ` ${isActive ? "underline" : "hover:scale-110"}`
+          }
+        >
           <li>Dancer</li>
         </NavLink>
-        <NavLink to="/choreographer" aria-label="Link to choreographer"  className={({ isActive }) => ` ${isActive ? "underline" : "hover:scale-110"}`}>
-          <li >Choreographer</li>
-        </NavLink>
-        <NavLink to="/pedagog" aria-label="Link to Pedagog" className={({ isActive }) => ` ${isActive ? "underline" : "hover:scale-110"}`}>
+        <NavLink
+          to="/pedagog"
+          aria-label="Link to Pedagog"
+          className={({ isActive }) =>
+            ` ${isActive ? "underline" : "hover:scale-110"}`
+          }
+        >
           <li>Pedagog</li>
         </NavLink>
-        <NavLink to="/about" aria-label="Link to About"  className={({ isActive }) => ` ${isActive ? "underline" : "hover:scale-110"}`}>
+        <NavLink
+          to="/about"
+          aria-label="Link to About"
+          className={({ isActive }) =>
+            ` ${isActive ? "underline" : "hover:scale-110"}`
+          }
+        >
           <li>About</li>
         </NavLink>
-        <NavLink to="/contact" aria-label="Link to Contact"  className={({ isActive }) => ` ${isActive ? "underline" : "hover:scale-110"}`}>
+        <NavLink
+          to="/contact"
+          aria-label="Link to Contact"
+          className={({ isActive }) =>
+            ` ${isActive ? "underline" : "hover:scale-110"}`
+          }
+        >
           <li>Contact</li>
         </NavLink>
-        {loggedIn && (<NavLink to="/admin" aria-label="Link to Admin"  className={({ isActive }) => ` ${isActive ? "underline" : "hover:scale-110"}`}>
-          <li className={` ${adminText}`}>Admin</li>
-        </NavLink>)}
+        {loggedIn && (
+          <NavLink
+            to="/admin"
+            aria-label="Link to Admin"
+            className={({ isActive }) =>
+              ` ${isActive ? "underline" : "hover:scale-110"}`
+            }
+          >
+            <li className={` ${adminText}`}>Admin</li>
+          </NavLink>
+        )}
       </ul>
     </header>
   );
