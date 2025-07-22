@@ -1030,50 +1030,93 @@ export const SingleProject = () => {
                         return (
                           <li
                             key={index}
-                            className="flex flex-col max-w-[100px] laptop:max-w-[150px] relative"
+                            className="flex flex-col max-w-[100px] laptop:max-w-[150px]"
                           >
-                            <img
-                              src={file.url}
-                              alt={file.photographer}
-                              className="aspect-[3/4] object-cover cursor-pointer rounded-xl"
-                              onClick={() =>
-                                handleImageClick(file.url, file.photographer)
-                              }
-                            />
-                            {showPhotographerName && !isEditing && (
-                              <p className="font-body text-main-dark mt-4">
-                                Photographer: {file.photographer}
-                              </p>
-                            )}
-                            {input.images.length > 1 && isEditing && (
-                              <>
-                                {index > 0 && (
-                                  <button
-                                    type="button"
-                                    onClick={() => moveImageLeft(index)} // Move image to the left
-                                    className="text-main-white  absolute bottom-2 left-2"
-                                  >
-                                    <IoMdArrowDropleftCircle className="w-6 h-6 hover:scale-110" />
-                                  </button>
-                                )}
-                                {index < currentProject.images.length - 1 && (
-                                  <button
-                                    type="button"
-                                    onClick={() => moveImageRight(index)} // Move image to the right
-                                    className="text-main-white absolute bottom-2 right-2 right-0 "
-                                  >
-                                    <IoMdArrowDroprightCircle className="w-6 h-6 hover:scale-110" />
-                                  </button>
-                                )}
+                            <div className="flex flex-col relative">
+                              <img
+                                src={file.url}
+                                alt={file.photographer}
+                                className="aspect-[3/4] object-cover cursor-pointer rounded-xl"
+                                onClick={() =>
+                                  handleImageClick(file.url, file.photographer)
+                                }
+                              />
 
-                                <button
-                                  type="button"
-                                  onClick={() => removeImage(index)}
-                                  className="text-red-700 absolute top-2 left-2"
-                                >
-                                  <FaTrashAlt className=" w-4 h-4 cursor-pointer hover:scale-110  " />
-                                </button>
-                              </>
+                              {showPhotographerName && !isEditing && (
+                                file.link ? (
+                                <a href={file.link} target="_blank" rel="noopener noreferrer" className="font-body text-main-dark mt-4">
+                                  Photographer: {file.photographer}
+                                </a>
+                                ) : (
+                                  <p
+                                    className="font-body text-main-dark mt-4">
+                                  Photographer: {file.photographer}
+                                  </p>
+                                )
+                              )}
+                              {input.images.length > 1 && isEditing && (
+                                <>
+                                  {index > 0 && (
+                                    <button
+                                      type="button"
+                                      onClick={() => moveImageLeft(index)} // Move image to the left
+                                      className="text-main-white  absolute bottom-2 left-2"
+                                    >
+                                      <IoMdArrowDropleftCircle className="w-6 h-6 hover:scale-110" />
+                                    </button>
+                                  )}
+                                  {index < currentProject.images.length - 1 && (
+                                    <button
+                                      type="button"
+                                      onClick={() => moveImageRight(index)} // Move image to the right
+                                      className="text-main-white absolute bottom-2 right-2 right-0 "
+                                    >
+                                      <IoMdArrowDroprightCircle className="w-6 h-6 hover:scale-110" />
+                                    </button>
+                                  )}
+
+                                  <button
+                                    type="button"
+                                    onClick={() => removeImage(index)}
+                                    className="text-red-700 absolute top-2 left-2"
+                                  >
+                                    <FaTrashAlt className=" w-4 h-4 cursor-pointer hover:scale-110  " />
+                                  </button>
+                                </>
+                              )}
+                            </div>
+                            {input.images.length > 1 && isEditing && (
+                              <div className="flex flex-col mt-2 gap-1">
+                                <input
+                                  type="text"
+                                  placeholder="Photographer"
+                                  value={file.photographer}
+                                  onChange={(e) => {
+                                    const newImages = [...input.images];
+                                    newImages[index].photographer =
+                                      e.target.value;
+                                    setInput((prevInput) => ({
+                                      ...prevInput,
+                                      images: newImages,
+                                    }));
+                                  }}
+                                  className="p-1 border rounded-md text-sm"
+                                />
+                                <input
+                                  type="text"
+                                  placeholder="Link"
+                                  value={file.link}
+                                  onChange={(e) => {
+                                    const newImages = [...input.images];
+                                    newImages[index].link = e.target.value;
+                                    setInput((prevInput) => ({
+                                      ...prevInput,
+                                      images: newImages,
+                                    }));
+                                  }}
+                                  className="p-1 border rounded-md text-sm"
+                                />
+                              </div>
                             )}
                           </li>
                         );
@@ -1097,9 +1140,51 @@ export const SingleProject = () => {
                           }
                           className="aspect-[3/4] object-cover cursor-pointer rounded-xl "
                         />
-                        <p className="font-body text-main-dark mt-4 italic">
-                          Photographer: {input.images[0].photographer}
-                        </p>
+                        {input.images[0].link ? (
+                          <a href={input.images[0].link} target="_blank" rel="noopener noreferrer" className="font-body text-main-dark mt-4">
+                                    Photographer: {input.images[0].photographer}
+                                </a>
+                                  ) : (
+                                  <p
+                                    className="font-body text-main-dark mt-4">
+                                  Photographer: {input.images[0].photographer}
+                                  </p>
+                                )
+                  }
+                   {isEditing && (
+                              <div className="flex flex-col mt-2 gap-1">
+                                <input
+                                  type="text"
+                                  placeholder="Photographer"
+                                  value={input.images[0].photographer}
+                                  onChange={(e) => {
+                                    const newImages = [...input.images];
+                                    newImages[0].photographer =
+                                      e.target.value;
+                                    setInput((prevInput) => ({
+                                      ...prevInput,
+                                      images: newImages,
+                                    }));
+                                  }}
+                                  className="p-1 border rounded-md text-sm"
+                                />
+                                <input
+                                  type="text"
+                                  placeholder="Link"
+                                  value={input.images[0].link}
+                                  onChange={(e) => {
+                                    const newImages = [...input.images];
+                                    newImages[0].link = e.target.value;
+                                    setInput((prevInput) => ({
+                                      ...prevInput,
+                                      images: newImages,
+                                    }));
+                                  }}
+                                  className="p-1 border rounded-md text-sm"
+                                />
+                              </div>
+                            )}
+                    
                       </div>
                     )
                   )}
@@ -1441,5 +1526,3 @@ export const SingleProject = () => {
     </section>
   );
 };
-
-
