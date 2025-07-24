@@ -1,5 +1,4 @@
 import express from "express";
-
 import Projects from "../models/projectSchema";
 
 const router = express.Router();
