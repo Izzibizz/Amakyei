@@ -47,14 +47,15 @@ export const Pedagog = () => {
     setIsModalOpen(false);
   };
 
-  const sortedProjects = [...formData.projects].sort((a, b) => {
-  const getYear = (str) => {
-    const match = str.match(/\d{4}/); // matchar första fyrsiffriga talet
-    return match ? parseInt(match[0], 10) : 0;
-  };
-
-  return getYear(b.year) - getYear(a.year); // sortera nyast först
-});
+const sortedProjects = formData?.projects
+  ? [...formData.projects].sort((a, b) => {
+      const getYear = (str) => {
+        const match = str.match(/\d{4}/);
+        return match ? parseInt(match[0], 10) : 0;
+      };
+      return getYear(b.year) - getYear(a.year);
+    })
+  : [];
 
   useEffect(() => {
     if (projectsData && category) {
@@ -156,7 +157,7 @@ export const Pedagog = () => {
                       </button>
                     </div>
                   )}
-                  {isEditing ? (
+                  {isEditing && formData ? (
                     <>
                       <input
                         type="text"
@@ -204,7 +205,7 @@ export const Pedagog = () => {
                 </div>
                 <div className="h-fit w-fit laptop:w-11/12 bg-main-white p-6 rounded-xl border border-green laptop:mt-8">
                   <h4 className="font-heading mb-4">Pedagogy Education</h4>
-                  {isEditing ? (
+                  {isEditing && formData ?  (
                     <>
                       <ul className="flex flex-col gap-4 font-body">
                         {formData.education.map((edu, index) => (
@@ -294,7 +295,7 @@ export const Pedagog = () => {
                 {isEditing ? (
                   <>
                     <ul className="flex flex-col gap-4 font-body">
-                      {sortedProjects.map((project, index) => (
+                      {sortedProjects?.map((project, index) => (
                         <li key={index}>
                           {/* År */}
                           <input
