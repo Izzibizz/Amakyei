@@ -30,11 +30,31 @@ router.post("/", async (req, res) => {
 
 router.delete("/", async (req, res) => {
   try {
-    await Pedagog.deleteMany({});
-    res.json({ message: "All Pedagog data deleted." });
+    const { type, id } = req.body;
+
+    if (!["education", "project"].includes(type) || !id) {
+      return res.status(400).json({ message: "Invalid delete request." });
+    }
+
+    const pedagog = await Pedagog.findOne();
+    if (!pedagog) {
+      return res.status(404).json({ message: "Pedagog not found." });
+    }
+
+    if (type === "education") {
+      pedagog.education = pedagog.education.filter(item => item._id.toString() !== id);
+    } else if (type === "project") {
+      pedagog.projects = pedagog.projects.filter(item => item._id.toString() !== id);
+    }
+
+    await pedagog.save();
+    res.json(pedagog);
   } catch (error) {
-    res.status(500).json({ message: "Failed to delete Pedagog data." });
+    console.error(error);
+    res.status(500).json({ message: "Failed to delete item from Pedagog." });
   }
 });
+
+
 
 export default router;

@@ -1,9 +1,12 @@
 import { create } from "zustand";
+import axios from "axios";
 
 export const useProjectsStore = create((set, get) => ({
   projectsData: [],
+  pedagogData: [],
   error: null,
   loadingProjects: false,
+  loadingPedagog: false,
   loadingUpload: false,
   loadingDelete: false,
   uploadError: false,
@@ -179,4 +182,62 @@ export const useProjectsStore = create((set, get) => ({
       console.error("Network error:", error);
     }
   },
+    fetchPedagog: async () => {
+      set({ loadingPedagog: true, error: null });
+    try {
+      const res = await axios.get("https://amakyei.onrender.com/pedagog");
+      set({ pedagogData: res.data });
+    } catch (error) {
+      console.error("Error fetching pedagog data", error);
+    }  finally {
+      set({ loadingPedagog: false });
+    }
+    
+  },
+ updatePedagogData: async (newData) => {
+  try {
+    // Hämta tidigare data, om du har det i state
+    const current = get().pedagogData;
+
+    const updatedEducation = newData.education.map(item => {
+      const existing = current.education.find(e => e._id === item._id);
+      return existing ? { ...existing, ...item } : item; // uppdatera eller lägg till
+    });
+
+    const updatedProjects = newData.projects.map(item => {
+      const existing = current.projects.find(p => p._id === item._id);
+      return existing ? { ...existing, ...item } : item; // uppdatera eller lägg till
+    });
+
+    const updatedDescription = {
+      ...current.description,
+      ...newData.description // endast uppdatera befintlig
+    };
+
+    const payload = {
+      description: updatedDescription,
+      education: updatedEducation,
+      projects: updatedProjects
+    };
+
+    const res = await axios.post("https://amakyei.onrender.com/pedagog", payload);
+    set({ pedagogData: res.data });
+
+  } catch (error) {
+    console.error("Error updating pedagog data", error);
+  }
+},
+
+ deletePedagogData: async (type, id) => {
+  try {
+    const res = await axios.delete("https://amakyei.onrender.com/pedagog", {
+      data: { type, id }
+    });
+    set({ pedagogData: res.data });
+  } catch (error) {
+    console.error("Error deleting pedagog data", error);
+  }
+},
+
+
 }));

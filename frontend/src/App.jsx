@@ -7,10 +7,11 @@ import { useEffect } from "react"
 
 export const App = () => {
 
-  const { fetchProjects } = useProjectsStore()
+  const { fetchProjects, fetchPedagog } = useProjectsStore()
 
   useEffect(() => {
     fetchProjects();
+    fetchPedagog();
   }, []);
 
   return (
