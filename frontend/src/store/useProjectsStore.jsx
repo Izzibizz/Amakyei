@@ -44,7 +44,7 @@ export const useProjectsStore = create((set, get) => ({
     set({ loadingProjects: true, error: null }); // Set loading and clear error
 
     try {
-      const response = await fetch("https://amakyei.onrender.com/projects", {
+      const response = await fetch("https://amakyei-9waf.onrender.com/projects", {
         method: "GET",
       });
 
@@ -83,7 +83,7 @@ export const useProjectsStore = create((set, get) => ({
       uploadError: false,
       uploadSuccessful: false,
     });
-    const URL = "https://amakyei.onrender.com/projects/newProject";
+    const URL = "https://amakyei-9waf.onrender.com/projects/newProject";
     try {
       const response = await fetch(URL, {
         method: "POST",
@@ -120,7 +120,7 @@ export const useProjectsStore = create((set, get) => ({
   },
   deleteProjectWithId: async (projectId) => {
     set({ error: null, loadingDelete: true, deleteError: false });
-    const URL = `https://amakyei.onrender.com/projects/${projectId}`;
+    const URL = `https://amakyei-9waf.onrender.com/projects/${projectId}`;
     try {
       const response = await fetch(URL, {
         method: "DELETE",
@@ -157,7 +157,7 @@ export const useProjectsStore = create((set, get) => ({
     });
     try {
       const response = await fetch(
-        `https://amakyei.onrender.com/projects/${projectId}`,
+        `https://amakyei-9waf.onrender.com/projects/${projectId}`,
         {
           method: "PATCH",
           headers: {
@@ -185,7 +185,7 @@ export const useProjectsStore = create((set, get) => ({
     fetchPedagog: async () => {
       set({ loadingPedagog: true, error: null });
     try {
-      const res = await axios.get("https://amakyei.onrender.com/pedagog");
+      const res = await axios.get("https://amakyei-9waf.onrender.com/pedagog");
       set({ pedagogData: res.data });
     } catch (error) {
       console.error("Error fetching pedagog data", error);
@@ -220,7 +220,7 @@ export const useProjectsStore = create((set, get) => ({
       projects: updatedProjects
     };
 
-    const res = await axios.post("https://amakyei.onrender.com/pedagog", payload);
+    const res = await axios.post("hhttps://amakyei-9waf.onrender.com/pedagog", payload);
     set({ pedagogData: res.data });
 
   } catch (error) {
@@ -230,7 +230,7 @@ export const useProjectsStore = create((set, get) => ({
 
  deletePedagogData: async (type, id) => {
   try {
-    const res = await axios.delete("https://amakyei.onrender.com/pedagog", {
+    const res = await axios.delete("https://amakyei-9waf.onrender.com/pedagog", {
       data: { type, id }
     });
     set({ pedagogData: res.data });
