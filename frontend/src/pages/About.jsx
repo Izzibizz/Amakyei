@@ -8,7 +8,7 @@ export const About = () => {
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <section className="text-main-dark w-full flex flex-col laptop:w-10/12 laptop:m-auto animate-fadeIn">
+    <section className="text-main-dark w-full flex flex-col laptop:m-auto animate-fadeIn">
       <h3 className="text-2xl font-heading text-right mb-10">About</h3>
       {/* Mobile */}
       <div className="flex flex-col gap-12 tablet:hidden">
@@ -135,24 +135,22 @@ export const About = () => {
         </div>
       </div>
       {/* Laptop */}
-      <div className="hidden laptop:grid grid-cols-4 gap-x-20 ">
+      <div className="hidden laptop:flex justify-between gap-10 ">
         {/* Video spanning all three columns in the top row */}
-        <div className="col-span-2 row-span-1 flex justify-center">
-          <video
-            src="https://res.cloudinary.com/duegke8je/video/upload/v1745322213/about_Ama_Kyei_ux2wgv.mp4"
-            type="video/mp4"
-            alt="about video"
-            className="w-full rounded-xl animate-fadeInVideo"
-            autoPlay
-            muted
-            loop
-            playsInline
-          />
-        </div>
+        <video
+          src="https://res.cloudinary.com/duegke8je/video/upload/v1745322213/about_Ama_Kyei_ux2wgv.mp4"
+          type="video/mp4"
+          alt="about video"
+          className="w-1/2 rounded-xl animate-fadeInVideo min-w-[400px]"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
 
         {/* Introductory text in the second row, first column */}
-        <div className="col-span-1 row-span-1 flex flex-col gap-8 justify-end">
-          <p className="font-heading text-base font-semibold text-right mb-4">
+        <div className="col-span-1 row-span-1 flex flex-col gap-8 justify-end max-w-[600px]">
+          <p className="font-heading text-base font-semibold text-right mb-4 max-w-[320px] self-end">
             I'm a Finnish-Ghanaian dancer, dance teacher, choreographer, and
             doula.
           </p>
@@ -169,10 +167,11 @@ export const About = () => {
         </div>
 
         {/* Longer text in the second row, second column */}
-
-        {/* White background with education info spanning all three columns in the bottom row */}
-        <div className="col-start-4 col-end-5 row-start-1 row-end-3 h-fit bg-main-white p-6 rounded-xl border border-green self-end">
-          <h4 className="font-heading mb-4">Education</h4>
+      </div>
+      {/* White background with education info spanning all three columns in the bottom row */}
+      <div className="hidden laptop:flex flex-col mt-20 h-fit w-full max-w-[800px] p-10 rounded-xl border border-green">
+        <h4 className="font-heading mb-4">Education</h4>
+        <div className="flex gap-6 justify-between">
           <ul className="flex flex-col gap-4 font-body">
             <li>
               <span className="font-semibold">Dancer</span>
@@ -191,24 +190,17 @@ export const About = () => {
               <br />
               Ecoles des Sables, Senegal (2019)
             </li>
-            <button
-              type="button"
-              className="border w-fit p-2 rounded-xl m-auto"
-              onClick={() => setShowMore(!showMore)}
-            >
-              {showMore ? "Show less" : "Show more"}
-            </button>
+            
           </ul>
-          {showMore && (
-            <p className="text-justify font-body pt-4">
-              Besides these official studies, I've studied contemporary and
-              modern West-African dances in Ghana and Benin. My doula education
-              I did in Cape Coast, Ghana at A Life of Peace School (2022). I've
-              been teaching dance since 2010, and my passion for teaching stems
-              from my desire to both be and to create environments free from
-              worry, where self-expression is the goal and joy is guaranteed.
-            </p>
-          )}
+
+          <p className="text-justify self-end font-body pt-4 w-1/2">
+            Besides these official studies, I've studied contemporary and modern
+            West-African dances in Ghana and Benin. My doula education I did in
+            Cape Coast, Ghana at A Life of Peace School (2022). I've been
+            teaching dance since 2010, and my passion for teaching stems from my
+            desire to both be and to create environments free from worry, where
+            self-expression is the goal and joy is guaranteed.
+          </p>
         </div>
       </div>
     </section>
