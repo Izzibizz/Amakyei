@@ -952,7 +952,7 @@ export const SingleProject = () => {
                         <input
                           type="text"
                           name="url"
-                          placeholder={currentInputVideo.url || "Video link"}
+                          placeholder={currentInputVideo.url || "Video link (important: embed format)"}
                           value={currentInputVideo.url}
                           onChange={(e) => handleVideoInputChange(e, "url")}
                           className="font-body focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap p-2 bg-main-white border border-2 border-dotted rounded-xl "
