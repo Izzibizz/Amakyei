@@ -86,6 +86,9 @@ export const SingleProject = () => {
 
   const contentRef = useRef(null);
 
+  const defaultVideo = { url: "", photographer: "", link: "" };
+  const currentInputVideo = input.video?.[0] || defaultVideo;
+
   const handleClickScroll = () => {
     console.log(laptopView);
     const yOffset = laptopView ? -50 : -200;
@@ -248,7 +251,10 @@ export const SingleProject = () => {
       description2: currentProject.description2 || "",
       credits: currentProject.credits || [],
       images: currentProject.images || [],
-      video: currentProject.video || [],
+      video:
+        currentProject.video && currentProject.video.length > 0
+          ? currentProject.video
+          : [defaultVideo],
     });
 
     // Calculate next and previous projects within filteredProjects
@@ -383,7 +389,7 @@ export const SingleProject = () => {
         ...acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          })
+          }),
         ),
       ]);
       setEditingField(null);
@@ -398,8 +404,8 @@ export const SingleProject = () => {
   const handleImageDetailChange = (index, field, value) => {
     setImageDetailsInput((prevDetails) =>
       prevDetails.map((detail, i) =>
-        i === index ? { ...detail, [field]: value } : detail
-      )
+        i === index ? { ...detail, [field]: value } : detail,
+      ),
     );
   };
 
@@ -407,10 +413,10 @@ export const SingleProject = () => {
   const removePreviewImage = (indexToRemove) => {
     // Filter out the image at the given index
     const updatedImages = imageInput.filter(
-      (_, index) => index !== indexToRemove
+      (_, index) => index !== indexToRemove,
     );
     const updatedDetails = imageDetailsInput.filter(
-      (_, index) => index !== indexToRemove
+      (_, index) => index !== indexToRemove,
     );
 
     // Update the input state with the new images and details arrays
@@ -439,7 +445,7 @@ export const SingleProject = () => {
       try {
         const response = await axios.post(
           `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-          formData
+          formData,
         );
 
         // Create the structured object for each image
@@ -470,7 +476,7 @@ export const SingleProject = () => {
   const removeImage = (indexToRemove) => {
     // Filter out the image at the given index
     const updatedImages = input.images.filter(
-      (_, index) => index !== indexToRemove
+      (_, index) => index !== indexToRemove,
     );
 
     // Update the input state with the new images array
@@ -518,15 +524,20 @@ export const SingleProject = () => {
 
   const handleVideoInputChange = (e, field) => {
     const { value } = e.target;
-    setInput((prevState) => ({
-      ...prevState,
-      video: [
-        {
-          ...prevState.video[0], // Use existing object in the array (if exists)
-          [field]: value, // Update the specific field (url, photographer, or link)
-        },
-      ],
-    }));
+    setInput((prevState) => {
+      const previousVideo =
+        (prevState.video && prevState.video.length > 0 && prevState.video[0]) ||
+        defaultVideo;
+      return {
+        ...prevState,
+        video: [
+          {
+            ...previousVideo,
+            [field]: value,
+          },
+        ],
+      };
+    });
   };
 
   const exitEdit = () => {
@@ -540,7 +551,10 @@ export const SingleProject = () => {
       description2: currentProject.description2 || "",
       credits: currentProject.credits || [],
       images: currentProject.images || [],
-      video: currentProject.video || [],
+      video:
+        currentProject.video && currentProject.video.length > 0
+          ? currentProject.video
+          : [defaultVideo],
     });
   };
 
@@ -788,7 +802,7 @@ export const SingleProject = () => {
                     onClick={() =>
                       handleImageClick(
                         currentProject.images[0].url,
-                        currentProject.images[0].photographer
+                        currentProject.images[0].photographer,
                       )
                     }
                     onLoad={() =>
@@ -938,8 +952,8 @@ export const SingleProject = () => {
                         <input
                           type="text"
                           name="url"
-                          placeholder={input.video[0].url || "Video link"}
-                          value={input.video[0].url}
+                          placeholder={currentInputVideo.url || "Video link"}
+                          value={currentInputVideo.url}
                           onChange={(e) => handleVideoInputChange(e, "url")}
                           className="font-body focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap p-2 bg-main-white border border-2 border-dotted rounded-xl "
                         />
@@ -947,9 +961,9 @@ export const SingleProject = () => {
                           type="text"
                           name="photographer"
                           placeholder={
-                            input.video[0].photographer || "Photographer"
+                            currentInputVideo.photographer || "Photographer"
                           }
-                          value={input.video[0].photographer}
+                          value={currentInputVideo.photographer}
                           onChange={(e) =>
                             handleVideoInputChange(e, "photographer")
                           }
@@ -959,9 +973,9 @@ export const SingleProject = () => {
                           type="text"
                           name="link"
                           placeholder={
-                            input.video[0].link || "Website / Socialmedia"
+                            currentInputVideo.link || "Website / Socialmedia"
                           }
-                          value={input.video[0].link}
+                          value={currentInputVideo.link}
                           onChange={(e) => handleVideoInputChange(e, "link")}
                           className="font-body focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap p-2 bg-main-white border border-2 border-dotted rounded-xl"
                         />
@@ -1042,18 +1056,22 @@ export const SingleProject = () => {
                                 }
                               />
 
-                              {showPhotographerName && !isEditing && (
-                                file.link ? (
-                                <a href={file.link} target="_blank" rel="noopener noreferrer" className="font-body text-main-dark mt-4">
-                                  Photographer: {file.photographer}
-                                </a>
+                              {showPhotographerName &&
+                                !isEditing &&
+                                (file.link ? (
+                                  <a
+                                    href={file.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="font-body text-main-dark mt-4"
+                                  >
+                                    Photographer: {file.photographer}
+                                  </a>
                                 ) : (
-                                  <p
-                                    className="font-body text-main-dark mt-4">
-                                  Photographer: {file.photographer}
+                                  <p className="font-body text-main-dark mt-4">
+                                    Photographer: {file.photographer}
                                   </p>
-                                )
-                              )}
+                                ))}
                               {input.images.length > 1 && isEditing && (
                                 <>
                                   {index > 0 && (
@@ -1135,56 +1153,57 @@ export const SingleProject = () => {
                           onClick={() =>
                             handleImageClick(
                               input.images[0].url,
-                              input.images[0].photographer
+                              input.images[0].photographer,
                             )
                           }
                           className="aspect-[3/4] object-cover cursor-pointer rounded-xl "
                         />
                         {input.images[0].link ? (
-                          <a href={input.images[0].link} target="_blank" rel="noopener noreferrer" className="font-body text-main-dark mt-4">
-                                    Photographer: {input.images[0].photographer}
-                                </a>
-                                  ) : (
-                                  <p
-                                    className="font-body text-main-dark mt-4">
-                                  Photographer: {input.images[0].photographer}
-                                  </p>
-                                )
-                  }
-                   {isEditing && (
-                              <div className="flex flex-col mt-2 gap-1">
-                                <input
-                                  type="text"
-                                  placeholder="Photographer"
-                                  value={input.images[0].photographer}
-                                  onChange={(e) => {
-                                    const newImages = [...input.images];
-                                    newImages[0].photographer =
-                                      e.target.value;
-                                    setInput((prevInput) => ({
-                                      ...prevInput,
-                                      images: newImages,
-                                    }));
-                                  }}
-                                  className="p-1 border rounded-md text-sm"
-                                />
-                                <input
-                                  type="text"
-                                  placeholder="Link"
-                                  value={input.images[0].link}
-                                  onChange={(e) => {
-                                    const newImages = [...input.images];
-                                    newImages[0].link = e.target.value;
-                                    setInput((prevInput) => ({
-                                      ...prevInput,
-                                      images: newImages,
-                                    }));
-                                  }}
-                                  className="p-1 border rounded-md text-sm"
-                                />
-                              </div>
-                            )}
-                    
+                          <a
+                            href={input.images[0].link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-body text-main-dark mt-4"
+                          >
+                            Photographer: {input.images[0].photographer}
+                          </a>
+                        ) : (
+                          <p className="font-body text-main-dark mt-4">
+                            Photographer: {input.images[0].photographer}
+                          </p>
+                        )}
+                        {isEditing && (
+                          <div className="flex flex-col mt-2 gap-1">
+                            <input
+                              type="text"
+                              placeholder="Photographer"
+                              value={input.images[0].photographer}
+                              onChange={(e) => {
+                                const newImages = [...input.images];
+                                newImages[0].photographer = e.target.value;
+                                setInput((prevInput) => ({
+                                  ...prevInput,
+                                  images: newImages,
+                                }));
+                              }}
+                              className="p-1 border rounded-md text-sm"
+                            />
+                            <input
+                              type="text"
+                              placeholder="Link"
+                              value={input.images[0].link}
+                              onChange={(e) => {
+                                const newImages = [...input.images];
+                                newImages[0].link = e.target.value;
+                                setInput((prevInput) => ({
+                                  ...prevInput,
+                                  images: newImages,
+                                }));
+                              }}
+                              className="p-1 border rounded-md text-sm"
+                            />
+                          </div>
+                        )}
                       </div>
                     )
                   )}
@@ -1235,7 +1254,7 @@ export const SingleProject = () => {
                                       handleImageDetailChange(
                                         index,
                                         "photographer",
-                                        e.target.value
+                                        e.target.value,
                                       )
                                     }
                                     className="p-2 border w-full mb-2"
@@ -1248,7 +1267,7 @@ export const SingleProject = () => {
                                       handleImageDetailChange(
                                         index,
                                         "link",
-                                        e.target.value
+                                        e.target.value,
                                       )
                                     }
                                     className="p-2 border w-full"
@@ -1269,7 +1288,7 @@ export const SingleProject = () => {
                             onClick={() =>
                               uploadImagesToCloudinary(
                                 imageInput,
-                                imageDetailsInput
+                                imageDetailsInput,
                               )
                             }
                             className="mt-4 p-6 bg-medium-white text-peach hover:drop-shadow rounded-xl flex h-fit w-fit items-center"
@@ -1339,7 +1358,7 @@ export const SingleProject = () => {
                               handleCreditChange(
                                 creditIndex,
                                 "role",
-                                e.target.value
+                                e.target.value,
                               )
                             }
                             className="p-2 bg-main-white border border-dotted rounded-md"
@@ -1402,7 +1421,7 @@ export const SingleProject = () => {
                                   handleCreditChange(
                                     creditIndex,
                                     `names.${nameIndex}.name`,
-                                    e.target.value
+                                    e.target.value,
                                   )
                                 }
                                 className="p-2 bg-main-white border border-dotted rounded-md"
@@ -1418,7 +1437,7 @@ export const SingleProject = () => {
                                   handleCreditChange(
                                     creditIndex,
                                     `names.${nameIndex}.link`,
-                                    e.target.value
+                                    e.target.value,
                                   )
                                 }
                                 className="p-2 bg-main-white border border-dotted rounded-md"

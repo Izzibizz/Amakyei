@@ -8,6 +8,11 @@ export const UploadVideo = ({
   handleKeyPress,
   toggleEditMode,
 }) => {
+  const currentVideoLink = videoLink?.[0] || {
+    url: "",
+    photographer: "",
+    link: "",
+  };
   return (
     <>
       <div
@@ -22,10 +27,10 @@ export const UploadVideo = ({
           <>
             <input
               type="text"
-              value={videoLink.url}
+              value={currentVideoLink.url}
               onChange={(e) =>
                 setVideoLink((prev) => {
-                  const newVideoLink = [...prev];
+                  const newVideoLink = [...(prev || [])];
                   newVideoLink[0] = {
                     ...newVideoLink[0],
                     url: e.target.value,
@@ -36,7 +41,7 @@ export const UploadVideo = ({
               onBlur={() => setEditingField(null)}
               onKeyDown={handleKeyPress}
               className="w-full overflow-hidden text-ellipsis  rounded-xl whitespace-nowrap p-4 focus:outline-none bg-main-white"
-              placeholder={videoLink[0].url || "https://example.com"}
+              placeholder={currentVideoLink.url || "https://example.com"}
             />
             <input
               type="text"
